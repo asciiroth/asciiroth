@@ -8,7 +8,7 @@
 	},
 	"scripts": {
 		"start": "npx parcel src/index.html",
-		"build": "npx parcel build src/index.html --experimental-scope-hoisting --public-url /dist/"
+		"build": "npx parcel build src/index.html --experimental-scope-hoisting --public-url /asciiroth/dist/"
 	},
 	"devDependencies": {
 		"parcel-bundler": "^1.12.3",
