@@ -1,7 +1,7 @@
 {
 	"name": "Asciiroth",
 	"description": "A text-based game based on Azeroth.",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/asciiroth/asciiroth.git"
