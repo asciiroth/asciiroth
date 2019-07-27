@@ -1,0 +1,191 @@
+@import url('https://fonts.googleapis.com/css?family=Cutive+Mono&display=swap&family=Montserrat');
+
+$dark: #2B2D42;
+$darkblue: #011936;
+// $light: #BEE9E8;
+$light: #D5DCF9;
+$vanilla: #D1CAA1;
+$yellow: #F8FA90;
+$red: #FE4A49;
+
+$fontMain: 'Cutive Mono', monospace;
+$fontCaption: 'Montserrat', sans-serif;
+
+@mixin hideScrollBars {
+	overflow: -moz-scrollbars-none;
+	-ms-overflow-style: none;
+
+	&::-webkit-scrollbar {
+		width: 0 !important;
+	}
+}
+
+@mixin backgroundGradient($colour) {
+	background: linear-gradient(to right, rgba($dark, 1) 1%, rgba($dark, 0.8) 5%, rgba($colour, 0.2) 90%);
+}
+
+* {
+	box-sizing: border-box;
+	font-family: Consolas;
+	font-family: $fontMain;
+}
+
+html, body {
+	margin: 0;
+	padding: 0;
+}
+
+#asciiroth {
+	max-height: 100vh;
+	height: 100vh;
+	background-color: $dark;
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+	overflow: hidden;
+
+	#left, #right {
+		flex: 1;
+		height: 100%;
+	}
+
+	#left {
+		color: $light;
+		overflow-y: auto;
+		padding: 1rem;
+		padding-bottom: 200px;
+		@include hideScrollBars;
+	}
+
+	#right {
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-position: center center;
+		position: relative;
+		opacity: 0;
+		transition: opacity .6s ease;
+		max-width: 50%;
+
+		&:after {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 100%;
+			width: 100%;
+			@include backgroundGradient($light);
+		}
+
+		&.alliance {
+			&:after {
+				@include backgroundGradient($darkblue);
+			}
+		}
+
+		&.horde {
+			&:after {
+				@include backgroundGradient($red);
+			}
+		}
+
+		img {
+			object-fit: cover;
+		    width: 100%;
+		    height: 100%;
+		}
+
+		.caption {
+			position: absolute;
+			bottom: 10%;
+			left: 15%;
+			right: 15%;
+			color: white;
+			font-family: $fontCaption;
+			font-weight: lighter;
+
+			* {
+				text-shadow: 0 0 5px rgba(0,0,0,0.2);
+			}
+
+			h2 {
+				font-size: 1.5rem;
+				font-weight: bold;
+			}
+
+			p {
+				font-size: 1rem;
+			}
+		}
+	}
+}
+
+#output {
+	.info {
+		color: $vanilla;
+	}
+
+	.speech {
+		color: $yellow;
+	}
+
+	.error {
+		color: $red;
+	}
+
+	.user-input {
+		padding-left: 1rem;
+		position: relative;
+		line-height: 1rem;
+		min-height: 1px;
+
+		&:after {
+			content: '>';
+			font-size: 0.6rem;
+			position: absolute;
+			left: 0;
+			top: 50%;
+			transform: translateY(-50%);
+			color: $light;
+		}
+	}
+}
+
+#main-input {
+    position: relative;
+	padding: 0.5rem;
+	padding-left: 1rem;
+
+	&:after {
+		content: '>';
+		font-size: 0.6rem;
+		position: absolute;
+		left: 0;
+		top: 50%;
+		transform: translateY(-50%);
+		color: $light;
+	}
+}
+
+#intellisense-holder {
+    display: block;
+    height: 0;
+    position: relative;
+
+    #intellisense {
+        position: absolute;
+        opacity: 0;
+		top: 5px;
+        padding: 0.5rem;
+        min-width: 300px;
+        height: auto;
+        max-width: 400px;
+        max-height: 200px;
+		overflow-y: auto;
+		background-color: $darkblue;
+		transition: opacity .2s ease;
+		border-radius: 5px;
+		box-shadow: 2px 2px rgba(0,0,0,0.2);
+		z-index: 3;
+		@include hideScrollBars;
+	}
+}

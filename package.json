@@ -1,0 +1,22 @@
+{
+	"name": "Asciiroth",
+	"description": "A text-based game based on Azeroth.",
+	"version": "1.0.0",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/asciiroth/asciiroth.git"
+	},
+	"scripts": {
+		"start": "npx parcel src/index.html",
+		"build": "npx parcel build src/index.html --experimental-scope-hoisting --public-url /dist/"
+	},
+	"devDependencies": {
+		"parcel-bundler": "^1.12.3",
+		"sass": "^1.22.7",
+		"typescript": "^3.5.2"
+	},
+	"dependencies": {
+		"babel-polyfill": "^6.26.0",
+		"tslib": "^1.10.0"
+	}
+}
