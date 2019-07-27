@@ -10004,7 +10004,7 @@ function () {
   DomRightClass.prototype.clear = function () {
     this.hide();
 
-    if (this._currentImage) {
+    if (this._currentImage && this._currentImage.parentNode) {
       this._currentImage.parentNode.removeChild(this.currentImage);
 
       this._currentImage = null;
@@ -10101,7 +10101,6 @@ var handleInput = function handleInput(event) {
     gameLoop();
   }
 
-  intellisense.redraw(event);
   domRight.redrawRight(event);
 };
 
@@ -10117,20 +10116,25 @@ function () {
     var _this = this;
 
     this._domIntellisense = document.querySelector('#intellisense');
+    this.isOpen = false;
+    this.suggestions = [];
+    this.highlightedIndex = -1;
     mainInput.addEventListener('blur', function () {
       _this.hide();
-    });
-    mainInput.addEventListener('keyup', function (event) {
-      _this.redraw(event);
-    });
+    }); // mainInput.addEventListener('keyup', event => {
+    //     this.redraw(event);
+    // });
   }
 
   IntellisenseClass.prototype.show = function () {
     this._domIntellisense.style.opacity = '1';
+    this.isOpen = true;
+    this.highlightedIndex = -1;
   };
 
   IntellisenseClass.prototype.hide = function () {
     this._domIntellisense.style.opacity = '0';
+    this.isOpen = false;
     this.clear();
   };
 
@@ -10153,6 +10157,11 @@ function () {
   };
 
   IntellisenseClass.prototype.redraw = function (event) {
+    var _this = this;
+
+    event.preventDefault();
+    var range = window.getSelection().getRangeAt(0);
+
     if (event.target.innerText.length <= 0 && event.keyCode !== 40) {
       this.hide();
       return;
@@ -10167,21 +10176,65 @@ function () {
         command = _a[0],
         args = _a.slice(1);
 
-    var suggestions = this.calculateSuggestions(command, args).slice();
+    this.suggestions = this.calculateSuggestions(command, args).slice();
     var pos = getCaretPosition(event.target);
 
     if (event.keyCode === 40) {
-      this.toggle();
+      // down arrow
+      if (!this.isOpen) {
+        this.show();
+      } else {
+        if (this.suggestions.length) {
+          if (this.highlightedIndex + 1 <= this.suggestions.length) {
+            this.highlightedIndex = this.highlightedIndex + 1;
+          }
+        }
+      }
     }
+
+    if (event.keyCode === 38) {
+      // up arrow
+      if (this.isOpen) {
+        if (this.suggestions.length) {
+          if (this.highlightedIndex - 1 >= -1) {
+            this.highlightedIndex = this.highlightedIndex - 1;
+          }
+        }
+      }
+    } // console.log(pos, event.target.selectionEnd, event.target.selectionStart);
+    // setTimeout(() => {
+    //     console.log('a')
+    //     if (event.target.setSelectionRange) {
+    //         event.target.focus();
+    //         event.target.setSelectionRange(pos, pos);
+    //     }
+    //     else if (event.target.createTextRange) {
+    //         var range = event.target.createTextRange();
+    //         range.collapse(true);
+    //         range.moveEnd('character', pos);
+    //         range.moveStart('character', pos);
+    //         range.select();
+    //     }
+    // }, 1000)
+
+
+    setTimeout(function () {
+      //console.log(range)
+      window.getSelection().addRange(range);
+    }, 100);
+    event.target.selectionStart = pos - 1; //window.getSelection().setPosition(event.target, pos);
 
     this.clear();
 
-    if (suggestions.length) {
-      this.show();
+    if (this.suggestions.length) {
+      if (!this.isOpen) {
+        this.show();
+      }
+
       this.positionLeft(pos);
 
-      this._domIntellisense.insertAdjacentHTML('afterbegin', suggestions.reduce(function (html, suggestion) {
-        return html += "<p>" + suggestion + "</p>";
+      this._domIntellisense.insertAdjacentHTML('afterbegin', this.suggestions.reduce(function (html, suggestion, index) {
+        return html += "<p class=\"" + (_this.highlightedIndex === index ? 'highlighted' : '') + "\">" + suggestion + "</p>";
       }, ''));
     } else {
       this.hide();
@@ -10304,7 +10357,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64633" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58003" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

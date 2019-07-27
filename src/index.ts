@@ -533,7 +533,7 @@ class DomRightClass {
 
     public clear() {
         this.hide();
-        if (this._currentImage) {
+        if (this._currentImage && this._currentImage.parentNode) {
             this._currentImage.parentNode.removeChild(this.currentImage);
             this._currentImage = null;
         }
@@ -636,7 +636,6 @@ const handleInput = (event: KeyboardEvent) => {
         gameLoop();
     }
 
-    intellisense.redraw(event);
     domRight.redrawRight(event);
 }
 
@@ -650,23 +649,29 @@ domLeft.addEventListener('click', () => {
 
 class IntellisenseClass {
     private _domIntellisense: HTMLElement = document.querySelector('#intellisense');
+    private isOpen: boolean = false;
+    private suggestions: string[] = [];
+    private highlightedIndex: number = -1;
 
     constructor() {
         mainInput.addEventListener('blur', () => {
             this.hide();
         });
 
-        mainInput.addEventListener('keyup', event => {
-            this.redraw(event);
-        });
+        // mainInput.addEventListener('keyup', event => {
+        //     this.redraw(event);
+        // });
     }
 
     public show(): void {
         this._domIntellisense.style.opacity = '1';
+        this.isOpen = true;
+        this.highlightedIndex = -1;
     }
 
     public hide(): void {
         this._domIntellisense.style.opacity = '0';
+        this.isOpen = false;
         this.clear();
     }
 
@@ -689,6 +694,9 @@ class IntellisenseClass {
     }
 
     public redraw(event: any): void {
+        event.preventDefault();
+        const range = window.getSelection().getRangeAt(0);
+
         if (event.target.innerText.length <= 0 && event.keyCode !== 40) {
             this.hide();
             return;
@@ -701,20 +709,69 @@ class IntellisenseClass {
 
         const [command, ...args] = transformInput(event.target.innerText)
 
-        const suggestions = [...this.calculateSuggestions(command, args)];
+        this.suggestions = [...this.calculateSuggestions(command, args)];
         const pos = getCaretPosition(event.target);
 
-        if (event.keyCode === 40) {
-            this.toggle();
+        if (event.keyCode === 40) { // down arrow
+            if (!this.isOpen) {
+                this.show();
+            } else {
+                if (this.suggestions.length) {
+                    if (this.highlightedIndex + 1 <= this.suggestions.length) {
+                        this.highlightedIndex = this.highlightedIndex + 1;
+
+                    }
+                }
+            }
         }
+
+        if (event.keyCode === 38) { // up arrow
+            if (this.isOpen) {
+                if (this.suggestions.length) {
+                    if (this.highlightedIndex - 1 >= -1) {
+                        this.highlightedIndex = this.highlightedIndex - 1;
+                    }
+                }
+            }
+        }
+
+        // console.log(pos, event.target.selectionEnd, event.target.selectionStart);
+
+        // setTimeout(() => {
+        //     console.log('a')
+        //     if (event.target.setSelectionRange) {
+        //         event.target.focus();
+        //         event.target.setSelectionRange(pos, pos);
+        //     }
+        //     else if (event.target.createTextRange) {
+        //         var range = event.target.createTextRange();
+        //         range.collapse(true);
+        //         range.moveEnd('character', pos);
+        //         range.moveStart('character', pos);
+        //         range.select();
+        //     }
+        // }, 1000)
+
+        setTimeout(() => {
+            //console.log(range)
+            window.getSelection().addRange(range);
+        }, 100)
+
+        event.target.selectionStart = pos - 1;
+
+        //window.getSelection().setPosition(event.target, pos);
 
         this.clear();
 
-        if (suggestions.length) {
-            this.show();
+        if (this.suggestions.length) {
+
+            if (!this.isOpen) {
+                this.show();
+            }
+
             this.positionLeft(pos);
-            this._domIntellisense.insertAdjacentHTML('afterbegin', suggestions.reduce((html, suggestion) => {
-                return html += `<p>${suggestion}</p>`;
+            this._domIntellisense.insertAdjacentHTML('afterbegin', this.suggestions.reduce((html, suggestion, index) => {
+                return html += `<p class="${ this.highlightedIndex === index ? 'highlighted' : '' }">${suggestion}</p>`;
             }, ''))
         } else {
             this.hide();
