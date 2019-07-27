@@ -88,7 +88,7 @@ const world = new World([
         ),
         new Location(
             'Stormwind Gates',
-            'The magestic Stormwind Gates. All around you is bustling in the summer breeze as a crowd of people weave in and out of the city gates.',
+            'The majestic Stormwind Gates. All around you is bustling in the summer breeze as a crowd of people weave in and out of the city gates.',
             'https://bnetcmsus-a.akamaihd.net/cms/content_entry_media/OCX0QPKBLRHQ1465832713312.jpg',
             [
                 new Npcs.Guard(),
