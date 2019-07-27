@@ -228,7 +228,9 @@ const handlerActions: { [id: string]: Function } = {
         }
 
         if (player.combatSelectedEnemy) {
-            enemy = player.combatSelectedEnemy;
+            if (enemy.id === player.combatSelectedEnemy.id) {
+                enemy = player.combatSelectedEnemy;
+            }
         }
 
         player.combatSelectedEnemy = enemy;
@@ -244,13 +246,13 @@ const handlerActions: { [id: string]: Function } = {
             },
         });
 
+        output(`🗡 Attacked ${target} for ${enemyDamage} damage! ${target}'s hp: ${enemy.hp}`);
+
         if (enemy.hp <= 0) {
             output(`You have killed the ${enemy.name}`);
             currentLocation.removeEntity(enemy.id);
             player.combatSelectedEnemy = null;
             return;
-        } else {
-            output(`🗡 Attacked ${target} for ${enemyDamage} damage! ${target}'s hp: ${enemy.hp}`);
         }
 
         // Enemy attacks player
@@ -264,12 +266,12 @@ const handlerActions: { [id: string]: Function } = {
             },
         });
 
+        output(`🛡 ${target} attacks you for ${playerDamage} damage! Your hp: ${player.hp}`);
+
         if (player.hp <= 0) {
             output(`You have died! Respawning...`);
             player.combatSelectedEnemy = null;
             respawn(player);
-        } else {
-            output(`🛡 ${target} attacks you for ${playerDamage} damage! Your hp: ${player.hp}`);
         }
 
     },

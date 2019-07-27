@@ -1,0 +1,153 @@
+@import url("https://fonts.googleapis.com/css?family=Cutive+Mono&display=swap&family=Montserrat");
+* {
+  box-sizing: border-box;
+  font-family: Consolas;
+  font-family: "Cutive Mono", monospace;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+#asciiroth {
+  max-height: 100vh;
+  height: 100vh;
+  background-color: #2B2D42;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  overflow: hidden;
+}
+#asciiroth #left, #asciiroth #right {
+  flex: 1;
+  height: 100%;
+}
+#asciiroth #left {
+  color: #D5DCF9;
+  overflow-y: auto;
+  padding: 1rem;
+  padding-bottom: 200px;
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
+}
+#asciiroth #left::-webkit-scrollbar {
+  width: 0 !important;
+}
+#asciiroth #right {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  position: relative;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  max-width: 50%;
+}
+#asciiroth #right:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(to right, #2b2d42 1%, rgba(43, 45, 66, 0.8) 5%, rgba(213, 220, 249, 0.2) 90%);
+}
+#asciiroth #right.alliance:after {
+  background: linear-gradient(to right, #2b2d42 1%, rgba(43, 45, 66, 0.8) 5%, rgba(1, 25, 54, 0.2) 90%);
+}
+#asciiroth #right.horde:after {
+  background: linear-gradient(to right, #2b2d42 1%, rgba(43, 45, 66, 0.8) 5%, rgba(254, 74, 73, 0.2) 90%);
+}
+#asciiroth #right img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+#asciiroth #right .caption {
+  position: absolute;
+  bottom: 10%;
+  left: 15%;
+  right: 15%;
+  color: white;
+  font-family: "Montserrat", sans-serif;
+  font-weight: lighter;
+}
+#asciiroth #right .caption * {
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+#asciiroth #right .caption h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+#asciiroth #right .caption p {
+  font-size: 1rem;
+}
+
+#output .info {
+  color: #D1CAA1;
+}
+#output .speech {
+  color: #F8FA90;
+}
+#output .error {
+  color: #FE4A49;
+}
+#output .user-input {
+  padding-left: 1rem;
+  position: relative;
+  line-height: 1rem;
+  min-height: 1px;
+}
+#output .user-input:after {
+  content: ">";
+  font-size: 0.6rem;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #D5DCF9;
+}
+
+#main-input {
+  position: relative;
+  padding: 0.5rem;
+  padding-left: 1rem;
+}
+#main-input:after {
+  content: ">";
+  font-size: 0.6rem;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #D5DCF9;
+}
+
+#intellisense-holder {
+  display: block;
+  height: 0;
+  position: relative;
+}
+#intellisense-holder #intellisense {
+  position: absolute;
+  opacity: 0;
+  top: 5px;
+  padding: 0.5rem;
+  min-width: 300px;
+  height: auto;
+  max-width: 400px;
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: #011936;
+  transition: opacity 0.2s ease;
+  border-radius: 5px;
+  box-shadow: 2px 2px rgba(0, 0, 0, 0.2);
+  z-index: 3;
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
+}
+#intellisense-holder #intellisense::-webkit-scrollbar {
+  width: 0 !important;
+}
+
+/*# sourceMappingURL=/src.80ee2152.css.map */
