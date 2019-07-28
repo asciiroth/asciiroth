@@ -658,9 +658,14 @@ class IntellisenseClass {
             this.hide();
         });
 
-        // mainInput.addEventListener('keyup', event => {
-        //     this.redraw(event);
-        // });
+        mainInput.addEventListener('keyup', event => {
+            this.updateSuggestions(event);
+            this.redraw(event);
+        });
+
+        mainInput.addEventListener('keydown', event => {
+            this.navigationHandler(event);
+        });
     }
 
     public show(): void {
@@ -693,33 +698,25 @@ class IntellisenseClass {
         this._domIntellisense.style.left = `${23 + (left * 10)}px`;
     }
 
-    public redraw(event: any): void {
-        event.preventDefault();
-        const range = window.getSelection().getRangeAt(0);
-
-        if (event.target.innerText.length <= 0 && event.keyCode !== 40) {
-            this.hide();
-            return;
-        }
-
-        if (event.keyCode === 13) {
-            this.hide();
-            return;
-        }
-
-        const [command, ...args] = transformInput(event.target.innerText)
-
+    private updateSuggestions(event: KeyboardEvent): void {
+        const [command, ...args] = transformInput(event.target.innerText);
         this.suggestions = [...this.calculateSuggestions(command, args)];
-        const pos = getCaretPosition(event.target);
+    }
+
+    private navigationHandler(event: KeyboardEvent) {
+        if (event.keyCode !== 40 && event.keyCode !== 38) {
+            return;
+        }
+
+        event.preventDefault();
 
         if (event.keyCode === 40) { // down arrow
             if (!this.isOpen) {
                 this.show();
             } else {
                 if (this.suggestions.length) {
-                    if (this.highlightedIndex + 1 <= this.suggestions.length) {
+                    if (this.highlightedIndex + 1 <= this.suggestions.length - 1) {
                         this.highlightedIndex = this.highlightedIndex + 1;
-
                     }
                 }
             }
@@ -735,31 +732,31 @@ class IntellisenseClass {
             }
         }
 
-        // console.log(pos, event.target.selectionEnd, event.target.selectionStart);
+        this.redraw(event);
+    }
 
-        // setTimeout(() => {
-        //     console.log('a')
-        //     if (event.target.setSelectionRange) {
-        //         event.target.focus();
-        //         event.target.setSelectionRange(pos, pos);
-        //     }
-        //     else if (event.target.createTextRange) {
-        //         var range = event.target.createTextRange();
-        //         range.collapse(true);
-        //         range.moveEnd('character', pos);
-        //         range.moveStart('character', pos);
-        //         range.select();
-        //     }
-        // }, 1000)
+    private mouseOverHandler(event: any) {
 
-        setTimeout(() => {
-            //console.log(range)
-            window.getSelection().addRange(range);
-        }, 100)
+    }
 
-        event.target.selectionStart = pos - 1;
+    private scrollToPosition(px: number) {
+        this._domIntellisense.scrollTop = px;
+    }
 
-        //window.getSelection().setPosition(event.target, pos);
+    public redraw(event: any): void {
+        event.preventDefault();
+
+        if (event.target.innerText.length <= 0 && (event.keyCode !== 40 && event.keyCode !== 38)) {
+            this.hide();
+            return;
+        }
+
+        if (event.keyCode === 13) {
+            this.hide();
+            return;
+        }
+
+        const pos = getCaretPosition(event.target);
 
         this.clear();
 
@@ -771,8 +768,24 @@ class IntellisenseClass {
 
             this.positionLeft(pos);
             this._domIntellisense.insertAdjacentHTML('afterbegin', this.suggestions.reduce((html, suggestion, index) => {
-                return html += `<p class="${ this.highlightedIndex === index ? 'highlighted' : '' }">${suggestion}</p>`;
+                return html += `
+                <p
+                    class="${ this.highlightedIndex === index ? 'highlighted' : '' }"
+                    data-value="${ suggestion }"
+                    data-index="${ index }"
+                >
+                    ${ suggestion }
+                </p>
+                `;
             }, ''))
+
+            const selectedElement = document.querySelector('#intellisense .highlighted');
+
+            if (selectedElement) {
+                console.log(selectedElement.getBoundingClientRect())
+                this.scrollToPosition(selectedElement.getBoundingClientRect().top);
+            }
+
         } else {
             this.hide();
         }

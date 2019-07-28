@@ -178,7 +178,7 @@ html, body {
         min-width: 300px;
         height: auto;
         max-width: 400px;
-        //max-height: 200px;
+        max-height: 200px;
 		overflow-y: auto;
 		background-color: $darkblue;
 		transition: opacity .2s ease;
@@ -194,6 +194,10 @@ html, body {
 
 			&.highlighted {
 				background-color: lighten($darkblue, 5);
+			}
+
+			&:hover {
+				background-color: lighten($darkblue, 15%);
 			}
 		}
 	}

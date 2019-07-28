@@ -135,6 +135,7 @@ html, body {
   min-width: 300px;
   height: auto;
   max-width: 400px;
+  max-height: 200px;
   overflow-y: auto;
   background-color: #011936;
   transition: opacity 0.2s ease;
@@ -154,6 +155,9 @@ html, body {
 }
 #intellisense-holder #intellisense p.highlighted {
   background-color: #01254f;
+}
+#intellisense-holder #intellisense p:hover {
+  background-color: #023c81;
 }
 
 /*# sourceMappingURL=/src.80ee2152.css.map */

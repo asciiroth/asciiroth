@@ -10121,9 +10121,15 @@ function () {
     this.highlightedIndex = -1;
     mainInput.addEventListener('blur', function () {
       _this.hide();
-    }); // mainInput.addEventListener('keyup', event => {
-    //     this.redraw(event);
-    // });
+    });
+    mainInput.addEventListener('keyup', function (event) {
+      _this.updateSuggestions(event);
+
+      _this.redraw(event);
+    });
+    mainInput.addEventListener('keydown', function (event) {
+      _this.navigationHandler(event);
+    });
   }
 
   IntellisenseClass.prototype.show = function () {
@@ -10156,28 +10162,20 @@ function () {
     this._domIntellisense.style.left = 23 + left * 10 + "px";
   };
 
-  IntellisenseClass.prototype.redraw = function (event) {
-    var _this = this;
-
-    event.preventDefault();
-    var range = window.getSelection().getRangeAt(0);
-
-    if (event.target.innerText.length <= 0 && event.keyCode !== 40) {
-      this.hide();
-      return;
-    }
-
-    if (event.keyCode === 13) {
-      this.hide();
-      return;
-    }
-
+  IntellisenseClass.prototype.updateSuggestions = function (event) {
     var _a = transformInput(event.target.innerText),
         command = _a[0],
         args = _a.slice(1);
 
     this.suggestions = this.calculateSuggestions(command, args).slice();
-    var pos = getCaretPosition(event.target);
+  };
+
+  IntellisenseClass.prototype.navigationHandler = function (event) {
+    if (event.keyCode !== 40 && event.keyCode !== 38) {
+      return;
+    }
+
+    event.preventDefault();
 
     if (event.keyCode === 40) {
       // down arrow
@@ -10185,7 +10183,7 @@ function () {
         this.show();
       } else {
         if (this.suggestions.length) {
-          if (this.highlightedIndex + 1 <= this.suggestions.length) {
+          if (this.highlightedIndex + 1 <= this.suggestions.length - 1) {
             this.highlightedIndex = this.highlightedIndex + 1;
           }
         }
@@ -10201,29 +10199,33 @@ function () {
           }
         }
       }
-    } // console.log(pos, event.target.selectionEnd, event.target.selectionStart);
-    // setTimeout(() => {
-    //     console.log('a')
-    //     if (event.target.setSelectionRange) {
-    //         event.target.focus();
-    //         event.target.setSelectionRange(pos, pos);
-    //     }
-    //     else if (event.target.createTextRange) {
-    //         var range = event.target.createTextRange();
-    //         range.collapse(true);
-    //         range.moveEnd('character', pos);
-    //         range.moveStart('character', pos);
-    //         range.select();
-    //     }
-    // }, 1000)
+    }
 
+    this.redraw(event);
+  };
 
-    setTimeout(function () {
-      //console.log(range)
-      window.getSelection().addRange(range);
-    }, 100);
-    event.target.selectionStart = pos - 1; //window.getSelection().setPosition(event.target, pos);
+  IntellisenseClass.prototype.mouseOverHandler = function (event) {};
 
+  IntellisenseClass.prototype.scrollToPosition = function (px) {
+    this._domIntellisense.scrollTop = px;
+  };
+
+  IntellisenseClass.prototype.redraw = function (event) {
+    var _this = this;
+
+    event.preventDefault();
+
+    if (event.target.innerText.length <= 0 && event.keyCode !== 40 && event.keyCode !== 38) {
+      this.hide();
+      return;
+    }
+
+    if (event.keyCode === 13) {
+      this.hide();
+      return;
+    }
+
+    var pos = getCaretPosition(event.target);
     this.clear();
 
     if (this.suggestions.length) {
@@ -10234,8 +10236,15 @@ function () {
       this.positionLeft(pos);
 
       this._domIntellisense.insertAdjacentHTML('afterbegin', this.suggestions.reduce(function (html, suggestion, index) {
-        return html += "<p class=\"" + (_this.highlightedIndex === index ? 'highlighted' : '') + "\">" + suggestion + "</p>";
+        return html += "\n                <p\n                    class=\"" + (_this.highlightedIndex === index ? 'highlighted' : '') + "\"\n                    data-value=\"" + suggestion + "\"\n                    data-index=\"" + index + "\"\n                >\n                    " + suggestion + "\n                </p>\n                ";
       }, ''));
+
+      var selectedElement = document.querySelector('#intellisense .highlighted');
+
+      if (selectedElement) {
+        console.log(selectedElement.getBoundingClientRect());
+        this.scrollToPosition(selectedElement.getBoundingClientRect().top);
+      }
     } else {
       this.hide();
     }
@@ -10357,7 +10366,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58003" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64758" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
