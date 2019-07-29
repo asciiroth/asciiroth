@@ -475,6 +475,8 @@ class DomImages {
 
     public get imageCache(): {
         [url: string]: HTMLImageElement;
+    } {
+        return this._imageCache;
     }
 }
 
@@ -491,12 +493,12 @@ class DomRightClass {
     public readonly domRight: HTMLElement = document.querySelector('#right');
     private _currentImage: HTMLImageElement;
 
-    public async setBackroundImage (imageUrl: string) {
+    public async setBackroundImage(imageUrl: string) {
         this.hide();
 
         const image: HTMLImageElement = await domImages.loadImage(imageUrl);
 
-        if (this._currentImage) {
+        if (this._currentImage && this._currentImage.parentNode) {
             if (this._currentImage.src !== imageUrl) {
                 await sleep(0.6);
                 this._currentImage.parentNode.replaceChild(image, this._currentImage);
@@ -552,41 +554,41 @@ class DomRightClass {
                             if (FactionData.Horde.races.includes(Races[command])) {
                                 domRight.addClass('horde');
                                 domRight.setBackroundImage(FactionData.Horde.background_characterCreate);
-    							captionEvents.addHtml(`
+                                captionEvents.addHtml(`
     								<h2>The Horde</h2>
-    								<p>${ FactionData.Horde.description }</p>
-    								<h2>${ command  }s</h2>
-    								<p>${RaceData[command].description }</p>
+    								<p>${ FactionData.Horde.description}</p>
+    								<h2>${ command}s</h2>
+    								<p>${RaceData[command].description}</p>
     							`);
-    						}
+                            }
 
                             if (FactionData.Alliance.races.includes(Races[command])) {
                                 domRight.addClass('alliance');
                                 domRight.setBackroundImage(FactionData.Alliance.background_characterCreate);
-    							captionEvents.addHtml(`
+                                captionEvents.addHtml(`
     								<h2>The Alliance</h2>
-    								<p>${ FactionData.Alliance.description }</p>
-    								<h2>${ command  }s</h2>
-    								<p>${RaceData[command].description }</p>
+    								<p>${ FactionData.Alliance.description}</p>
+    								<h2>${ command}s</h2>
+    								<p>${RaceData[command].description}</p>
     							`);
-    						}
+                            }
                         } else {
                             domRight.hide();
                         }
                         break;
-    				case CreateCharacterStates.ChooseClass:
-    					if (ClassData[Classes[command]]) {
-    						domRight.setBackroundImage(ClassData[Classes[command]].image);
-    						captionEvents.addHtml(`
-    							<h2>${ command }s</h2>
-    							<p>${ ClassData[Classes[command]].description }</p>
+                    case CreateCharacterStates.ChooseClass:
+                        if (ClassData[Classes[command]]) {
+                            domRight.setBackroundImage(ClassData[Classes[command]].image);
+                            captionEvents.addHtml(`
+    							<h2>${ command}s</h2>
+    							<p>${ ClassData[Classes[command]].description}</p>
     						`);
-    					} else {
-    						domRight.hide();
-    						captionEvents.clear();
-    					}
+                        } else {
+                            domRight.hide();
+                            captionEvents.clear();
+                        }
                 }
-    		case GameStates.InGame:
+            case GameStates.InGame:
 
         }
     }
@@ -598,13 +600,13 @@ const domImages = new DomImages();
 const caption = document.querySelector('#right .caption');
 
 const captionEvents = {
-	clear: () => {
-		caption.innerHTML = '';
-	},
-	addHtml: (html: string) => {
-		captionEvents.clear();
-		caption.insertAdjacentHTML('afterbegin', html);
-	}
+    clear: () => {
+        caption.innerHTML = '';
+    },
+    addHtml: (html: string) => {
+        captionEvents.clear();
+        caption.insertAdjacentHTML('afterbegin', html);
+    }
 }
 
 const handleInput = (event: KeyboardEvent) => {
@@ -752,7 +754,12 @@ class IntellisenseClass {
         }
 
         if (event.keyCode === 13) {
+            console.log('a')
             this.hide();
+            if (this.highlightedIndex > -1 && this.suggestions[this.highlightedIndex]) {
+                mainInput.innerHTML = this.suggestions[this.highlightedIndex];
+                event.preventDefault();
+            }
             return;
         }
 
@@ -770,20 +777,19 @@ class IntellisenseClass {
             this._domIntellisense.insertAdjacentHTML('afterbegin', this.suggestions.reduce((html, suggestion, index) => {
                 return html += `
                 <p
-                    class="${ this.highlightedIndex === index ? 'highlighted' : '' }"
-                    data-value="${ suggestion }"
-                    data-index="${ index }"
+                    class="${ this.highlightedIndex === index ? 'highlighted' : ''}"
+                    data-value="${ suggestion}"
+                    data-index="${ index}"
                 >
-                    ${ suggestion }
+                    ${ suggestion}
                 </p>
                 `;
             }, ''))
 
-            const selectedElement = document.querySelector('#intellisense .highlighted');
+            const selectedElement: HTMLElement = document.querySelector('#intellisense .highlighted');
 
             if (selectedElement) {
-                console.log(selectedElement.getBoundingClientRect())
-                this.scrollToPosition(selectedElement.getBoundingClientRect().top);
+                this.scrollToPosition(selectedElement.offsetTop);
             }
 
         } else {
@@ -875,7 +881,7 @@ const gameLoop = () => {
             //currentStatus(player);
             domRight.setBackroundImage(world.getWorldLocation(...player.coords).image);
             captionEvents.addHtml(`
-                <p>${ world.getWorldLocation(...player.coords).description }</p>
+                <p>${ world.getWorldLocation(...player.coords).description}</p>
             `);
             break;
     }

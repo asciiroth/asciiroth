@@ -9898,7 +9898,9 @@ function () {
   };
 
   Object.defineProperty(DomImages.prototype, "imageCache", {
-    get: function get() {},
+    get: function get() {
+      return this._imageCache;
+    },
     enumerable: true,
     configurable: true
   });
@@ -9939,7 +9941,7 @@ function () {
 
           case 1:
             image = _a.sent();
-            if (!this._currentImage) return [3
+            if (!(this._currentImage && this._currentImage.parentNode)) return [3
             /*break*/
             , 4];
             if (!(this._currentImage.src !== imageUrl)) return [3
@@ -10221,7 +10223,14 @@ function () {
     }
 
     if (event.keyCode === 13) {
+      console.log('a');
       this.hide();
+
+      if (this.highlightedIndex > -1 && this.suggestions[this.highlightedIndex]) {
+        mainInput.innerHTML = this.suggestions[this.highlightedIndex];
+        event.preventDefault();
+      }
+
       return;
     }
 
@@ -10242,8 +10251,7 @@ function () {
       var selectedElement = document.querySelector('#intellisense .highlighted');
 
       if (selectedElement) {
-        console.log(selectedElement.getBoundingClientRect());
-        this.scrollToPosition(selectedElement.getBoundingClientRect().top);
+        this.scrollToPosition(selectedElement.offsetTop);
       }
     } else {
       this.hide();
@@ -10366,7 +10374,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64758" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51760" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
