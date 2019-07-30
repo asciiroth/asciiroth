@@ -10073,7 +10073,10 @@ var captionEvents = {
   }
 };
 
-var handleInput = function handleInput(event) {
+var handleKeyUpEvent = function handleKeyUpEvent(event) {
+  domRight.redrawRight(event);
+  intellisense.keyUpHandler(event);
+
   if (event.keyCode === 13) {
     event.preventDefault();
     output("" + event.target.innerText, {
@@ -10102,11 +10105,9 @@ var handleInput = function handleInput(event) {
     domLeft.scrollTop = domLeft.scrollHeight;
     gameLoop();
   }
-
-  domRight.redrawRight(event);
 };
 
-mainInput.addEventListener('keyup', handleInput);
+mainInput.addEventListener('keyup', handleKeyUpEvent);
 domLeft.addEventListener('click', function () {
   mainInput.focus();
 }); // Intellisense
@@ -10123,16 +10124,24 @@ function () {
     this.highlightedIndex = -1;
     mainInput.addEventListener('blur', function () {
       _this.hide();
-    });
-    mainInput.addEventListener('keyup', function (event) {
-      _this.updateSuggestions(event);
+    }); // mainInput.addEventListener('keyup', event => {
+    //     this.updateSuggestions(event);
+    //     this.redraw(event);
+    // });
 
-      _this.redraw(event);
-    });
     mainInput.addEventListener('keydown', function (event) {
       _this.navigationHandler(event);
     });
   }
+
+  IntellisenseClass.prototype.keyUpHandler = function (event) {
+    this.updateSuggestions(event);
+    this.redraw(event);
+  };
+
+  IntellisenseClass.prototype.keyDownHandler = function (event) {
+    this.navigationHandler(event);
+  };
 
   IntellisenseClass.prototype.show = function () {
     this._domIntellisense.style.opacity = '1';
@@ -10217,18 +10226,18 @@ function () {
 
     event.preventDefault();
 
-    if (event.target.innerText.length <= 0 && event.keyCode !== 40 && event.keyCode !== 38) {
+    if (event.target.innerText.length <= 0 && event.keyCode !== 40 && event.keyCode !== 38 && event.keyCode !== 13) {
       this.hide();
+      event.stopPropagation();
       return;
     }
 
     if (event.keyCode === 13) {
-      console.log('a');
       this.hide();
+      event = null;
 
       if (this.highlightedIndex > -1 && this.suggestions[this.highlightedIndex]) {
         mainInput.innerHTML = this.suggestions[this.highlightedIndex];
-        event.preventDefault();
       }
 
       return;
@@ -10251,7 +10260,11 @@ function () {
       var selectedElement = document.querySelector('#intellisense .highlighted');
 
       if (selectedElement) {
-        this.scrollToPosition(selectedElement.offsetTop);
+        if (selectedElement.offsetTop >= this._domIntellisense.scrollTop + this._domIntellisense.getBoundingClientRect().height) {
+          this.scrollToPosition(selectedElement.offsetTop);
+        } else if (selectedElement.offsetTop < this._domIntellisense.scrollTop) {
+          this.scrollToPosition(selectedElement.offsetTop);
+        }
       }
     } else {
       this.hide();
@@ -10374,7 +10387,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51760" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53963" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

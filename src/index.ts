@@ -609,7 +609,10 @@ const captionEvents = {
     }
 }
 
-const handleInput = (event: KeyboardEvent) => {
+const handleKeyUpEvent = (event: KeyboardEvent) => {
+
+    domRight.redrawRight(event);
+    intellisense.keyUpHandler(event);
 
     if (event.keyCode === 13) {
         event.preventDefault();
@@ -637,11 +640,9 @@ const handleInput = (event: KeyboardEvent) => {
         domLeft.scrollTop = domLeft.scrollHeight;
         gameLoop();
     }
-
-    domRight.redrawRight(event);
 }
 
-mainInput.addEventListener('keyup', handleInput);
+mainInput.addEventListener('keyup', handleKeyUpEvent);
 
 domLeft.addEventListener('click', () => {
     mainInput.focus();
@@ -660,14 +661,23 @@ class IntellisenseClass {
             this.hide();
         });
 
-        mainInput.addEventListener('keyup', event => {
-            this.updateSuggestions(event);
-            this.redraw(event);
-        });
+        // mainInput.addEventListener('keyup', event => {
+        //     this.updateSuggestions(event);
+        //     this.redraw(event);
+        // });
 
         mainInput.addEventListener('keydown', event => {
             this.navigationHandler(event);
         });
+    }
+
+    public keyUpHandler(event: KeyboardEvent) {
+        this.updateSuggestions(event);
+        this.redraw(event);
+    }
+
+    public keyDownHandler(event: KeyboardEvent) {
+        this.navigationHandler(event);
     }
 
     public show(): void {
@@ -748,17 +758,17 @@ class IntellisenseClass {
     public redraw(event: any): void {
         event.preventDefault();
 
-        if (event.target.innerText.length <= 0 && (event.keyCode !== 40 && event.keyCode !== 38)) {
+        if (event.target.innerText.length <= 0 && (event.keyCode !== 40 && event.keyCode !== 38 && event.keyCode !== 13)) {
             this.hide();
+            event.stopPropagation();
             return;
         }
 
         if (event.keyCode === 13) {
-            console.log('a')
             this.hide();
+            event = null;
             if (this.highlightedIndex > -1 && this.suggestions[this.highlightedIndex]) {
                 mainInput.innerHTML = this.suggestions[this.highlightedIndex];
-                event.preventDefault();
             }
             return;
         }
@@ -789,7 +799,11 @@ class IntellisenseClass {
             const selectedElement: HTMLElement = document.querySelector('#intellisense .highlighted');
 
             if (selectedElement) {
-                this.scrollToPosition(selectedElement.offsetTop);
+                if (selectedElement.offsetTop >= this._domIntellisense.scrollTop + this._domIntellisense.getBoundingClientRect().height) {
+                    this.scrollToPosition(selectedElement.offsetTop);
+                } else if (selectedElement.offsetTop < this._domIntellisense.scrollTop) {
+                    this.scrollToPosition(selectedElement.offsetTop);
+                }
             }
 
         } else {
