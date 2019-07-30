@@ -32,7 +32,7 @@ export interface PlayerActionPayload {
     hp?: number;
 }
 
-export default class Player {
+export class Player {
     public inventory: InventoryClass = new InventoryClass();
     public xp: number = 0;
     public name: string;

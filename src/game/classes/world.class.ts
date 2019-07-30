@@ -1,7 +1,7 @@
 import Location from './location.class';
 import { EntityDirections } from '../enums/EntityDirections.enum';
 
-export default class World {
+export class World {
 	private _worldGrid: Location[][];
 
 	public constructor(initialGrid: Location[][]) {

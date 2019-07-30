@@ -5,7 +5,7 @@ const generateId = (): string => {
 	return `e_${ performance.now() }`;
 }
 
-export default class Location {
+export class Location {
 	public entities: (Entity | Npc)[] = [];
 
 	constructor(
@@ -30,6 +30,6 @@ export default class Location {
 		if (!name) {
 			return null;
 		}
-		return this.entities.find(({ referenceNames }) => referenceNames.includes(name.toLowerCase()));
+		return this.entities.find(({ referenceName }) => referenceName.toLowerCase() === name.toLowerCase());
 	}
 }

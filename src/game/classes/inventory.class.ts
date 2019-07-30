@@ -1,4 +1,4 @@
-export default class Inventory {
+export class Inventory {
 	private _items: number[] = [];
 
 	public constructor(...itemIds: number[]) {

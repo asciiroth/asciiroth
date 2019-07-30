@@ -15,7 +15,7 @@ export interface Speech {
     [id: string]: string | Speech;
 }
 
-export default class Npc extends EntityClass {
+export class Npc extends EntityClass {
     public id: string;
     public speech: Speech;
     public hp: number = 5;

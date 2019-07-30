@@ -5,6 +5,7 @@ import { EntityProperties } from './EntityProperties.enum';
 import { EntityDirections } from './EntityDirections.enum';
 import { PlayerStatuses  } from './PlayerStatuses.enum';
 import { NpcProperties } from './NpcProperties.enum';
+import { GameStates } from './GameStates.enum';
 
 export {
 	Classes,
@@ -14,4 +15,5 @@ export {
 	EntityDirections,
 	PlayerStatuses,
 	NpcProperties,
+	GameStates
 };
