@@ -1,8 +1,5 @@
 import 'babel-polyfill'
-import Player from './game/classes/player.class';
-import World from './game/classes/world.class';
-import Npc from './game/classes/npc.class';
-import Location from './game/classes/location.class';
+import { World, Player, Npc, Location } from './game/classes'
 import { Classes, Races, EntityActions } from './game/enums';
 import { FactionData } from './game/data/factions';
 import { RaceData } from './game/data/races';

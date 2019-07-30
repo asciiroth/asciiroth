@@ -1,4 +1,4 @@
-import { Enitity } from './entity.class';
+import { Entity } from './entity.class';
 import { Game } from './game.class';
 import { Inventory } from './inventory.class';
 import { Location } from './location.class';

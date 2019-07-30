@@ -8539,7 +8539,112 @@ define(String.prototype, "padRight", "".padEnd);
 "pop,reverse,shift,keys,values,entries,indexOf,every,some,forEach,map,filter,find,findIndex,includes,join,slice,concat,push,splice,unshift,sort,lastIndexOf,reduce,reduceRight,copyWithin,fill".split(",").forEach(function (key) {
   [][key] && define(Array, key, Function.call.bind([][key]));
 });
-},{"core-js/shim":"../node_modules/core-js/shim.js","regenerator-runtime/runtime":"../node_modules/babel-polyfill/node_modules/regenerator-runtime/runtime.js","core-js/fn/regexp/escape":"../node_modules/core-js/fn/regexp/escape.js"}],"game/classes/inventory.class.ts":[function(require,module,exports) {
+},{"core-js/shim":"../node_modules/core-js/shim.js","regenerator-runtime/runtime":"../node_modules/babel-polyfill/node_modules/regenerator-runtime/runtime.js","core-js/fn/regexp/escape":"../node_modules/core-js/fn/regexp/escape.js"}],"game/classes/entity.class.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var Entity =
+/** @class */
+function () {
+  function Entity(options) {
+    Object.assign(this, options);
+  }
+
+  Entity.prototype.setId = function (id) {
+    this.id = id;
+  };
+
+  Entity.prototype.hasAction = function (action) {
+    if (this.actions.includes(action)) {
+      return true;
+    }
+
+    return false;
+  };
+
+  return Entity;
+}();
+
+exports.Entity = Entity;
+},{}],"game/classes/game.class.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _1 = require("./");
+
+var Game =
+/** @class */
+function () {
+  function Game(_name) {
+    this._name = _name;
+  }
+
+  Object.defineProperty(Game.prototype, "name", {
+    get: function get() {
+      return this._name;
+    },
+    enumerable: true,
+    configurable: true
+  });
+
+  Game.prototype.addWorld = function (world) {
+    this._world = world;
+  };
+
+  Object.defineProperty(Game.prototype, "world", {
+    get: function get() {
+      return _world;
+    },
+    enumerable: true,
+    configurable: true
+  });
+
+  Game.prototype.addPlayer = function (player) {
+    this._player = player;
+  };
+
+  Object.defineProperty(Game.prototype, "player", {
+    get: function get() {
+      return this._player;
+    },
+    enumerable: true,
+    configurable: true
+  });
+
+  Game.prototype.addStage = function (name) {
+    var stage = new _1.Stage(name);
+    return this._stages[stage.name] = stage;
+  };
+
+  Game.prototype.setStage = function (name) {
+    this._currentStage = this._stages[name];
+  };
+
+  Object.defineProperty(Game.prototype, "stage", {
+    get: function get() {
+      return this._currentStage;
+    },
+    enumerable: true,
+    configurable: true
+  });
+  Object.defineProperty(Game.prototype, "stages", {
+    get: function get() {
+      return Object.values(this._stages);
+    },
+    enumerable: true,
+    configurable: true
+  });
+  return Game;
+}();
+
+exports.Game = Game;
+},{"./":"game/classes/index.js"}],"game/classes/inventory.class.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8590,7 +8695,64 @@ function () {
   return Inventory;
 }();
 
-exports.default = Inventory;
+exports.Inventory = Inventory;
+},{}],"game/classes/location.class.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var generateId = function generateId() {
+  return "e_" + performance.now();
+};
+
+var Location =
+/** @class */
+function () {
+  function Location(name, description, image, entities) {
+    var _this = this;
+
+    if (entities === void 0) {
+      entities = [];
+    }
+
+    this.name = name;
+    this.description = description;
+    this.image = image;
+    this.entities = [];
+    entities.forEach(function (entity) {
+      return _this.addEntity(entity);
+    });
+  }
+
+  Location.prototype.addEntity = function (entity) {
+    entity.setId(generateId());
+    this.entities.push(entity);
+  };
+
+  Location.prototype.removeEntity = function (entityId) {
+    this.entities = this.entities.filter(function (_a) {
+      var id = _a.id;
+      return id !== entityId;
+    });
+  };
+
+  Location.prototype.findEntity = function (name) {
+    if (!name) {
+      return null;
+    }
+
+    return this.entities.find(function (_a) {
+      var referenceName = _a.referenceName;
+      return referenceName.toLowerCase() === name.toLowerCase();
+    });
+  };
+
+  return Location;
+}();
+
+exports.Location = Location;
 },{}],"game/enums/Classes.enum.ts":[function(require,module,exports) {
 "use strict";
 
@@ -8640,7 +8802,7 @@ Object.defineProperty(exports, "__esModule", {
 var Races;
 
 (function (Races) {
-  Races["Human"] = "human"; // Orc = 'orc',
+  Races["Human"] = "human"; //Orc = 'orc',
 })(Races = exports.Races || (exports.Races = {}));
 },{}],"game/enums/EntityProperties.enum.ts":[function(require,module,exports) {
 "use strict";
@@ -8681,6 +8843,19 @@ var PlayerStatuses;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+},{}],"game/enums/GameStates.enum.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var GameStates;
+
+(function (GameStates) {
+  GameStates[GameStates["CreateCharacter"] = 0] = "CreateCharacter";
+  GameStates[GameStates["LoadCharacter"] = 1] = "LoadCharacter";
+  GameStates[GameStates["InGame"] = 2] = "InGame";
+})(GameStates = exports.GameStates || (exports.GameStates = {}));
 },{}],"game/enums/index.ts":[function(require,module,exports) {
 "use strict";
 
@@ -8715,7 +8890,11 @@ exports.PlayerStatuses = PlayerStatuses_enum_1.PlayerStatuses;
 var NpcProperties_enum_1 = require("./NpcProperties.enum");
 
 exports.NpcProperties = NpcProperties_enum_1.NpcProperties;
-},{"./Classes.enum":"game/enums/Classes.enum.ts","./EntityActions.enum":"game/enums/EntityActions.enum.ts","./Races.enum":"game/enums/Races.enum.ts","./EntityProperties.enum":"game/enums/EntityProperties.enum.ts","./EntityDirections.enum":"game/enums/EntityDirections.enum.ts","./PlayerStatuses.enum":"game/enums/PlayerStatuses.enum.ts","./NpcProperties.enum":"game/enums/NpcProperties.enum.ts"}],"game/classes/player.class.ts":[function(require,module,exports) {
+
+var GameStates_enum_1 = require("./GameStates.enum");
+
+exports.GameStates = GameStates_enum_1.GameStates;
+},{"./Classes.enum":"game/enums/Classes.enum.ts","./EntityActions.enum":"game/enums/EntityActions.enum.ts","./Races.enum":"game/enums/Races.enum.ts","./EntityProperties.enum":"game/enums/EntityProperties.enum.ts","./EntityDirections.enum":"game/enums/EntityDirections.enum.ts","./PlayerStatuses.enum":"game/enums/PlayerStatuses.enum.ts","./NpcProperties.enum":"game/enums/NpcProperties.enum.ts","./GameStates.enum":"game/enums/GameStates.enum.ts"}],"game/classes/npc.class.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8724,7 +8903,56 @@ Object.defineProperty(exports, "__esModule", {
 
 var tslib_1 = require("tslib");
 
-var inventory_class_1 = tslib_1.__importDefault(require("./inventory.class"));
+var _1 = require("./");
+
+var enums_1 = require("../enums");
+
+var Npc =
+/** @class */
+function (_super) {
+  tslib_1.__extends(Npc, _super);
+
+  function Npc(options) {
+    var _this = _super.call(this, options) || this;
+
+    _this.hp = 5;
+    _this.strength = 5;
+    _this.defence = 5;
+    _this.friendly = true;
+    Object.assign(_this, options);
+    return _this;
+  }
+
+  Npc.prototype.action = function (payload) {
+    switch (payload.action) {
+      case enums_1.EntityActions.Talk:
+        switch (payload.data.talkSubject) {
+          default:
+            return this.speech.default;
+        }
+
+      case enums_1.EntityActions.Attack:
+        this.removeHp(payload.data.hp);
+        break;
+    }
+  };
+
+  Npc.prototype.removeHp = function (amount) {
+    return this.hp -= amount;
+  };
+
+  return Npc;
+}(_1.Entity);
+
+exports.Npc = Npc;
+},{"tslib":"../node_modules/tslib/tslib.es6.js","./":"game/classes/index.js","../enums":"game/enums/index.ts"}],"game/classes/player.class.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _1 = require("./");
 
 var enums_1 = require("../enums");
 
@@ -8732,7 +8960,7 @@ var Player =
 /** @class */
 function () {
   function Player(options) {
-    this.inventory = new inventory_class_1.default();
+    this.inventory = new _1.Inventory();
     this.xp = 0;
     this.coords = [0, 0];
     this.maxHp = 10;
@@ -8850,8 +9078,10 @@ function () {
   return Player;
 }();
 
-exports.default = Player;
-},{"tslib":"../node_modules/tslib/tslib.es6.js","./inventory.class":"game/classes/inventory.class.ts","../enums":"game/enums/index.ts"}],"game/classes/world.class.ts":[function(require,module,exports) {
+exports.Player = Player;
+},{"./":"game/classes/index.js","../enums":"game/enums/index.ts"}],"game/classes/race.class.ts":[function(require,module,exports) {
+
+},{}],"game/classes/world.class.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8904,65 +9134,78 @@ function () {
   return World;
 }();
 
-exports.default = World;
-},{"../enums/EntityDirections.enum":"game/enums/EntityDirections.enum.ts"}],"game/classes/location.class.ts":[function(require,module,exports) {
+exports.World = World;
+},{"../enums/EntityDirections.enum":"game/enums/EntityDirections.enum.ts"}],"game/classes/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var generateId = function generateId() {
-  return "e_" + performance.now();
-};
-
-var Location =
-/** @class */
-function () {
-  function Location(name, description, image, entities) {
-    var _this = this;
-
-    if (entities === void 0) {
-      entities = [];
-    }
-
-    this.name = name;
-    this.description = description;
-    this.image = image;
-    this.entities = [];
-    entities.forEach(function (entity) {
-      return _this.addEntity(entity);
-    });
+Object.defineProperty(exports, "Entity", {
+  enumerable: true,
+  get: function () {
+    return _entity.Entity;
   }
+});
+Object.defineProperty(exports, "Game", {
+  enumerable: true,
+  get: function () {
+    return _game.Game;
+  }
+});
+Object.defineProperty(exports, "Inventory", {
+  enumerable: true,
+  get: function () {
+    return _inventory.Inventory;
+  }
+});
+Object.defineProperty(exports, "Location", {
+  enumerable: true,
+  get: function () {
+    return _location.Location;
+  }
+});
+Object.defineProperty(exports, "Npc", {
+  enumerable: true,
+  get: function () {
+    return _npc.Npc;
+  }
+});
+Object.defineProperty(exports, "Player", {
+  enumerable: true,
+  get: function () {
+    return _player.Player;
+  }
+});
+Object.defineProperty(exports, "Race", {
+  enumerable: true,
+  get: function () {
+    return _race.Race;
+  }
+});
+Object.defineProperty(exports, "World", {
+  enumerable: true,
+  get: function () {
+    return _world.World;
+  }
+});
 
-  Location.prototype.addEntity = function (entity) {
-    entity.setId(generateId());
-    this.entities.push(entity);
-  };
+var _entity = require("./entity.class");
 
-  Location.prototype.removeEntity = function (entityId) {
-    this.entities = this.entities.filter(function (_a) {
-      var id = _a.id;
-      return id !== entityId;
-    });
-  };
+var _game = require("./game.class");
 
-  Location.prototype.findEntity = function (name) {
-    if (!name) {
-      return null;
-    }
+var _inventory = require("./inventory.class");
 
-    return this.entities.find(function (_a) {
-      var referenceNames = _a.referenceNames;
-      return referenceNames.includes(name.toLowerCase());
-    });
-  };
+var _location = require("./location.class");
 
-  return Location;
-}();
+var _npc = require("./npc.class");
 
-exports.default = Location;
-},{}],"game/data/factions.ts":[function(require,module,exports) {
+var _player = require("./player.class");
+
+var _race = require("./race.class");
+
+var _world = require("./world.class");
+},{"./entity.class":"game/classes/entity.class.ts","./game.class":"game/classes/game.class.ts","./inventory.class":"game/classes/inventory.class.ts","./location.class":"game/classes/location.class.ts","./npc.class":"game/classes/npc.class.ts","./player.class":"game/classes/player.class.ts","./race.class":"game/classes/race.class.ts","./world.class":"game/classes/world.class.ts"}],"game/data/factions.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9036,48 +9279,7 @@ exports.ClassData = (_a = {}, _a[Classes_enum_1.Classes.Priest] = {
   description: 'Silent, hidden, swift and cunning. Rogues are assasins, using stealth, poison, cloaks and daggers to dispatch their enemies - for themselves, or their employer.',
   image: 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/b4b72ee1-006a-49b8-80f9-8564227dfda5/d9o33at-8fda8329-1ee7-474b-8069-2e614054d81b.jpg/v1/fill/w_1192,h_670,q_70,strp/rogue_world_of_warcraft_by_sayta0_d9o33at-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6IlwvZlwvYjRiNzJlZTEtMDA2YS00OWI4LTgwZjktODU2NDIyN2RmZGE1XC9kOW8zM2F0LThmZGE4MzI5LTFlZTctNDc0Yi04MDY5LTJlNjE0MDU0ZDgxYi5qcGciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.5-8WMHYcbroeYYrcMVxUHa52XGTnOIM5uCDj9DN9XU8'
 }, _a);
-},{"../enums/Classes.enum":"game/enums/Classes.enum.ts"}],"game/classes/entity.class.ts":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var Enitity =
-/** @class */
-function () {
-  function Enitity(options) {
-    this._referenceNames = options.referenceNames;
-    delete options.referenceNames;
-    Object.assign(this, options);
-  }
-
-  Enitity.prototype.setId = function (id) {
-    this.id = id;
-  };
-
-  Enitity.prototype.hasAction = function (action) {
-    if (this.actions.includes(action)) {
-      return true;
-    }
-
-    return false;
-  };
-
-  Object.defineProperty(Enitity.prototype, "referenceNames", {
-    get: function get() {
-      return this._referenceNames.map(function (name) {
-        return name.toLowerCase();
-      });
-    },
-    enumerable: true,
-    configurable: true
-  });
-  return Enitity;
-}();
-
-exports.default = Enitity;
-},{}],"game/classes/npc.class.ts":[function(require,module,exports) {
+},{"../enums/Classes.enum":"game/enums/Classes.enum.ts"}],"game/npcs/wolf.npc.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9086,58 +9288,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var tslib_1 = require("tslib");
 
-var entity_class_1 = tslib_1.__importDefault(require("./entity.class"));
-
-var enums_1 = require("../enums");
-
-var Npc =
-/** @class */
-function (_super) {
-  tslib_1.__extends(Npc, _super);
-
-  function Npc(options) {
-    var _this = _super.call(this, options) || this;
-
-    _this.hp = 5;
-    _this.strength = 5;
-    _this.defence = 5;
-    _this.friendly = true;
-    Object.assign(_this, options);
-    return _this;
-  }
-
-  Npc.prototype.action = function (payload) {
-    switch (payload.action) {
-      case enums_1.EntityActions.Talk:
-        switch (payload.data.talkSubject) {
-          default:
-            return this.speech.default;
-        }
-
-      case enums_1.EntityActions.Attack:
-        this.removeHp(payload.data.hp);
-        break;
-    }
-  };
-
-  Npc.prototype.removeHp = function (amount) {
-    return this.hp -= amount;
-  };
-
-  return Npc;
-}(entity_class_1.default);
-
-exports.default = Npc;
-},{"tslib":"../node_modules/tslib/tslib.es6.js","./entity.class":"game/classes/entity.class.ts","../enums":"game/enums/index.ts"}],"game/npcs/wolf.npc.ts":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var tslib_1 = require("tslib");
-
-var npc_class_1 = tslib_1.__importDefault(require("../classes/npc.class"));
+var classes_1 = require("../classes");
 
 var enums_1 = require("../enums");
 
@@ -9160,10 +9311,10 @@ function (_super) {
   }
 
   return Wolf;
-}(npc_class_1.default);
+}(classes_1.Npc);
 
 exports.Wolf = Wolf;
-},{"tslib":"../node_modules/tslib/tslib.es6.js","../classes/npc.class":"game/classes/npc.class.ts","../enums":"game/enums/index.ts"}],"game/npcs/abby.npc.ts":[function(require,module,exports) {
+},{"tslib":"../node_modules/tslib/tslib.es6.js","../classes":"game/classes/index.js","../enums":"game/enums/index.ts"}],"game/npcs/abby.npc.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9172,7 +9323,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var tslib_1 = require("tslib");
 
-var npc_class_1 = tslib_1.__importDefault(require("../classes/npc.class"));
+var classes_1 = require("../classes");
 
 var enums_1 = require("../enums");
 
@@ -9198,10 +9349,10 @@ function (_super) {
   }
 
   return AbbyClass;
-}(npc_class_1.default);
+}(classes_1.Npc);
 
 exports.Abby = new AbbyClass();
-},{"tslib":"../node_modules/tslib/tslib.es6.js","../classes/npc.class":"game/classes/npc.class.ts","../enums":"game/enums/index.ts"}],"game/npcs/stormwind-guard.npc.ts":[function(require,module,exports) {
+},{"tslib":"../node_modules/tslib/tslib.es6.js","../classes":"game/classes/index.js","../enums":"game/enums/index.ts"}],"game/npcs/stormwind-guard.npc.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9210,7 +9361,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var tslib_1 = require("tslib");
 
-var npc_class_1 = tslib_1.__importDefault(require("../classes/npc.class"));
+var classes_1 = require("../classes");
 
 var enums_1 = require("../enums");
 
@@ -9236,10 +9387,10 @@ function (_super) {
   }
 
   return Guard;
-}(npc_class_1.default);
+}(classes_1.Npc);
 
 exports.Guard = Guard;
-},{"tslib":"../node_modules/tslib/tslib.es6.js","../classes/npc.class":"game/classes/npc.class.ts","../enums":"game/enums/index.ts"}],"game/npcs/Marshal-McBride.npc.ts":[function(require,module,exports) {
+},{"tslib":"../node_modules/tslib/tslib.es6.js","../classes":"game/classes/index.js","../enums":"game/enums/index.ts"}],"game/npcs/Marshal-McBride.npc.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9248,7 +9399,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var tslib_1 = require("tslib");
 
-var npc_class_1 = tslib_1.__importDefault(require("../classes/npc.class"));
+var classes_1 = require("../classes");
 
 var enums_1 = require("../enums");
 
@@ -9274,10 +9425,10 @@ function (_super) {
   }
 
   return MarshalMcBrideClass;
-}(npc_class_1.default);
+}(classes_1.Npc);
 
 exports.MarshalMcBride = new MarshalMcBrideClass();
-},{"tslib":"../node_modules/tslib/tslib.es6.js","../classes/npc.class":"game/classes/npc.class.ts","../enums":"game/enums/index.ts"}],"game/npcs/Smith-Argus.npc.ts":[function(require,module,exports) {
+},{"tslib":"../node_modules/tslib/tslib.es6.js","../classes":"game/classes/index.js","../enums":"game/enums/index.ts"}],"game/npcs/Smith-Argus.npc.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9286,7 +9437,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var tslib_1 = require("tslib");
 
-var npc_class_1 = tslib_1.__importDefault(require("../classes/npc.class"));
+var classes_1 = require("../classes");
 
 var enums_1 = require("../enums");
 
@@ -9312,10 +9463,10 @@ function (_super) {
   }
 
   return SmithArgusClass;
-}(npc_class_1.default);
+}(classes_1.Npc);
 
 exports.SmithArgus = new SmithArgusClass();
-},{"tslib":"../node_modules/tslib/tslib.es6.js","../classes/npc.class":"game/classes/npc.class.ts","../enums":"game/enums/index.ts"}],"game/npcs/murloc.npc.ts":[function(require,module,exports) {
+},{"tslib":"../node_modules/tslib/tslib.es6.js","../classes":"game/classes/index.js","../enums":"game/enums/index.ts"}],"game/npcs/murloc.npc.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9324,7 +9475,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var tslib_1 = require("tslib");
 
-var npc_class_1 = tslib_1.__importDefault(require("../classes/npc.class"));
+var classes_1 = require("../classes");
 
 var enums_1 = require("../enums");
 
@@ -9347,10 +9498,10 @@ function (_super) {
   }
 
   return Murloc;
-}(npc_class_1.default);
+}(classes_1.Npc);
 
 exports.Murloc = Murloc;
-},{"tslib":"../node_modules/tslib/tslib.es6.js","../classes/npc.class":"game/classes/npc.class.ts","../enums":"game/enums/index.ts"}],"game/npcs/kobold.npc.ts":[function(require,module,exports) {
+},{"tslib":"../node_modules/tslib/tslib.es6.js","../classes":"game/classes/index.js","../enums":"game/enums/index.ts"}],"game/npcs/kobold.npc.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9359,7 +9510,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var tslib_1 = require("tslib");
 
-var npc_class_1 = tslib_1.__importDefault(require("../classes/npc.class"));
+var classes_1 = require("../classes");
 
 var enums_1 = require("../enums");
 
@@ -9385,10 +9536,10 @@ function (_super) {
   }
 
   return Kobold;
-}(npc_class_1.default);
+}(classes_1.Npc);
 
 exports.Kobold = Kobold;
-},{"tslib":"../node_modules/tslib/tslib.es6.js","../classes/npc.class":"game/classes/npc.class.ts","../enums":"game/enums/index.ts"}],"game/npcs/hogger.npc.ts":[function(require,module,exports) {
+},{"tslib":"../node_modules/tslib/tslib.es6.js","../classes":"game/classes/index.js","../enums":"game/enums/index.ts"}],"game/npcs/hogger.npc.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9397,7 +9548,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var tslib_1 = require("tslib");
 
-var npc_class_1 = tslib_1.__importDefault(require("../classes/npc.class"));
+var classes_1 = require("../classes");
 
 var enums_1 = require("../enums");
 
@@ -9420,10 +9571,10 @@ function (_super) {
   }
 
   return HoggerClass;
-}(npc_class_1.default);
+}(classes_1.Npc);
 
 exports.Hogger = new HoggerClass();
-},{"tslib":"../node_modules/tslib/tslib.es6.js","../classes/npc.class":"game/classes/npc.class.ts","../enums":"game/enums/index.ts"}],"game/npcs/gnoll.npc.ts":[function(require,module,exports) {
+},{"tslib":"../node_modules/tslib/tslib.es6.js","../classes":"game/classes/index.js","../enums":"game/enums/index.ts"}],"game/npcs/gnoll.npc.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9432,7 +9583,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var tslib_1 = require("tslib");
 
-var npc_class_1 = tslib_1.__importDefault(require("../classes/npc.class"));
+var classes_1 = require("../classes");
 
 var enums_1 = require("../enums");
 
@@ -9455,10 +9606,10 @@ function (_super) {
   }
 
   return Gnoll;
-}(npc_class_1.default);
+}(classes_1.Npc);
 
 exports.Gnoll = Gnoll;
-},{"tslib":"../node_modules/tslib/tslib.es6.js","../classes/npc.class":"game/classes/npc.class.ts","../enums":"game/enums/index.ts"}],"game/npcs/index.ts":[function(require,module,exports) {
+},{"tslib":"../node_modules/tslib/tslib.es6.js","../classes":"game/classes/index.js","../enums":"game/enums/index.ts"}],"game/npcs/index.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9515,11 +9666,7 @@ var tslib_1 = require("tslib");
 
 require("babel-polyfill");
 
-var player_class_1 = tslib_1.__importDefault(require("./game/classes/player.class"));
-
-var world_class_1 = tslib_1.__importDefault(require("./game/classes/world.class"));
-
-var location_class_1 = tslib_1.__importDefault(require("./game/classes/location.class"));
+var classes_1 = require("./game/classes");
 
 var enums_1 = require("./game/enums");
 
@@ -9527,7 +9674,7 @@ var factions_1 = require("./game/data/factions");
 
 var races_1 = require("./game/data/races");
 
-var classes_1 = require("./game/data/classes");
+var classes_2 = require("./game/data/classes");
 
 var Npcs = tslib_1.__importStar(require("./game/npcs"));
 
@@ -9575,7 +9722,7 @@ var getCaretPosition = function getCaretPosition(editableDiv) {
 */
 
 
-var world = new world_class_1.default([[new location_class_1.default('Forest\'s Edge', 'The trees are thinning and traversing the forest becomes easier. But it\'s far from safe - This area is filled with makeshift camps full of Gnolls. Sounds like ravenous dogs and smells of barbecue fill the air.', 'https://vignette.wikia.nocookie.net/wowwiki/images/2/28/Forest%27s_Edge.jpg/revision/latest?cb=20130509202609', [Npcs.Hogger, new Npcs.Gnoll(), new Npcs.Gnoll(), new Npcs.Gnoll()]), undefined, undefined], [new location_class_1.default('Fargodeep Mine', 'As you step through the trees towards the mine, the sounds of mining and excavating grow louder. As you peer round the rocky outcrop, you see a mine entrance bustling with Kobolds.', 'https://vignette.wikia.nocookie.net/wowwiki/images/b/b3/Fargodeep_Mine.jpg/revision/latest?cb=20130509195948', [new Npcs.Kobold(), new Npcs.Kobold(), new Npcs.Kobold(), new Npcs.Kobold(), new Npcs.Kobold(), new Npcs.Kobold()]), new location_class_1.default('Goldshire', 'You stand in the square of a quaint village, south of Stormwind, nestled deep in Elwyn Forest. The town is alive, people buying and selling - but it\'s the sound of the blacksmith\'s hammer that cuts through the air.', 'https://steemitimages.com/DQmV3CeLfrZtHQ4uchLy9yxBPvZQvjNj7HeRVQHmUJBvcJD/world-of-warcraft-wow-2569.jpg', [Npcs.SmithArgus, new Npcs.Guard()]), new location_class_1.default('Stormwind Gates', 'The majestic Stormwind Gates. All around you is bustling in the summer breeze as a crowd of people weave in and out of the city gates.', 'https://bnetcmsus-a.akamaihd.net/cms/content_entry_media/OCX0QPKBLRHQ1465832713312.jpg', [new Npcs.Guard(), new Npcs.Guard()])], [undefined, new location_class_1.default('Stone Cairn Lake', 'You emerge from the thick trees, before you is a cool, clear lake. In the centre of the lake is a small island covered in ruins. The water\'s edge teems with Murlocs, you must be silent here.', 'https://vignette.wikia.nocookie.net/wowwiki/images/8/8c/Stone_Cairn_Lake.jpg/revision/latest?cb=20130510021922', [new Npcs.Murloc(), new Npcs.Murloc(), new Npcs.Murloc(), new Npcs.Murloc(), new Npcs.Murloc()]), new location_class_1.default('Northshire Valley', 'A quiet valley surrounding Northshire Abbey. This place has recently been the training ground for Alliance army human recruits.', 'https://vignette.wikia.nocookie.net/wowwiki/images/d/dd/Northshire_Valley.jpg/revision/latest/scale-to-width-down/2000?cb=20171203170351', [new Npcs.Guard()])], [undefined, undefined, new location_class_1.default('Northshire Abbey', 'A grand abbey, built to worship the Gods.', 'https://vignette.wikia.nocookie.net/wowwiki/images/d/dd/Northshire_Valley.jpg/revision/latest/scale-to-width-down/2000?cb=20171203170351', [Npcs.MarshalMcBride, new Npcs.Wolf()])]]);
+var world = new classes_1.World([[new classes_1.Location('Forest\'s Edge', 'The trees are thinning and traversing the forest becomes easier. But it\'s far from safe - This area is filled with makeshift camps full of Gnolls. Sounds like ravenous dogs and smells of barbecue fill the air.', 'https://vignette.wikia.nocookie.net/wowwiki/images/2/28/Forest%27s_Edge.jpg/revision/latest?cb=20130509202609', [Npcs.Hogger, new Npcs.Gnoll(), new Npcs.Gnoll(), new Npcs.Gnoll()]), undefined, undefined], [new classes_1.Location('Fargodeep Mine', 'As you step through the trees towards the mine, the sounds of mining and excavating grow louder. As you peer round the rocky outcrop, you see a mine entrance bustling with Kobolds.', 'https://vignette.wikia.nocookie.net/wowwiki/images/b/b3/Fargodeep_Mine.jpg/revision/latest?cb=20130509195948', [new Npcs.Kobold(), new Npcs.Kobold(), new Npcs.Kobold(), new Npcs.Kobold(), new Npcs.Kobold(), new Npcs.Kobold()]), new classes_1.Location('Goldshire', 'You stand in the square of a quaint village, south of Stormwind, nestled deep in Elwyn Forest. The town is alive, people buying and selling - but it\'s the sound of the blacksmith\'s hammer that cuts through the air.', 'https://steemitimages.com/DQmV3CeLfrZtHQ4uchLy9yxBPvZQvjNj7HeRVQHmUJBvcJD/world-of-warcraft-wow-2569.jpg', [Npcs.SmithArgus, new Npcs.Guard()]), new classes_1.Location('Stormwind Gates', 'The majestic Stormwind Gates. All around you is bustling in the summer breeze as a crowd of people weave in and out of the city gates.', 'https://bnetcmsus-a.akamaihd.net/cms/content_entry_media/OCX0QPKBLRHQ1465832713312.jpg', [new Npcs.Guard(), new Npcs.Guard()])], [undefined, new classes_1.Location('Stone Cairn Lake', 'You emerge from the thick trees, before you is a cool, clear lake. In the centre of the lake is a small island covered in ruins. The water\'s edge teems with Murlocs, you must be silent here.', 'https://vignette.wikia.nocookie.net/wowwiki/images/8/8c/Stone_Cairn_Lake.jpg/revision/latest?cb=20130510021922', [new Npcs.Murloc(), new Npcs.Murloc(), new Npcs.Murloc(), new Npcs.Murloc(), new Npcs.Murloc()]), new classes_1.Location('Northshire Valley', 'A quiet valley surrounding Northshire Abbey. This place has recently been the training ground for Alliance army human recruits.', 'https://vignette.wikia.nocookie.net/wowwiki/images/d/dd/Northshire_Valley.jpg/revision/latest/scale-to-width-down/2000?cb=20171203170351', [new Npcs.Guard()])], [undefined, undefined, new classes_1.Location('Northshire Abbey', 'A grand abbey, built to worship the Gods.', 'https://vignette.wikia.nocookie.net/wowwiki/images/d/dd/Northshire_Valley.jpg/revision/latest/scale-to-width-down/2000?cb=20171203170351', [Npcs.MarshalMcBride, new Npcs.Wolf()])]]);
 var player;
 var GameStates;
 
@@ -9758,7 +9905,7 @@ var welcomeMessages = function welcomeMessages() {
 };
 
 var createNewCharacter = function createNewCharacter() {
-  player = new player_class_1.default({
+  player = new classes_1.Player({
     name: null,
     class: null,
     race: null,
@@ -10043,9 +10190,9 @@ function () {
             break;
 
           case CreateCharacterStates.ChooseClass:
-            if (classes_1.ClassData[enums_1.Classes[command]]) {
-              domRight.setBackroundImage(classes_1.ClassData[enums_1.Classes[command]].image);
-              captionEvents.addHtml("\n    \t\t\t\t\t\t\t<h2>" + command + "s</h2>\n    \t\t\t\t\t\t\t<p>" + classes_1.ClassData[enums_1.Classes[command]].description + "</p>\n    \t\t\t\t\t\t");
+            if (classes_2.ClassData[enums_1.Classes[command]]) {
+              domRight.setBackroundImage(classes_2.ClassData[enums_1.Classes[command]].image);
+              captionEvents.addHtml("\n    \t\t\t\t\t\t\t<h2>" + command + "s</h2>\n    \t\t\t\t\t\t\t<p>" + classes_2.ClassData[enums_1.Classes[command]].description + "</p>\n    \t\t\t\t\t\t");
             } else {
               domRight.hide();
               captionEvents.clear();
@@ -10359,7 +10506,7 @@ var gameLoop = function gameLoop() {
 };
 
 gameLoop();
-},{"tslib":"../node_modules/tslib/tslib.es6.js","babel-polyfill":"../node_modules/babel-polyfill/lib/index.js","./game/classes/player.class":"game/classes/player.class.ts","./game/classes/world.class":"game/classes/world.class.ts","./game/classes/location.class":"game/classes/location.class.ts","./game/enums":"game/enums/index.ts","./game/data/factions":"game/data/factions.ts","./game/data/races":"game/data/races.ts","./game/data/classes":"game/data/classes.ts","./game/npcs":"game/npcs/index.ts"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"tslib":"../node_modules/tslib/tslib.es6.js","babel-polyfill":"../node_modules/babel-polyfill/lib/index.js","./game/classes":"game/classes/index.js","./game/enums":"game/enums/index.ts","./game/data/factions":"game/data/factions.ts","./game/data/races":"game/data/races.ts","./game/data/classes":"game/data/classes.ts","./game/npcs":"game/npcs/index.ts"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -10387,7 +10534,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62861" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49981" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

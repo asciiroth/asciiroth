@@ -1,7 +1,5 @@
-import InventoryClass from './inventory.class';
-import Npc from './npc.class';
+import { Inventory, Npc, World } from './';
 import { EntityDirections, EntityActions, Races, Classes } from '../enums';
-import World from './world.class';
 
 export interface SpeechTree {
     [entityId: string]: string;
@@ -33,7 +31,7 @@ export interface PlayerActionPayload {
 }
 
 export class Player {
-    public inventory: InventoryClass = new InventoryClass();
+    public inventory: Inventory = new Inventory();
     public xp: number = 0;
     public name: string;
     public race: Races; // Todo: RaceEnum

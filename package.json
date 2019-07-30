@@ -1,5 +1,5 @@
 {
-	"name": "Asciiroth",
+	"name": "@asciiroth/asciiroth",
 	"description": "A text-based game based on Azeroth.",
 	"version": "1.0.0",
 	"repository": {
@@ -13,7 +13,7 @@
 	"devDependencies": {
 		"parcel-bundler": "^1.12.3",
 		"sass": "^1.22.7",
-		"typescript": "^3.5.2"
+		"typescript": "^3.5.3"
 	},
 	"dependencies": {
 		"babel-polyfill": "^6.26.0",

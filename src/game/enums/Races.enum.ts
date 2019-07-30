@@ -1,4 +1,4 @@
 export enum Races {
     Human = 'human',
-    Orc = 'orc',
+    //Orc = 'orc',
 }

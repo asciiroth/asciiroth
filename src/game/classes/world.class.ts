@@ -1,4 +1,4 @@
-import Location from './location.class';
+import { Location } from './';
 import { EntityDirections } from '../enums/EntityDirections.enum';
 
 export class World {

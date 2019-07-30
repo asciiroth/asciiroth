@@ -1,6 +1,6 @@
 import { EntityProperties, EntityActions } from '../enums';
 
-export class Enitity {
+export class Entity {
 	public id: string;
 	public referenceName: string;
 	public description: string;

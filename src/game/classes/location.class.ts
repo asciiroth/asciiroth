@@ -1,5 +1,4 @@
-import Entity from './entity.class';
-import Npc from './npc.class';
+import { Entity, Npc } from './';
 
 const generateId = (): string => {
 	return `e_${ performance.now() }`;

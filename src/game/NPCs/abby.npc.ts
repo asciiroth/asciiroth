@@ -1,4 +1,4 @@
-import Npc from '../classes/npc.class';
+import { Npc } from '../classes';
 import { EntityActions } from '../enums';
 
 class AbbyClass extends Npc {

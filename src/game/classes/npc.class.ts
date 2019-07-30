@@ -1,4 +1,4 @@
-import EntityClass from './entity.class';
+import { Entity } from './';
 import { NpcProperties, EntityActions } from '../enums';
 
 export interface NpcAction {
@@ -15,7 +15,7 @@ export interface Speech {
     [id: string]: string | Speech;
 }
 
-export class Npc extends EntityClass {
+export class Npc extends Entity {
     public id: string;
     public speech: Speech;
     public hp: number = 5;
