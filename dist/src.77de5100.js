@@ -8221,11 +8221,19 @@ var Game = /** @class */ (function () {
     });
     Object.defineProperty(Game.prototype, "stage", {
         get: function () {
-            return this._stage;
+            return this._stage.name;
         },
         enumerable: true,
         configurable: true
     });
+    Game.prototype.setStage = function (stageName) {
+        var stage = this._stages.findStage(stageName);
+        if (stage) {
+            this._stage = stage;
+            return;
+        }
+        throw new Error("Cannot find stage " + stageName);
+    };
     Object.defineProperty(Game.prototype, "stages", {
         get: function () {
             return this._stages;
@@ -8734,7 +8742,17 @@ var Npc = /** @class */ (function (_super) {
 }(_1.Entity));
 exports.Npc = Npc;
 
-},{"tslib":"../node_modules/@asciiroth/core/node_modules/tslib/tslib.es6.js","./":"../node_modules/@asciiroth/core/lib/index.js"}],"../node_modules/@asciiroth/core/lib/Player.class.js":[function(require,module,exports) {
+},{"tslib":"../node_modules/@asciiroth/core/node_modules/tslib/tslib.es6.js","./":"../node_modules/@asciiroth/core/lib/index.js"}],"../node_modules/@asciiroth/core/lib/Pet.class.js":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var Pet = /** @class */ (function () {
+    function Pet() {
+    }
+    return Pet;
+}());
+exports.Pet = Pet;
+
+},{}],"../node_modules/@asciiroth/core/lib/Player.class.js":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var _1 = require("./");
@@ -8941,6 +8959,9 @@ var Stages = /** @class */ (function () {
     Stages.prototype.removeStage = function (name) {
         delete this._stages[name];
     };
+    Stages.prototype.findStage = function (name) {
+        return this._stages[name];
+    };
     Object.defineProperty(Stages.prototype, "stages", {
         get: function () {
             return Object.values(this._stages);
@@ -9069,6 +9090,8 @@ var Inventory_class_1 = require("./Inventory.class");
 exports.Inventory = Inventory_class_1.Inventory;
 var Npc_class_1 = require("./Npc.class");
 exports.Npc = Npc_class_1.Npc;
+var Pet_class_1 = require("./Pet.class");
+exports.Pet = Pet_class_1.Pet;
 var Player_class_1 = require("./Player.class");
 exports.Player = Player_class_1.Player;
 var Quest_class_1 = require("./Quest.class");
@@ -9086,7 +9109,7 @@ exports.Zone = Zone_class_1.Zone;
 var Zones_class_1 = require("./Zones.class");
 exports.Zones = Zones_class_1.Zones;
 
-},{"./Ability.class":"../node_modules/@asciiroth/core/lib/Ability.class.js","./AbilityBook.class":"../node_modules/@asciiroth/core/lib/AbilityBook.class.js","./Class.class":"../node_modules/@asciiroth/core/lib/Class.class.js","./Entity.class":"../node_modules/@asciiroth/core/lib/Entity.class.js","./Faction.class":"../node_modules/@asciiroth/core/lib/Faction.class.js","./Game.class":"../node_modules/@asciiroth/core/lib/Game.class.js","./Input.class":"../node_modules/@asciiroth/core/lib/Input.class.js","./Location.class":"../node_modules/@asciiroth/core/lib/Location.class.js","./Inventory.class":"../node_modules/@asciiroth/core/lib/Inventory.class.js","./Npc.class":"../node_modules/@asciiroth/core/lib/Npc.class.js","./Player.class":"../node_modules/@asciiroth/core/lib/Player.class.js","./Quest.class":"../node_modules/@asciiroth/core/lib/Quest.class.js","./Race.class":"../node_modules/@asciiroth/core/lib/Race.class.js","./Stage.class":"../node_modules/@asciiroth/core/lib/Stage.class.js","./Stages.class":"../node_modules/@asciiroth/core/lib/Stages.class.js","./World.class":"../node_modules/@asciiroth/core/lib/World.class.js","./Zone.class":"../node_modules/@asciiroth/core/lib/Zone.class.js","./Zones.class":"../node_modules/@asciiroth/core/lib/Zones.class.js"}],"index.ts":[function(require,module,exports) {
+},{"./Ability.class":"../node_modules/@asciiroth/core/lib/Ability.class.js","./AbilityBook.class":"../node_modules/@asciiroth/core/lib/AbilityBook.class.js","./Class.class":"../node_modules/@asciiroth/core/lib/Class.class.js","./Entity.class":"../node_modules/@asciiroth/core/lib/Entity.class.js","./Faction.class":"../node_modules/@asciiroth/core/lib/Faction.class.js","./Game.class":"../node_modules/@asciiroth/core/lib/Game.class.js","./Input.class":"../node_modules/@asciiroth/core/lib/Input.class.js","./Location.class":"../node_modules/@asciiroth/core/lib/Location.class.js","./Inventory.class":"../node_modules/@asciiroth/core/lib/Inventory.class.js","./Npc.class":"../node_modules/@asciiroth/core/lib/Npc.class.js","./Pet.class":"../node_modules/@asciiroth/core/lib/Pet.class.js","./Player.class":"../node_modules/@asciiroth/core/lib/Player.class.js","./Quest.class":"../node_modules/@asciiroth/core/lib/Quest.class.js","./Race.class":"../node_modules/@asciiroth/core/lib/Race.class.js","./Stage.class":"../node_modules/@asciiroth/core/lib/Stage.class.js","./Stages.class":"../node_modules/@asciiroth/core/lib/Stages.class.js","./World.class":"../node_modules/@asciiroth/core/lib/World.class.js","./Zone.class":"../node_modules/@asciiroth/core/lib/Zone.class.js","./Zones.class":"../node_modules/@asciiroth/core/lib/Zones.class.js"}],"index.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9102,7 +9125,6 @@ require("babel-polyfill"); // import { World, Player, Npc, Location } from './ga
 
 var core_1 = require("@asciiroth/core");
 
-var game = new core_1.Game('hello');
 var world = new core_1.World();
 var location1 = new core_1.Location({
   name: 'test1'
@@ -9119,6 +9141,16 @@ var player = new core_1.Player({
   zone: zone,
   coords: [0, 0]
 });
+player.addAction({
+  name: 'test',
+  action: function action(game, payload) {
+    console.log(payload);
+  }
+});
+var game = new core_1.Game('hello');
+game.setPlayer(player);
+game.stages.addStage('whatwhat');
+game.setStage('whatwhat');
 window['game'] = game;
 window['world'] = world;
 window['location1'] = location1;

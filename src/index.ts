@@ -12,7 +12,6 @@ import {
     Player
 } from '@asciiroth/core';
 
-const game = new Game('hello');
 let world = new World();
 
 const location1 = new Location({
@@ -37,6 +36,19 @@ const player = new Player({
     zone,
     coords: [0, 0],
 });
+
+player.addAction({
+    name: 'test',
+    action: (game: Game, payload: unknown) => {
+        console.log(payload);
+    }
+});
+
+const game = new Game('hello');
+
+game.setPlayer(player);
+game.stages.addStage('whatwhat');
+game.setStage('whatwhat');
 
 window['game'] = game;
 window['world'] = world;
