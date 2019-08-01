@@ -117,431 +117,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"../node_modules/tslib/tslib.es6.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.__extends = __extends;
-exports.__rest = __rest;
-exports.__decorate = __decorate;
-exports.__param = __param;
-exports.__metadata = __metadata;
-exports.__awaiter = __awaiter;
-exports.__generator = __generator;
-exports.__exportStar = __exportStar;
-exports.__values = __values;
-exports.__read = __read;
-exports.__spread = __spread;
-exports.__spreadArrays = __spreadArrays;
-exports.__await = __await;
-exports.__asyncGenerator = __asyncGenerator;
-exports.__asyncDelegator = __asyncDelegator;
-exports.__asyncValues = __asyncValues;
-exports.__makeTemplateObject = __makeTemplateObject;
-exports.__importStar = __importStar;
-exports.__importDefault = __importDefault;
-exports.__assign = void 0;
-
-/*! *****************************************************************************
-Copyright (c) Microsoft Corporation. All rights reserved.
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use
-this file except in compliance with the License. You may obtain a copy of the
-License at http://www.apache.org/licenses/LICENSE-2.0
-
-THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
-WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
-MERCHANTABLITY OR NON-INFRINGEMENT.
-
-See the Apache Version 2.0 License for specific language governing permissions
-and limitations under the License.
-***************************************************************************** */
-
-/* global Reflect, Promise */
-var extendStatics = function (d, b) {
-  extendStatics = Object.setPrototypeOf || {
-    __proto__: []
-  } instanceof Array && function (d, b) {
-    d.__proto__ = b;
-  } || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-  };
-
-  return extendStatics(d, b);
-};
-
-function __extends(d, b) {
-  extendStatics(d, b);
-
-  function __() {
-    this.constructor = d;
-  }
-
-  d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-}
-
-var __assign = function () {
-  exports.__assign = __assign = Object.assign || function __assign(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-
-      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-    }
-
-    return t;
-  };
-
-  return __assign.apply(this, arguments);
-};
-
-exports.__assign = __assign;
-
-function __rest(s, e) {
-  var t = {};
-
-  for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
-
-  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
-  }
-  return t;
-}
-
-function __decorate(decorators, target, key, desc) {
-  var c = arguments.length,
-      r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
-      d;
-  if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-  return c > 3 && r && Object.defineProperty(target, key, r), r;
-}
-
-function __param(paramIndex, decorator) {
-  return function (target, key) {
-    decorator(target, key, paramIndex);
-  };
-}
-
-function __metadata(metadataKey, metadataValue) {
-  if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
-}
-
-function __awaiter(thisArg, _arguments, P, generator) {
-  return new (P || (P = Promise))(function (resolve, reject) {
-    function fulfilled(value) {
-      try {
-        step(generator.next(value));
-      } catch (e) {
-        reject(e);
-      }
-    }
-
-    function rejected(value) {
-      try {
-        step(generator["throw"](value));
-      } catch (e) {
-        reject(e);
-      }
-    }
-
-    function step(result) {
-      result.done ? resolve(result.value) : new P(function (resolve) {
-        resolve(result.value);
-      }).then(fulfilled, rejected);
-    }
-
-    step((generator = generator.apply(thisArg, _arguments || [])).next());
-  });
-}
-
-function __generator(thisArg, body) {
-  var _ = {
-    label: 0,
-    sent: function () {
-      if (t[0] & 1) throw t[1];
-      return t[1];
-    },
-    trys: [],
-    ops: []
-  },
-      f,
-      y,
-      t,
-      g;
-  return g = {
-    next: verb(0),
-    "throw": verb(1),
-    "return": verb(2)
-  }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
-    return this;
-  }), g;
-
-  function verb(n) {
-    return function (v) {
-      return step([n, v]);
-    };
-  }
-
-  function step(op) {
-    if (f) throw new TypeError("Generator is already executing.");
-
-    while (_) try {
-      if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-      if (y = 0, t) op = [op[0] & 2, t.value];
-
-      switch (op[0]) {
-        case 0:
-        case 1:
-          t = op;
-          break;
-
-        case 4:
-          _.label++;
-          return {
-            value: op[1],
-            done: false
-          };
-
-        case 5:
-          _.label++;
-          y = op[1];
-          op = [0];
-          continue;
-
-        case 7:
-          op = _.ops.pop();
-
-          _.trys.pop();
-
-          continue;
-
-        default:
-          if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
-            _ = 0;
-            continue;
-          }
-
-          if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
-            _.label = op[1];
-            break;
-          }
-
-          if (op[0] === 6 && _.label < t[1]) {
-            _.label = t[1];
-            t = op;
-            break;
-          }
-
-          if (t && _.label < t[2]) {
-            _.label = t[2];
-
-            _.ops.push(op);
-
-            break;
-          }
-
-          if (t[2]) _.ops.pop();
-
-          _.trys.pop();
-
-          continue;
-      }
-
-      op = body.call(thisArg, _);
-    } catch (e) {
-      op = [6, e];
-      y = 0;
-    } finally {
-      f = t = 0;
-    }
-
-    if (op[0] & 5) throw op[1];
-    return {
-      value: op[0] ? op[1] : void 0,
-      done: true
-    };
-  }
-}
-
-function __exportStar(m, exports) {
-  for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
-
-function __values(o) {
-  var m = typeof Symbol === "function" && o[Symbol.iterator],
-      i = 0;
-  if (m) return m.call(o);
-  return {
-    next: function () {
-      if (o && i >= o.length) o = void 0;
-      return {
-        value: o && o[i++],
-        done: !o
-      };
-    }
-  };
-}
-
-function __read(o, n) {
-  var m = typeof Symbol === "function" && o[Symbol.iterator];
-  if (!m) return o;
-  var i = m.call(o),
-      r,
-      ar = [],
-      e;
-
-  try {
-    while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-  } catch (error) {
-    e = {
-      error: error
-    };
-  } finally {
-    try {
-      if (r && !r.done && (m = i["return"])) m.call(i);
-    } finally {
-      if (e) throw e.error;
-    }
-  }
-
-  return ar;
-}
-
-function __spread() {
-  for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
-
-  return ar;
-}
-
-function __spreadArrays() {
-  for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
-
-  for (var r = Array(s), k = 0, i = 0; i < il; i++) for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++) r[k] = a[j];
-
-  return r;
-}
-
-;
-
-function __await(v) {
-  return this instanceof __await ? (this.v = v, this) : new __await(v);
-}
-
-function __asyncGenerator(thisArg, _arguments, generator) {
-  if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
-  var g = generator.apply(thisArg, _arguments || []),
-      i,
-      q = [];
-  return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () {
-    return this;
-  }, i;
-
-  function verb(n) {
-    if (g[n]) i[n] = function (v) {
-      return new Promise(function (a, b) {
-        q.push([n, v, a, b]) > 1 || resume(n, v);
-      });
-    };
-  }
-
-  function resume(n, v) {
-    try {
-      step(g[n](v));
-    } catch (e) {
-      settle(q[0][3], e);
-    }
-  }
-
-  function step(r) {
-    r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r);
-  }
-
-  function fulfill(value) {
-    resume("next", value);
-  }
-
-  function reject(value) {
-    resume("throw", value);
-  }
-
-  function settle(f, v) {
-    if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]);
-  }
-}
-
-function __asyncDelegator(o) {
-  var i, p;
-  return i = {}, verb("next"), verb("throw", function (e) {
-    throw e;
-  }), verb("return"), i[Symbol.iterator] = function () {
-    return this;
-  }, i;
-
-  function verb(n, f) {
-    i[n] = o[n] ? function (v) {
-      return (p = !p) ? {
-        value: __await(o[n](v)),
-        done: n === "return"
-      } : f ? f(v) : v;
-    } : f;
-  }
-}
-
-function __asyncValues(o) {
-  if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
-  var m = o[Symbol.asyncIterator],
-      i;
-  return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () {
-    return this;
-  }, i);
-
-  function verb(n) {
-    i[n] = o[n] && function (v) {
-      return new Promise(function (resolve, reject) {
-        v = o[n](v), settle(resolve, reject, v.done, v.value);
-      });
-    };
-  }
-
-  function settle(resolve, reject, d, v) {
-    Promise.resolve(v).then(function (v) {
-      resolve({
-        value: v,
-        done: d
-      });
-    }, reject);
-  }
-}
-
-function __makeTemplateObject(cooked, raw) {
-  if (Object.defineProperty) {
-    Object.defineProperty(cooked, "raw", {
-      value: raw
-    });
-  } else {
-    cooked.raw = raw;
-  }
-
-  return cooked;
-}
-
-;
-
-function __importStar(mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  result.default = mod;
-  return result;
-}
-
-function __importDefault(mod) {
-  return mod && mod.__esModule ? mod : {
-    default: mod
-  };
-}
-},{}],"../node_modules/core-js/modules/_global.js":[function(require,module,exports) {
+})({"../node_modules/core-js/modules/_global.js":[function(require,module,exports) {
 
 // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
 var global = module.exports = typeof window != 'undefined' && window.Math == Math
@@ -8539,1974 +8115,1912 @@ define(String.prototype, "padRight", "".padEnd);
 "pop,reverse,shift,keys,values,entries,indexOf,every,some,forEach,map,filter,find,findIndex,includes,join,slice,concat,push,splice,unshift,sort,lastIndexOf,reduce,reduceRight,copyWithin,fill".split(",").forEach(function (key) {
   [][key] && define(Array, key, Function.call.bind([][key]));
 });
-},{"core-js/shim":"../node_modules/core-js/shim.js","regenerator-runtime/runtime":"../node_modules/babel-polyfill/node_modules/regenerator-runtime/runtime.js","core-js/fn/regexp/escape":"../node_modules/core-js/fn/regexp/escape.js"}],"game/classes/entity.class.ts":[function(require,module,exports) {
+},{"core-js/shim":"../node_modules/core-js/shim.js","regenerator-runtime/runtime":"../node_modules/babel-polyfill/node_modules/regenerator-runtime/runtime.js","core-js/fn/regexp/escape":"../node_modules/core-js/fn/regexp/escape.js"}],"../node_modules/@asciiroth/core/lib/Ability.class.js":[function(require,module,exports) {
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var Entity =
-/** @class */
-function () {
-  function Entity(options) {
-    Object.assign(this, options);
-  }
-
-  Entity.prototype.setId = function (id) {
-    this.id = id;
-  };
-
-  Entity.prototype.hasAction = function (action) {
-    if (this.actions.includes(action)) {
-      return true;
+Object.defineProperty(exports, "__esModule", { value: true });
+var Ability = /** @class */ (function () {
+    function Ability(name) {
+        if (name === void 0) { name = 'hello'; }
+        this.name = name;
     }
+    return Ability;
+}());
+exports.Ability = Ability;
 
-    return false;
-  };
-
-  return Entity;
-}();
-
-exports.Entity = Entity;
-},{}],"game/classes/game.class.ts":[function(require,module,exports) {
+},{}],"../node_modules/@asciiroth/core/lib/AbilityBook.class.js":[function(require,module,exports) {
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _1 = require("./");
-
-var Game =
-/** @class */
-function () {
-  function Game(_name) {
-    this._name = _name;
-  }
-
-  Object.defineProperty(Game.prototype, "name", {
-    get: function get() {
-      return this._name;
-    },
-    enumerable: true,
-    configurable: true
-  });
-
-  Game.prototype.addWorld = function (world) {
-    this._world = world;
-  };
-
-  Object.defineProperty(Game.prototype, "world", {
-    get: function get() {
-      return _world;
-    },
-    enumerable: true,
-    configurable: true
-  });
-
-  Game.prototype.addPlayer = function (player) {
-    this._player = player;
-  };
-
-  Object.defineProperty(Game.prototype, "player", {
-    get: function get() {
-      return this._player;
-    },
-    enumerable: true,
-    configurable: true
-  });
-
-  Game.prototype.addStage = function (name) {
-    var stage = new _1.Stage(name);
-    return this._stages[stage.name] = stage;
-  };
-
-  Game.prototype.setStage = function (name) {
-    this._currentStage = this._stages[name];
-  };
-
-  Object.defineProperty(Game.prototype, "stage", {
-    get: function get() {
-      return this._currentStage;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(Game.prototype, "stages", {
-    get: function get() {
-      return Object.values(this._stages);
-    },
-    enumerable: true,
-    configurable: true
-  });
-  return Game;
-}();
-
-exports.Game = Game;
-},{"./":"game/classes/index.js"}],"game/classes/inventory.class.ts":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var Inventory =
-/** @class */
-function () {
-  function Inventory() {
-    var itemIds = [];
-
-    for (var _i = 0; _i < arguments.length; _i++) {
-      itemIds[_i] = arguments[_i];
+Object.defineProperty(exports, "__esModule", { value: true });
+var AbilityBook = /** @class */ (function () {
+    function AbilityBook(name) {
+        if (name === void 0) { name = 'hello'; }
+        this.name = name;
     }
+    return AbilityBook;
+}());
+exports.AbilityBook = AbilityBook;
 
-    this._items = [];
-    this.add(itemIds);
-  }
-
-  Inventory.prototype.has = function (id, amount) {// if items has all the ids, return true
-  };
-
-  Object.defineProperty(Inventory.prototype, "list", {
-    get: function get() {
-      return this._items;
-    },
-    enumerable: true,
-    configurable: true
-  });
-
-  Inventory.prototype.add = function (id) {
-    if (typeof id === 'number') {
-      this._items.push(id);
-
-      return;
+},{}],"../node_modules/@asciiroth/core/lib/Class.class.js":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var Class = /** @class */ (function () {
+    function Class(name) {
+        if (name === void 0) { name = 'hello'; }
+        this.name = name;
     }
+    return Class;
+}());
+exports.Class = Class;
 
-    this._items = this.list.concat(id);
-  };
-
-  Inventory.prototype.remove = function (id, amount) {
-    this._items = this._items.slice().filter(function (itemId) {
-      return itemId !== id;
-    });
-  };
-
-  return Inventory;
-}();
-
-exports.Inventory = Inventory;
-},{}],"game/classes/location.class.ts":[function(require,module,exports) {
+},{}],"../node_modules/@asciiroth/core/lib/Entity.class.js":[function(require,module,exports) {
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var generateId = function generateId() {
-  return "e_" + performance.now();
-};
-
-var Location =
-/** @class */
-function () {
-  function Location(name, description, image, entities) {
-    var _this = this;
-
-    if (entities === void 0) {
-      entities = [];
+Object.defineProperty(exports, "__esModule", { value: true });
+var Entity = /** @class */ (function () {
+    function Entity(options) {
+        Object.assign(this, options);
     }
-
-    this.name = name;
-    this.description = description;
-    this.image = image;
-    this.entities = [];
-    entities.forEach(function (entity) {
-      return _this.addEntity(entity);
-    });
-  }
-
-  Location.prototype.addEntity = function (entity) {
-    entity.setId(generateId());
-    this.entities.push(entity);
-  };
-
-  Location.prototype.removeEntity = function (entityId) {
-    this.entities = this.entities.filter(function (_a) {
-      var id = _a.id;
-      return id !== entityId;
-    });
-  };
-
-  Location.prototype.findEntity = function (name) {
-    if (!name) {
-      return null;
-    }
-
-    return this.entities.find(function (_a) {
-      var referenceName = _a.referenceName;
-      return referenceName.toLowerCase() === name.toLowerCase();
-    });
-  };
-
-  return Location;
-}();
-
-exports.Location = Location;
-},{}],"game/enums/Classes.enum.ts":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var Classes;
-
-(function (Classes) {
-  Classes["Warrior"] = "warrior";
-  Classes["Priest"] = "priest";
-  Classes["Rogue"] = "rogue";
-  Classes["Shaman"] = "shaman";
-  Classes["Hunter"] = "hunter";
-  Classes["Mage"] = "mage";
-  Classes["Druid"] = "druid";
-  Classes["Paladin"] = "paladin";
-  Classes["Warlock"] = "warlock";
-})(Classes = exports.Classes || (exports.Classes = {}));
-},{}],"game/enums/EntityActions.enum.ts":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var EntityActions;
-
-(function (EntityActions) {
-  EntityActions["Walk"] = "walk";
-  EntityActions["Talk"] = "talk"; //Give = 'give',
-  //Take = 'take',
-  //Destroy = 'destroy',
-  //Drop = 'drop',
-  //Examine = 'examine',
-
-  EntityActions["Attack"] = "attack"; //Quest = 'quest',
-
-  EntityActions["Look"] = "look"; //New = 'new',
-  //Character = 'character',
-})(EntityActions = exports.EntityActions || (exports.EntityActions = {}));
-},{}],"game/enums/Races.enum.ts":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var Races;
-
-(function (Races) {
-  Races["Human"] = "human"; //Orc = 'orc',
-})(Races = exports.Races || (exports.Races = {}));
-},{}],"game/enums/EntityProperties.enum.ts":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-},{}],"game/enums/EntityDirections.enum.ts":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var EntityDirections;
-
-(function (EntityDirections) {
-  EntityDirections["North"] = "north";
-  EntityDirections["East"] = "east";
-  EntityDirections["South"] = "south";
-  EntityDirections["West"] = "west";
-})(EntityDirections = exports.EntityDirections || (exports.EntityDirections = {}));
-},{}],"game/enums/PlayerStatuses.enum.ts":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var PlayerStatuses;
-
-(function (PlayerStatuses) {
-  PlayerStatuses["Default"] = "default";
-  PlayerStatuses["Talking"] = "talking";
-  PlayerStatuses["Combat"] = "combat";
-})(PlayerStatuses = exports.PlayerStatuses || (exports.PlayerStatuses = {}));
-},{}],"game/enums/NpcProperties.enum.ts":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-},{}],"game/enums/GameStates.enum.ts":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var GameStates;
-
-(function (GameStates) {
-  GameStates[GameStates["CreateCharacter"] = 0] = "CreateCharacter";
-  GameStates[GameStates["LoadCharacter"] = 1] = "LoadCharacter";
-  GameStates[GameStates["InGame"] = 2] = "InGame";
-})(GameStates = exports.GameStates || (exports.GameStates = {}));
-},{}],"game/enums/index.ts":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var Classes_enum_1 = require("./Classes.enum");
-
-exports.Classes = Classes_enum_1.Classes;
-
-var EntityActions_enum_1 = require("./EntityActions.enum");
-
-exports.EntityActions = EntityActions_enum_1.EntityActions;
-
-var Races_enum_1 = require("./Races.enum");
-
-exports.Races = Races_enum_1.Races;
-
-var EntityProperties_enum_1 = require("./EntityProperties.enum");
-
-exports.EntityProperties = EntityProperties_enum_1.EntityProperties;
-
-var EntityDirections_enum_1 = require("./EntityDirections.enum");
-
-exports.EntityDirections = EntityDirections_enum_1.EntityDirections;
-
-var PlayerStatuses_enum_1 = require("./PlayerStatuses.enum");
-
-exports.PlayerStatuses = PlayerStatuses_enum_1.PlayerStatuses;
-
-var NpcProperties_enum_1 = require("./NpcProperties.enum");
-
-exports.NpcProperties = NpcProperties_enum_1.NpcProperties;
-
-var GameStates_enum_1 = require("./GameStates.enum");
-
-exports.GameStates = GameStates_enum_1.GameStates;
-},{"./Classes.enum":"game/enums/Classes.enum.ts","./EntityActions.enum":"game/enums/EntityActions.enum.ts","./Races.enum":"game/enums/Races.enum.ts","./EntityProperties.enum":"game/enums/EntityProperties.enum.ts","./EntityDirections.enum":"game/enums/EntityDirections.enum.ts","./PlayerStatuses.enum":"game/enums/PlayerStatuses.enum.ts","./NpcProperties.enum":"game/enums/NpcProperties.enum.ts","./GameStates.enum":"game/enums/GameStates.enum.ts"}],"game/classes/npc.class.ts":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var tslib_1 = require("tslib");
-
-var _1 = require("./");
-
-var enums_1 = require("../enums");
-
-var Npc =
-/** @class */
-function (_super) {
-  tslib_1.__extends(Npc, _super);
-
-  function Npc(options) {
-    var _this = _super.call(this, options) || this;
-
-    _this.hp = 5;
-    _this.strength = 5;
-    _this.defence = 5;
-    _this.friendly = true;
-    Object.assign(_this, options);
-    return _this;
-  }
-
-  Npc.prototype.action = function (payload) {
-    switch (payload.action) {
-      case enums_1.EntityActions.Talk:
-        switch (payload.data.talkSubject) {
-          default:
-            return this.speech.default;
+    Entity.prototype.setId = function (id) {
+        this.id = id;
+    };
+    Entity.prototype.hasAction = function (action) {
+        if (this.actions.includes(action)) {
+            return true;
         }
-
-      case enums_1.EntityActions.Attack:
-        this.removeHp(payload.data.hp);
-        break;
-    }
-  };
-
-  Npc.prototype.removeHp = function (amount) {
-    return this.hp -= amount;
-  };
-
-  return Npc;
-}(_1.Entity);
-
-exports.Npc = Npc;
-},{"tslib":"../node_modules/tslib/tslib.es6.js","./":"game/classes/index.js","../enums":"game/enums/index.ts"}],"game/classes/player.class.ts":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _1 = require("./");
-
-var enums_1 = require("../enums");
-
-var Player =
-/** @class */
-function () {
-  function Player(options) {
-    this.inventory = new _1.Inventory();
-    this.xp = 0;
-    this.coords = [0, 0];
-    this.maxHp = 10;
-    this.hp = 10;
-    this.strength = 5;
-    this.defence = 5;
-    this.completedIntroduction = false;
-    Object.assign(this, options);
-  }
-
-  Object.defineProperty(Player.prototype, "spells", {
-    get: function get() {
-      return this._spells.map(function (spellId) {
-        return spellId;
-      }); // Map all ids to actual spells
-    },
-    enumerable: true,
-    configurable: true
-  });
-
-  Player.prototype.hasCompleted = function () {
-    var questIds = [];
-
-    for (var _i = 0; _i < arguments.length; _i++) {
-      questIds[_i] = arguments[_i];
-    }
-
-    return questIds.reduce(function (completedAll, questId) {
-      if (!completedAll) {
         return false;
-      }
+    };
+    return Entity;
+}());
+exports.Entity = Entity;
 
-      return; // return ifCompleted(questId);
-    }, true);
-  };
+},{}],"../node_modules/@asciiroth/core/lib/Faction.class.js":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var Faction = /** @class */ (function () {
+    function Faction(name) {
+        if (name === void 0) { name = 'hello'; }
+        this.name = name;
+    }
+    return Faction;
+}());
+exports.Faction = Faction;
 
-  Player.prototype.action = function (payload) {
-    switch (payload.action) {
-      case enums_1.EntityActions.Walk:
-        var _a = this.coords,
-            x = _a[0],
-            y = _a[1];
-        var direction = payload.data.args[0];
+},{}],"../node_modules/@asciiroth/core/lib/Game.class.js":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var _1 = require("./");
+var Game = /** @class */ (function () {
+    function Game(_name) {
+        this._name = _name;
+        this._stages = new _1.Stages();
+    }
+    Object.defineProperty(Game.prototype, "name", {
+        get: function () {
+            return this._name;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Game.prototype.setWorld = function (world) {
+        this._world = world;
+    };
+    Object.defineProperty(Game.prototype, "world", {
+        get: function () {
+            return this._world;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Game.prototype.setPlayer = function (player) {
+        this._player = player;
+    };
+    Object.defineProperty(Game.prototype, "player", {
+        get: function () {
+            return this._player;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Game.prototype, "stage", {
+        get: function () {
+            return this._stage;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Game.prototype, "stages", {
+        get: function () {
+            return this._stages;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return Game;
+}());
+exports.Game = Game;
 
-        switch (enums_1.EntityDirections[direction]) {
-          case enums_1.EntityDirections.North:
-            if (this.world.areCoordsInGrid(x, y + 1)) {
-              this.coords = [x, y + 1];
-              return true;
-            } else {
-              return false;
-            }
+},{"./":"../node_modules/@asciiroth/core/lib/index.js"}],"../node_modules/@asciiroth/core/lib/Input.class.js":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var Input = /** @class */ (function () {
+    function Input(name) {
+        if (name === void 0) { name = 'hello'; }
+        this.name = name;
+    }
+    return Input;
+}());
+exports.Input = Input;
+// this could be passed a dom element and an event with a keycode and a callback. It will check for all the things and then fire a callback 
 
-          case enums_1.EntityDirections.East:
-            if (this.world.areCoordsInGrid(x + 1, y)) {
-              this.coords = [x + 1, y];
-              return true;
-            } else {
-              return false;
-            }
-
-          case enums_1.EntityDirections.South:
-            if (this.world.areCoordsInGrid(x, y - 1)) {
-              this.coords = [x, y - 1];
-              return true;
-            } else {
-              return false;
-            }
-
-          case enums_1.EntityDirections.West:
-            if (this.world.areCoordsInGrid(x - 1, y)) {
-              this.coords = [x - 1, y];
-              return true;
-            } else {
-              return false;
-            }
-
-          default:
-            return false;
+},{}],"../node_modules/@asciiroth/core/lib/Location.class.js":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var Location = /** @class */ (function () {
+    function Location(options) {
+        var _this = this;
+        this.entities = [];
+        this.name = options.name || '';
+        this.description = options.description || '';
+        this.image = options.description || '';
+        if (options.entities) {
+            options.entities.forEach(function (entity) { return _this.addEntity(entity); });
         }
-
-      case enums_1.EntityActions.Talk:
-        break;
-
-      case enums_1.EntityActions.Attack:
-        this.removeHp(payload.data.hp);
-        break;
     }
-  };
+    Location.prototype.addEntity = function (entity) {
+        entity.setId(this.generateId());
+        this.entities.push(entity);
+    };
+    Location.prototype.removeEntity = function (entityId) {
+        this.entities = this.entities.filter(function (entity) { return entity.id !== entityId; });
+    };
+    Location.prototype.findEntity = function (name) {
+        if (!name) {
+            return null;
+        }
+        return this.entities.find(function (entity) { return entity.referenceName.toLowerCase() === name.toLowerCase(); });
+    };
+    Location.prototype.generateId = function () {
+        return "e_" + performance.now();
+    };
+    return Location;
+}());
+exports.Location = Location;
 
-  Player.prototype.setName = function (name) {
-    this.name = name;
-  };
-
-  Player.prototype.setRace = function (race) {
-    this.race = race;
-  };
-
-  Player.prototype.setClass = function (playerClass) {
-    this.class = playerClass;
-  };
-
-  Player.prototype.removeHp = function (amount) {
-    return this.hp -= amount;
-  };
-
-  Player.prototype.addHp = function (amount) {
-    if (amount) {
-      return this.hp += amount;
+},{}],"../node_modules/@asciiroth/core/lib/Inventory.class.js":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var Inventory = /** @class */ (function () {
+    function Inventory(name) {
+        if (name === void 0) { name = 'hello'; }
+        this.name = name;
     }
+    return Inventory;
+}());
+exports.Inventory = Inventory;
 
-    return this.hp = this.maxHp;
-  };
-
-  return Player;
-}();
-
-exports.Player = Player;
-},{"./":"game/classes/index.js","../enums":"game/enums/index.ts"}],"game/classes/race.class.ts":[function(require,module,exports) {
-
-},{}],"game/classes/world.class.ts":[function(require,module,exports) {
+},{}],"../node_modules/@asciiroth/core/node_modules/tslib/tslib.es6.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.__extends = __extends;
+exports.__rest = __rest;
+exports.__decorate = __decorate;
+exports.__param = __param;
+exports.__metadata = __metadata;
+exports.__awaiter = __awaiter;
+exports.__generator = __generator;
+exports.__exportStar = __exportStar;
+exports.__values = __values;
+exports.__read = __read;
+exports.__spread = __spread;
+exports.__spreadArrays = __spreadArrays;
+exports.__await = __await;
+exports.__asyncGenerator = __asyncGenerator;
+exports.__asyncDelegator = __asyncDelegator;
+exports.__asyncValues = __asyncValues;
+exports.__makeTemplateObject = __makeTemplateObject;
+exports.__importStar = __importStar;
+exports.__importDefault = __importDefault;
+exports.__assign = void 0;
 
-var EntityDirections_enum_1 = require("../enums/EntityDirections.enum");
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+this file except in compliance with the License. You may obtain a copy of the
+License at http://www.apache.org/licenses/LICENSE-2.0
 
-var World =
-/** @class */
-function () {
-  function World(initialGrid) {
-    this.setWorldGrid(initialGrid);
-  }
+THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+MERCHANTABLITY OR NON-INFRINGEMENT.
 
-  World.prototype.setWorldGrid = function (grid) {
-    this._worldGrid = grid;
+See the Apache Version 2.0 License for specific language governing permissions
+and limitations under the License.
+***************************************************************************** */
+
+/* global Reflect, Promise */
+var extendStatics = function (d, b) {
+  extendStatics = Object.setPrototypeOf || {
+    __proto__: []
+  } instanceof Array && function (d, b) {
+    d.__proto__ = b;
+  } || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
   };
 
-  World.prototype.getWorldLocation = function (x, y) {
-    return this._worldGrid[x][y];
+  return extendStatics(d, b);
+};
+
+function __extends(d, b) {
+  extendStatics(d, b);
+
+  function __() {
+    this.constructor = d;
+  }
+
+  d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+}
+
+var __assign = function () {
+  exports.__assign = __assign = Object.assign || function __assign(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+    }
+
+    return t;
   };
 
-  World.prototype.areCoordsInGrid = function (x, y) {
-    return this._worldGrid[x] !== undefined && this._worldGrid[x][y] !== undefined ? true : false;
+  return __assign.apply(this, arguments);
+};
+
+exports.__assign = __assign;
+
+function __rest(s, e) {
+  var t = {};
+
+  for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+  }
+  return t;
+}
+
+function __decorate(decorators, target, key, desc) {
+  var c = arguments.length,
+      r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
+      d;
+  if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+  return c > 3 && r && Object.defineProperty(target, key, r), r;
+}
+
+function __param(paramIndex, decorator) {
+  return function (target, key) {
+    decorator(target, key, paramIndex);
   };
+}
 
-  World.prototype.getCurrentAvailableDirections = function (x, y) {
-    var directions = [];
+function __metadata(metadataKey, metadataValue) {
+  if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
+}
 
-    if (this.areCoordsInGrid(x + 1, y)) {
-      directions.push(EntityDirections_enum_1.EntityDirections.East);
+function __awaiter(thisArg, _arguments, P, generator) {
+  return new (P || (P = Promise))(function (resolve, reject) {
+    function fulfilled(value) {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
     }
 
-    if (this.areCoordsInGrid(x, y - 1)) {
-      directions.push(EntityDirections_enum_1.EntityDirections.South);
+    function rejected(value) {
+      try {
+        step(generator["throw"](value));
+      } catch (e) {
+        reject(e);
+      }
     }
 
-    if (this.areCoordsInGrid(x - 1, y)) {
-      directions.push(EntityDirections_enum_1.EntityDirections.West);
+    function step(result) {
+      result.done ? resolve(result.value) : new P(function (resolve) {
+        resolve(result.value);
+      }).then(fulfilled, rejected);
     }
 
-    if (this.areCoordsInGrid(x, y + 1)) {
-      directions.push(EntityDirections_enum_1.EntityDirections.North);
-    }
+    step((generator = generator.apply(thisArg, _arguments || [])).next());
+  });
+}
 
-    return directions;
-  };
-
-  return World;
-}();
-
-exports.World = World;
-},{"../enums/EntityDirections.enum":"game/enums/EntityDirections.enum.ts"}],"game/classes/index.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-Object.defineProperty(exports, "Entity", {
-  enumerable: true,
-  get: function () {
-    return _entity.Entity;
-  }
-});
-Object.defineProperty(exports, "Game", {
-  enumerable: true,
-  get: function () {
-    return _game.Game;
-  }
-});
-Object.defineProperty(exports, "Inventory", {
-  enumerable: true,
-  get: function () {
-    return _inventory.Inventory;
-  }
-});
-Object.defineProperty(exports, "Location", {
-  enumerable: true,
-  get: function () {
-    return _location.Location;
-  }
-});
-Object.defineProperty(exports, "Npc", {
-  enumerable: true,
-  get: function () {
-    return _npc.Npc;
-  }
-});
-Object.defineProperty(exports, "Player", {
-  enumerable: true,
-  get: function () {
-    return _player.Player;
-  }
-});
-Object.defineProperty(exports, "Race", {
-  enumerable: true,
-  get: function () {
-    return _race.Race;
-  }
-});
-Object.defineProperty(exports, "World", {
-  enumerable: true,
-  get: function () {
-    return _world.World;
-  }
-});
-
-var _entity = require("./entity.class");
-
-var _game = require("./game.class");
-
-var _inventory = require("./inventory.class");
-
-var _location = require("./location.class");
-
-var _npc = require("./npc.class");
-
-var _player = require("./player.class");
-
-var _race = require("./race.class");
-
-var _world = require("./world.class");
-},{"./entity.class":"game/classes/entity.class.ts","./game.class":"game/classes/game.class.ts","./inventory.class":"game/classes/inventory.class.ts","./location.class":"game/classes/location.class.ts","./npc.class":"game/classes/npc.class.ts","./player.class":"game/classes/player.class.ts","./race.class":"game/classes/race.class.ts","./world.class":"game/classes/world.class.ts"}],"game/data/factions.ts":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var enums_1 = require("../enums");
-
-exports.FactionData = {
-  Alliance: {
-    description: 'Proud, noble, courageous and wise - Humans, Night Elves, Dwarves and Gnomes work together to provide order in Azeroth.',
-    background_characterCreate: 'https://cdna.artstation.com/p/assets/images/images/004/893/358/large/studio-vulcan-alliance-background.jpg?1487032386',
-    races: [enums_1.Races.Human]
+function __generator(thisArg, body) {
+  var _ = {
+    label: 0,
+    sent: function () {
+      if (t[0] & 1) throw t[1];
+      return t[1];
+    },
+    trys: [],
+    ops: []
   },
-  Horde: {
-    description: 'Despised and misunderstood; powerful and great. Orcs, Trolls, Tauren and the Undead banded together to win their freedom for their people and prosper in the land that has come to hate them.',
-    background_characterCreate: 'https://hellsgamers.com/screenshots/monthly_12_2012/3b08ef1961778c26630573b38cce3948-hordebg--1-.jpg',
-    races: [enums_1.Races.Orc]
-  }
-};
-},{"../enums":"game/enums/index.ts"}],"game/data/races.ts":[function(require,module,exports) {
-"use strict";
+      f,
+      y,
+      t,
+      g;
+  return g = {
+    next: verb(0),
+    "throw": verb(1),
+    "return": verb(2)
+  }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+    return this;
+  }), g;
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.RaceData = {
-  Human: {
-    description: 'Humans are versatile and resourceful beings. Ruling with a just and righteous hand, cunning and corruptable.'
-  },
-  Orc: {
-    description: 'Orcs - a race moulded by war and suffering. Never feeling accepted, the Orcs have fought and warred for every scrap of freedom they have.'
-  }
-};
-},{}],"game/data/classes.ts":[function(require,module,exports) {
-"use strict";
-
-var _a;
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var Classes_enum_1 = require("../enums/Classes.enum");
-
-exports.ClassData = (_a = {}, _a[Classes_enum_1.Classes.Priest] = {
-  description: 'Priests are Light-wielding magic users, devout to the Light.',
-  image: 'http://img00.deviantart.net/c30d/i/2009/114/e/c/wow___angel_by_isuna.jpg'
-}, _a[Classes_enum_1.Classes.Warrior] = {
-  description: 'Warriors are experts in weaponry and close-quarters combat.',
-  image: 'https://i.pinimg.com/originals/1f/a8/86/1fa88608ce4639beb35f0e3dca992643.jpg'
-}, _a[Classes_enum_1.Classes.Mage] = {
-  description: 'Mages, highly intelligent and powerful magic users. Prefer to keep enemies at a distance.',
-  image: 'https://i.pinimg.com/originals/43/c4/0c/43c40cb7fe96f92ce294790a428e9596.jpg'
-}, _a[Classes_enum_1.Classes.Warlock] = {
-  description: 'Warlocks are shrouded in mystery and renown, they toe a dangerous line with death and demons.',
-  image: 'https://i.redd.it/f2nrd4tcl9s01.jpg'
-}, _a[Classes_enum_1.Classes.Hunter] = {
-  description: 'Hunters are masters of the land, experts in all animals and their surroundings, and often a damn good shot.',
-  image: 'https://i.pinimg.com/originals/d5/2f/96/d52f96342070913f4e34339bcb09676b.jpg'
-}, _a[Classes_enum_1.Classes.Paladin] = {
-  description: 'Paladins fight for the glory of the Light to bring order and justice. Justice ain\t gunna dispense itself.',
-  image: 'https://i.imgur.com/TgocG8E.jpg'
-}, _a[Classes_enum_1.Classes.Druid] = {
-  description: 'Druids are one with the world they live in, the animals they meet, the plants they touch, the air they breathe.',
-  image: 'https://omfgsoup.files.wordpress.com/2014/05/world_of_warcraft_tcg___moonkin_by_murph3-d6fggpd.jpg'
-}, _a[Classes_enum_1.Classes.Shaman] = {
-  description: 'Shamans have a cruel legacy of pain and healing. Using totems, they bend the elements themselves to their will.',
-  image: 'https://i.pinimg.com/originals/fd/04/b4/fd04b40abe80451b3decac05b292a230.jpg'
-}, _a[Classes_enum_1.Classes.Rogue] = {
-  description: 'Silent, hidden, swift and cunning. Rogues are assasins, using stealth, poison, cloaks and daggers to dispatch their enemies - for themselves, or their employer.',
-  image: 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/b4b72ee1-006a-49b8-80f9-8564227dfda5/d9o33at-8fda8329-1ee7-474b-8069-2e614054d81b.jpg/v1/fill/w_1192,h_670,q_70,strp/rogue_world_of_warcraft_by_sayta0_d9o33at-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6IlwvZlwvYjRiNzJlZTEtMDA2YS00OWI4LTgwZjktODU2NDIyN2RmZGE1XC9kOW8zM2F0LThmZGE4MzI5LTFlZTctNDc0Yi04MDY5LTJlNjE0MDU0ZDgxYi5qcGciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.5-8WMHYcbroeYYrcMVxUHa52XGTnOIM5uCDj9DN9XU8'
-}, _a);
-},{"../enums/Classes.enum":"game/enums/Classes.enum.ts"}],"game/npcs/wolf.npc.ts":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var tslib_1 = require("tslib");
-
-var classes_1 = require("../classes");
-
-var enums_1 = require("../enums");
-
-var Wolf =
-/** @class */
-function (_super) {
-  tslib_1.__extends(Wolf, _super);
-
-  function Wolf() {
-    return _super.call(this, {
-      referenceNames: ['Wolf'],
-      name: 'Wolf',
-      description: 'A mean looking beast!',
-      friendly: false,
-      hp: 10,
-      strength: 1,
-      defence: 1,
-      actions: [enums_1.EntityActions.Attack]
-    }) || this;
+  function verb(n) {
+    return function (v) {
+      return step([n, v]);
+    };
   }
 
-  return Wolf;
-}(classes_1.Npc);
-
-exports.Wolf = Wolf;
-},{"tslib":"../node_modules/tslib/tslib.es6.js","../classes":"game/classes/index.js","../enums":"game/enums/index.ts"}],"game/npcs/abby.npc.ts":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var tslib_1 = require("tslib");
-
-var classes_1 = require("../classes");
-
-var enums_1 = require("../enums");
-
-var AbbyClass =
-/** @class */
-function (_super) {
-  tslib_1.__extends(AbbyClass, _super);
-
-  function AbbyClass() {
-    return _super.call(this, {
-      referenceNames: ['Abby'],
-      name: 'Abby',
-      description: 'A lady stand before the Abbey and greets new adventurers.',
-      friendly: true,
-      hp: 100,
-      strength: 100,
-      defence: 100,
-      actions: [enums_1.EntityActions.Talk],
-      speech: {
-        default: 'hello there young one...'
-      }
-    }) || this;
-  }
-
-  return AbbyClass;
-}(classes_1.Npc);
-
-exports.Abby = new AbbyClass();
-},{"tslib":"../node_modules/tslib/tslib.es6.js","../classes":"game/classes/index.js","../enums":"game/enums/index.ts"}],"game/npcs/stormwind-guard.npc.ts":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var tslib_1 = require("tslib");
-
-var classes_1 = require("../classes");
-
-var enums_1 = require("../enums");
-
-var Guard =
-/** @class */
-function (_super) {
-  tslib_1.__extends(Guard, _super);
-
-  function Guard() {
-    return _super.call(this, {
-      referenceNames: ['guard'],
-      name: 'Guard',
-      description: 'A righteous, armour-clad knight stood on protect of the city.',
-      friendly: true,
-      hp: 100,
-      strength: 100,
-      defence: 100,
-      actions: [enums_1.EntityActions.Talk],
-      speech: {
-        default: 'I used to be an adventurer like you... Until I took a [dirge] to the knee...'
-      }
-    }) || this;
-  }
-
-  return Guard;
-}(classes_1.Npc);
-
-exports.Guard = Guard;
-},{"tslib":"../node_modules/tslib/tslib.es6.js","../classes":"game/classes/index.js","../enums":"game/enums/index.ts"}],"game/npcs/Marshal-McBride.npc.ts":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var tslib_1 = require("tslib");
-
-var classes_1 = require("../classes");
-
-var enums_1 = require("../enums");
-
-var MarshalMcBrideClass =
-/** @class */
-function (_super) {
-  tslib_1.__extends(MarshalMcBrideClass, _super);
-
-  function MarshalMcBrideClass() {
-    return _super.call(this, {
-      referenceNames: ['Marshal', 'McBride', 'Marshal McBride'],
-      name: 'Marshal McBride',
-      description: 'A confident knight standing at the Abbey to greet new recruits and aventurers.',
-      friendly: true,
-      hp: 100,
-      strength: 100,
-      defence: 100,
-      actions: [enums_1.EntityActions.Talk],
-      speech: {
-        default: 'Hey, citizen! You look like a stout one. We guards are spread a little thin out here, and I could use your help...'
-      }
-    }) || this;
-  }
-
-  return MarshalMcBrideClass;
-}(classes_1.Npc);
-
-exports.MarshalMcBride = new MarshalMcBrideClass();
-},{"tslib":"../node_modules/tslib/tslib.es6.js","../classes":"game/classes/index.js","../enums":"game/enums/index.ts"}],"game/npcs/Smith-Argus.npc.ts":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var tslib_1 = require("tslib");
-
-var classes_1 = require("../classes");
-
-var enums_1 = require("../enums");
-
-var SmithArgusClass =
-/** @class */
-function (_super) {
-  tslib_1.__extends(SmithArgusClass, _super);
-
-  function SmithArgusClass() {
-    return _super.call(this, {
-      referenceNames: ['Argus', 'blacksmith', 'smith'],
-      name: 'Smith Argus',
-      description: 'A coal-covered smith, hard at work.',
-      friendly: true,
-      hp: 100,
-      strength: 100,
-      defence: 100,
-      actions: [enums_1.EntityActions.Talk],
-      speech: {
-        default: 'I\'m sorry, I\'m a bit busy right now making horseshoes for Verner Osgood in Lakeshire.'
-      }
-    }) || this;
-  }
-
-  return SmithArgusClass;
-}(classes_1.Npc);
-
-exports.SmithArgus = new SmithArgusClass();
-},{"tslib":"../node_modules/tslib/tslib.es6.js","../classes":"game/classes/index.js","../enums":"game/enums/index.ts"}],"game/npcs/murloc.npc.ts":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var tslib_1 = require("tslib");
-
-var classes_1 = require("../classes");
-
-var enums_1 = require("../enums");
-
-var Murloc =
-/** @class */
-function (_super) {
-  tslib_1.__extends(Murloc, _super);
-
-  function Murloc() {
-    return _super.call(this, {
-      referenceNames: ['Murloc', 'gmmmlmrmrgmg'],
-      name: 'Murloc',
-      description: 'A strange, mean amphibian!',
-      friendly: false,
-      hp: 15,
-      strength: 2,
-      defence: 2,
-      actions: [enums_1.EntityActions.Attack]
-    }) || this;
-  }
-
-  return Murloc;
-}(classes_1.Npc);
-
-exports.Murloc = Murloc;
-},{"tslib":"../node_modules/tslib/tslib.es6.js","../classes":"game/classes/index.js","../enums":"game/enums/index.ts"}],"game/npcs/kobold.npc.ts":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var tslib_1 = require("tslib");
-
-var classes_1 = require("../classes");
-
-var enums_1 = require("../enums");
-
-var Kobold =
-/** @class */
-function (_super) {
-  tslib_1.__extends(Kobold, _super);
-
-  function Kobold() {
-    return _super.call(this, {
-      referenceNames: ['Kobold'],
-      name: 'Kobold',
-      description: 'A gruff, rat-like humanoid wielding a pickaxe and wearing a candle for a hat.',
-      friendly: false,
-      hp: 15,
-      strength: 2,
-      defence: 2,
-      actions: [enums_1.EntityActions.Attack, enums_1.EntityActions.Talk],
-      speech: {
-        default: "You take no candle!"
-      }
-    }) || this;
-  }
-
-  return Kobold;
-}(classes_1.Npc);
-
-exports.Kobold = Kobold;
-},{"tslib":"../node_modules/tslib/tslib.es6.js","../classes":"game/classes/index.js","../enums":"game/enums/index.ts"}],"game/npcs/hogger.npc.ts":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var tslib_1 = require("tslib");
-
-var classes_1 = require("../classes");
-
-var enums_1 = require("../enums");
-
-var HoggerClass =
-/** @class */
-function (_super) {
-  tslib_1.__extends(HoggerClass, _super);
-
-  function HoggerClass() {
-    return _super.call(this, {
-      referenceNames: ['Hogger'],
-      name: 'Hogger',
-      description: 'A fierce Gnoll, barking orders at his lackies!',
-      friendly: false,
-      hp: 25,
-      strength: 8,
-      defence: 8,
-      actions: [enums_1.EntityActions.Attack]
-    }) || this;
-  }
-
-  return HoggerClass;
-}(classes_1.Npc);
-
-exports.Hogger = new HoggerClass();
-},{"tslib":"../node_modules/tslib/tslib.es6.js","../classes":"game/classes/index.js","../enums":"game/enums/index.ts"}],"game/npcs/gnoll.npc.ts":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var tslib_1 = require("tslib");
-
-var classes_1 = require("../classes");
-
-var enums_1 = require("../enums");
-
-var Gnoll =
-/** @class */
-function (_super) {
-  tslib_1.__extends(Gnoll, _super);
-
-  function Gnoll() {
-    return _super.call(this, {
-      referenceNames: ['Gnoll'],
-      name: 'Gnoll',
-      description: 'A bloody and eratic dog-hyena-like humanoid, definitely not friendly!',
-      friendly: false,
-      hp: 15,
-      strength: 3,
-      defence: 3,
-      actions: [enums_1.EntityActions.Attack]
-    }) || this;
-  }
-
-  return Gnoll;
-}(classes_1.Npc);
-
-exports.Gnoll = Gnoll;
-},{"tslib":"../node_modules/tslib/tslib.es6.js","../classes":"game/classes/index.js","../enums":"game/enums/index.ts"}],"game/npcs/index.ts":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var wolf_npc_1 = require("./wolf.npc");
-
-exports.Wolf = wolf_npc_1.Wolf;
-
-var abby_npc_1 = require("./abby.npc");
-
-exports.Abby = abby_npc_1.Abby;
-
-var stormwind_guard_npc_1 = require("./stormwind-guard.npc");
-
-exports.Guard = stormwind_guard_npc_1.Guard;
-
-var Marshal_McBride_npc_1 = require("./Marshal-McBride.npc");
-
-exports.MarshalMcBride = Marshal_McBride_npc_1.MarshalMcBride;
-
-var Smith_Argus_npc_1 = require("./Smith-Argus.npc");
-
-exports.SmithArgus = Smith_Argus_npc_1.SmithArgus;
-
-var murloc_npc_1 = require("./murloc.npc");
-
-exports.Murloc = murloc_npc_1.Murloc;
-
-var kobold_npc_1 = require("./kobold.npc");
-
-exports.Kobold = kobold_npc_1.Kobold;
-
-var hogger_npc_1 = require("./hogger.npc");
-
-exports.Hogger = hogger_npc_1.Hogger;
-
-var gnoll_npc_1 = require("./gnoll.npc");
-
-exports.Gnoll = gnoll_npc_1.Gnoll;
-},{"./wolf.npc":"game/npcs/wolf.npc.ts","./abby.npc":"game/npcs/abby.npc.ts","./stormwind-guard.npc":"game/npcs/stormwind-guard.npc.ts","./Marshal-McBride.npc":"game/npcs/Marshal-McBride.npc.ts","./Smith-Argus.npc":"game/npcs/Smith-Argus.npc.ts","./murloc.npc":"game/npcs/murloc.npc.ts","./kobold.npc":"game/npcs/kobold.npc.ts","./hogger.npc":"game/npcs/hogger.npc.ts","./gnoll.npc":"game/npcs/gnoll.npc.ts"}],"index.ts":[function(require,module,exports) {
-"use strict";
-
-var _a, _b;
-
-var _this = this;
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var tslib_1 = require("tslib");
-
-require("babel-polyfill");
-
-var classes_1 = require("./game/classes");
-
-var enums_1 = require("./game/enums");
-
-var factions_1 = require("./game/data/factions");
-
-var races_1 = require("./game/data/races");
-
-var classes_2 = require("./game/data/classes");
-
-var Npcs = tslib_1.__importStar(require("./game/npcs"));
-
-var capitalizeFirstLetter = function capitalizeFirstLetter(string) {
-  return string[0].toUpperCase() + string.slice(1);
-};
-
-var calculateDamage = function calculateDamage(strength, defence) {
-  return strength * (defence / defence);
-};
-
-var getCaretPosition = function getCaretPosition(editableDiv) {
-  var caretPos = 0;
-  var sel = 0;
-  var range = 0;
-
-  if (window.getSelection) {
-    sel = window.getSelection();
-
-    if (sel.rangeCount) {
-      range = sel.getRangeAt(0);
-
-      if (range.commonAncestorContainer.parentNode == editableDiv) {
-        caretPos = range.endOffset;
-      }
-    }
-  } else if (document.selection && document.selection.createRange) {
-    range = document.selection.createRange();
-
-    if (range.parentElement() == editableDiv) {
-      var tempEl = document.createElement("span");
-      editableDiv.insertBefore(tempEl, editableDiv.firstChild);
-      var tempRange = range.duplicate();
-      tempRange.moveToElementText(tempEl);
-      tempRange.setEndPoint("EndToEnd", range);
-      caretPos = tempRange.text.length;
-    }
-  }
-
-  return caretPos;
-};
-/*
-    This is the main world grid. It is a 2d grid set into tiles for each area.
-    Currently only Elwyn Forest is in the game, however more can easily be added.
-*/
-
-
-var world = new classes_1.World([[new classes_1.Location('Forest\'s Edge', 'The trees are thinning and traversing the forest becomes easier. But it\'s far from safe - This area is filled with makeshift camps full of Gnolls. Sounds like ravenous dogs and smells of barbecue fill the air.', 'https://vignette.wikia.nocookie.net/wowwiki/images/2/28/Forest%27s_Edge.jpg/revision/latest?cb=20130509202609', [Npcs.Hogger, new Npcs.Gnoll(), new Npcs.Gnoll(), new Npcs.Gnoll()]), undefined, undefined], [new classes_1.Location('Fargodeep Mine', 'As you step through the trees towards the mine, the sounds of mining and excavating grow louder. As you peer round the rocky outcrop, you see a mine entrance bustling with Kobolds.', 'https://vignette.wikia.nocookie.net/wowwiki/images/b/b3/Fargodeep_Mine.jpg/revision/latest?cb=20130509195948', [new Npcs.Kobold(), new Npcs.Kobold(), new Npcs.Kobold(), new Npcs.Kobold(), new Npcs.Kobold(), new Npcs.Kobold()]), new classes_1.Location('Goldshire', 'You stand in the square of a quaint village, south of Stormwind, nestled deep in Elwyn Forest. The town is alive, people buying and selling - but it\'s the sound of the blacksmith\'s hammer that cuts through the air.', 'https://steemitimages.com/DQmV3CeLfrZtHQ4uchLy9yxBPvZQvjNj7HeRVQHmUJBvcJD/world-of-warcraft-wow-2569.jpg', [Npcs.SmithArgus, new Npcs.Guard()]), new classes_1.Location('Stormwind Gates', 'The majestic Stormwind Gates. All around you is bustling in the summer breeze as a crowd of people weave in and out of the city gates.', 'https://bnetcmsus-a.akamaihd.net/cms/content_entry_media/OCX0QPKBLRHQ1465832713312.jpg', [new Npcs.Guard(), new Npcs.Guard()])], [undefined, new classes_1.Location('Stone Cairn Lake', 'You emerge from the thick trees, before you is a cool, clear lake. In the centre of the lake is a small island covered in ruins. The water\'s edge teems with Murlocs, you must be silent here.', 'https://vignette.wikia.nocookie.net/wowwiki/images/8/8c/Stone_Cairn_Lake.jpg/revision/latest?cb=20130510021922', [new Npcs.Murloc(), new Npcs.Murloc(), new Npcs.Murloc(), new Npcs.Murloc(), new Npcs.Murloc()]), new classes_1.Location('Northshire Valley', 'A quiet valley surrounding Northshire Abbey. This place has recently been the training ground for Alliance army human recruits.', 'https://vignette.wikia.nocookie.net/wowwiki/images/d/dd/Northshire_Valley.jpg/revision/latest/scale-to-width-down/2000?cb=20171203170351', [new Npcs.Guard()])], [undefined, undefined, new classes_1.Location('Northshire Abbey', 'A grand abbey, built to worship the Gods.', 'https://vignette.wikia.nocookie.net/wowwiki/images/d/dd/Northshire_Valley.jpg/revision/latest/scale-to-width-down/2000?cb=20171203170351', [Npcs.MarshalMcBride, new Npcs.Wolf()])]]);
-var player;
-var GameStates;
-
-(function (GameStates) {
-  GameStates[GameStates["CreateCharacter"] = 0] = "CreateCharacter";
-  GameStates[GameStates["LoadCharacter"] = 1] = "LoadCharacter";
-  GameStates[GameStates["InGame"] = 2] = "InGame";
-})(GameStates || (GameStates = {}));
-
-var CreateCharacterStates;
-
-(function (CreateCharacterStates) {
-  CreateCharacterStates[CreateCharacterStates["ChooseName"] = 0] = "ChooseName";
-  CreateCharacterStates[CreateCharacterStates["ChooseRace"] = 1] = "ChooseRace";
-  CreateCharacterStates[CreateCharacterStates["ChooseClass"] = 2] = "ChooseClass";
-})(CreateCharacterStates || (CreateCharacterStates = {}));
-
-var gameState;
-var createCharacterState;
-window['world'] = world;
-window['player'] = player;
-var handlerActions = (_a = {}, // eg: walk east
-_a[enums_1.EntityActions.Walk] = function (command, args) {
-  var success = player.action({
-    action: command,
-    data: {
-      args: args
-    }
-  });
-
-  if (!success) {
-    output('Cannot walk in that direction', {
-      classes: 'error'
-    });
-  }
-
-  currentStatus(player);
-}, // eg: talk abby
-_a[enums_1.EntityActions.Talk] = function (command, args) {
-  var target = args[0],
-      subject = args[1];
-
-  if (!target) {
-    output("Who would you like to talk to?");
-    return;
-  }
-
-  var npc = world.getWorldLocation.apply(world, player.coords).entities.find(function (entity) {
-    return entity.referenceNames.includes(target.toLowerCase());
-  });
-
-  if (!npc) {
-    output("Hmm " + target + " doesn't seem to be here...");
-    return;
-  }
-
-  if (!npc.hasAction(enums_1.EntityActions.Talk)) {
-    output("Doesn't seem like " + target + " wants to talk...");
-    return;
-  }
-
-  var speech = npc.action({
-    action: enums_1.EntityActions.Talk,
-    data: {
-      talkSubject: subject
-    }
-  });
-  output(npc.name + ": <span class=\"speech\">\"" + speech + "\"</span>");
-}, // eg: attack wolf
-_a[enums_1.EntityActions.Attack] = function (command, args) {
-  var target = args[0];
-  var currentLocation = world.getWorldLocation.apply(world, player.coords);
-  var enemy = currentLocation.findEntity(target);
-
-  if (!enemy) {
-    output("Cannot find " + (target || 'that target'));
-    return;
-  }
-
-  if (enemy.friendly) {
-    output('Cannot attack that target');
-    return;
-  }
-
-  if (player.combatSelectedEnemy) {
-    if (enemy.id === player.combatSelectedEnemy.id) {
-      enemy = player.combatSelectedEnemy;
-    }
-  }
-
-  player.combatSelectedEnemy = enemy; // Attack enemy
-
-  var enemyDamage = calculateDamage(player.strength, enemy.defence);
-  enemy.action({
-    action: enums_1.EntityActions.Attack,
-    data: {
-      hp: enemyDamage
-    }
-  });
-  output("\uD83D\uDDE1 Attacked " + target + " for " + enemyDamage + " damage! " + target + "'s hp: " + enemy.hp);
-
-  if (enemy.hp <= 0) {
-    output("You have killed the " + enemy.name);
-    currentLocation.removeEntity(enemy.id);
-    player.combatSelectedEnemy = null;
-    return;
-  } // Enemy attacks player
-
-
-  var playerDamage = calculateDamage(enemy.strength, player.defence);
-  player.action({
-    action: enums_1.EntityActions.Attack,
-    data: {
-      hp: playerDamage
-    }
-  });
-  output("\uD83D\uDEE1 " + target + " attacks you for " + playerDamage + " damage! Your hp: " + player.hp);
-
-  if (player.hp <= 0) {
-    output("You have died! Respawning...");
-    player.combatSelectedEnemy = null;
-    respawn(player);
-  }
-}, _a[enums_1.EntityActions.Look] = function (command, args) {
-  if (args.length) {
-    var targetName = args[0];
-    var currentLocation = world.getWorldLocation.apply(world, player.coords);
-    var target = currentLocation.findEntity(targetName);
-
-    if (target) {
-      output("<span class=\"info\">" + target.description + "</span>");
-    }
-  } else {
-    currentStatus(player);
-  }
-}, _a);
-
-var currentStatus = function currentStatus(player) {
-  var currentLocation = world.getWorldLocation.apply(world, player.coords);
-  output("You are currently in " + currentLocation.name, {
-    tag: 'span'
-  });
-  output("As you look around you see: " + currentLocation.entities.map(function (entity) {
-    return "<span class=\"info\"> " + entity.name + "</span>";
-  }) + " ");
-};
-
-var respawn = function respawn(player) {
-  player.addHp();
-  player.coords = [2, 2];
-  currentStatus(player);
-};
-
-var outputDiv = document.querySelector('#output');
-
-var output = function output(text, options) {
-  if (text === void 0) {
-    text = '';
-  }
-
-  if (options === void 0) {
-    options = {};
-  }
-
-  if (text.length <= 0) {
-    return;
-  }
-
-  outputDiv.insertAdjacentHTML('beforeend', "<" + (options.tag || 'p') + " class=\"" + (options.isUserInput ? 'user-input' : '') + " " + options.classes + "\" >" + text + "</" + options.tag + ">");
-};
-
-var welcomeMessages = function welcomeMessages() {
-  output('Welcome to Asciiroth!', {
-    tag: 'h1'
-  });
-  output('You can use the ⬇ (down arrow) anytime to bring up a list of available commands.', {
-    tag: 'i',
-    classes: 'info'
-  });
-};
-
-var createNewCharacter = function createNewCharacter() {
-  player = new classes_1.Player({
-    name: null,
-    class: null,
-    race: null,
-    coords: [2, 2],
-    world: world
-  });
-  gameState = GameStates.CreateCharacter;
-  createCharacterState = CreateCharacterStates.ChooseName;
-};
-
-var transformInput = function transformInput(input) {
-  return input.split(' ').filter(function (arg) {
-    return arg || '';
-  }).map(function (arg) {
-    return arg.toLowerCase();
-  }).map(function (arg) {
-    return capitalizeFirstLetter(arg);
-  }).map(function (arg) {
-    return arg.trim();
-  });
-};
-
-var createCharacterFlow = (_b = {
-  start: CreateCharacterStates.ChooseName,
-  end: {
-    callback: function callback() {
-      output("Welcome to the world " + player.name);
-      gameState = GameStates.InGame;
-      currentStatus(player);
-    }
-  }
-}, _b[CreateCharacterStates.ChooseName] = {
-  output: 'What is your name?',
-  callback: function callback(input) {
-    var name = transformInput(input)[0];
-    player.setName(name);
-    return;
-  },
-  next: CreateCharacterStates.ChooseRace
-}, _b[CreateCharacterStates.ChooseRace] = {
-  output: 'What is your race?',
-  callback: function callback(input) {
-    var race = transformInput(input)[0];
-
-    if (enums_1.Races[race]) {
-      player.setRace(enums_1.Races[race]);
-      return;
-    }
-
-    return "Race \"" + race + "\" doesn't exist";
-  },
-  next: CreateCharacterStates.ChooseClass
-}, _b[CreateCharacterStates.ChooseClass] = {
-  output: 'What is your class?',
-  callback: function callback(input) {
-    var _class = transformInput(input)[0];
-
-    if (enums_1.Classes[_class]) {
-      player.setClass(enums_1.Classes[_class]);
-      return;
-    }
-
-    return "class \"" + _class + "\" doesn't exist";
-  }
-}, _b); // State handlers
-
-var createCharacterHandler = function createCharacterHandler(input) {
-  var error = createCharacterFlow[createCharacterState].callback(input);
-
-  if (error) {
-    output(error, {
-      classes: 'error'
-    });
-    return;
-  }
-
-  domRight.clear();
-
-  if (createCharacterFlow[createCharacterState].next) {
-    createCharacterState = createCharacterFlow[createCharacterState].next;
-    return;
-  }
-
-  createCharacterFlow.end.callback();
-  return;
-};
-
-var loadCharacterHandler = function loadCharacterHandler(input) {};
-
-var inGameHandler = function inGameHandler(command, args) {
-  command = enums_1.EntityActions[command];
-
-  if (command && handlerActions[command]) {
-    handlerActions[command](command, args);
-  } else {
-    output("That is not a valid command", {
-      classes: 'error'
-    });
-  }
-}; // Main input
-
-
-var mainInput = document.querySelector('#main-input');
-var domLeft = document.querySelector('#left');
-
-var DomImages =
-/** @class */
-function () {
-  function DomImages() {
-    this._imageCache = {};
-  }
-
-  DomImages.prototype.loadImage = function (imageUrl) {
-    return tslib_1.__awaiter(this, void 0, Promise, function () {
-      var _this = this;
-
-      return tslib_1.__generator(this, function (_a) {
-        return [2
-        /*return*/
-        , new Promise(function (resolve) {
-          if (_this._imageCache[imageUrl]) {
-            resolve(_this._imageCache[imageUrl]);
-            return;
-          }
-
-          var image = new Image();
-
-          image.onload = function () {
-            _this._imageCache[imageUrl] = image;
-            resolve(image);
+  function step(op) {
+    if (f) throw new TypeError("Generator is already executing.");
+
+    while (_) try {
+      if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+      if (y = 0, t) op = [op[0] & 2, t.value];
+
+      switch (op[0]) {
+        case 0:
+        case 1:
+          t = op;
+          break;
+
+        case 4:
+          _.label++;
+          return {
+            value: op[1],
+            done: false
           };
 
-          image.src = imageUrl;
-        })];
-      });
-    });
-  };
+        case 5:
+          _.label++;
+          y = op[1];
+          op = [0];
+          continue;
 
-  Object.defineProperty(DomImages.prototype, "imageCache", {
-    get: function get() {
-      return this._imageCache;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  return DomImages;
-}();
+        case 7:
+          op = _.ops.pop();
 
-var sleep = function sleep(seconds) {
-  return tslib_1.__awaiter(_this, void 0, void 0, function () {
-    return tslib_1.__generator(this, function (_a) {
-      return [2
-      /*return*/
-      , new Promise(function (resolve) {
-        setTimeout(function () {
-          resolve();
-        }, seconds * 1000);
-      })];
-    });
-  });
-};
+          _.trys.pop();
 
-var DomRightClass =
-/** @class */
-function () {
-  function DomRightClass() {
-    this.domRight = document.querySelector('#right');
-  }
+          continue;
 
-  DomRightClass.prototype.setBackroundImage = function (imageUrl) {
-    return tslib_1.__awaiter(this, void 0, void 0, function () {
-      var image;
-      return tslib_1.__generator(this, function (_a) {
-        switch (_a.label) {
-          case 0:
-            this.hide();
-            return [4
-            /*yield*/
-            , domImages.loadImage(imageUrl)];
+        default:
+          if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+            _ = 0;
+            continue;
+          }
 
-          case 1:
-            image = _a.sent();
-            if (!(this._currentImage && this._currentImage.parentNode)) return [3
-            /*break*/
-            , 4];
-            if (!(this._currentImage.src !== imageUrl)) return [3
-            /*break*/
-            , 3];
-            return [4
-            /*yield*/
-            , sleep(0.6)];
+          if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+            _.label = op[1];
+            break;
+          }
 
-          case 2:
-            _a.sent();
+          if (op[0] === 6 && _.label < t[1]) {
+            _.label = t[1];
+            t = op;
+            break;
+          }
 
-            this._currentImage.parentNode.replaceChild(image, this._currentImage);
+          if (t && _.label < t[2]) {
+            _.label = t[2];
 
-            _a.label = 3;
-
-          case 3:
-            return [3
-            /*break*/
-            , 5];
-
-          case 4:
-            this.domRight.appendChild(image);
-            _a.label = 5;
-
-          case 5:
-            this._currentImage = image;
-            this.show();
-            return [2
-            /*return*/
-            ];
-        }
-      });
-    });
-  };
-
-  Object.defineProperty(DomRightClass.prototype, "currentImage", {
-    get: function get() {
-      return this._currentImage;
-    },
-    enumerable: true,
-    configurable: true
-  });
-
-  DomRightClass.prototype.hide = function () {
-    this.domRight.style.opacity = '0';
-  };
-
-  DomRightClass.prototype.show = function () {
-    this.domRight.style.opacity = '1';
-  };
-
-  DomRightClass.prototype.addClass = function (className) {
-    this.domRight.className = '';
-    this.domRight.classList.add(className);
-  };
-
-  DomRightClass.prototype.removeClass = function (className) {
-    this.domRight.classList.remove(className);
-  };
-
-  DomRightClass.prototype.clear = function () {
-    this.hide();
-
-    if (this._currentImage && this._currentImage.parentNode) {
-      this._currentImage.parentNode.removeChild(this.currentImage);
-
-      this._currentImage = null;
-    }
-
-    captionEvents.clear();
-  };
-
-  DomRightClass.prototype.redrawRight = function (event) {
-    var _a = transformInput(event.target.innerText),
-        command = _a[0],
-        args = _a.slice(1);
-
-    switch (gameState) {
-      case GameStates.CreateCharacter:
-        switch (createCharacterState) {
-          case CreateCharacterStates.ChooseRace:
-            if (enums_1.Races[command]) {
-              if (factions_1.FactionData.Horde.races.includes(enums_1.Races[command])) {
-                domRight.addClass('horde');
-                domRight.setBackroundImage(factions_1.FactionData.Horde.background_characterCreate);
-                captionEvents.addHtml("\n    \t\t\t\t\t\t\t\t<h2>The Horde</h2>\n    \t\t\t\t\t\t\t\t<p>" + factions_1.FactionData.Horde.description + "</p>\n    \t\t\t\t\t\t\t\t<h2>" + command + "s</h2>\n    \t\t\t\t\t\t\t\t<p>" + races_1.RaceData[command].description + "</p>\n    \t\t\t\t\t\t\t");
-              }
-
-              if (factions_1.FactionData.Alliance.races.includes(enums_1.Races[command])) {
-                domRight.addClass('alliance');
-                domRight.setBackroundImage(factions_1.FactionData.Alliance.background_characterCreate);
-                captionEvents.addHtml("\n    \t\t\t\t\t\t\t\t<h2>The Alliance</h2>\n    \t\t\t\t\t\t\t\t<p>" + factions_1.FactionData.Alliance.description + "</p>\n    \t\t\t\t\t\t\t\t<h2>" + command + "s</h2>\n    \t\t\t\t\t\t\t\t<p>" + races_1.RaceData[command].description + "</p>\n    \t\t\t\t\t\t\t");
-              }
-            } else {
-              domRight.hide();
-            }
+            _.ops.push(op);
 
             break;
+          }
 
-          case CreateCharacterStates.ChooseClass:
-            if (classes_2.ClassData[enums_1.Classes[command]]) {
-              domRight.setBackroundImage(classes_2.ClassData[enums_1.Classes[command]].image);
-              captionEvents.addHtml("\n    \t\t\t\t\t\t\t<h2>" + command + "s</h2>\n    \t\t\t\t\t\t\t<p>" + classes_2.ClassData[enums_1.Classes[command]].description + "</p>\n    \t\t\t\t\t\t");
-            } else {
-              domRight.hide();
-              captionEvents.clear();
+          if (t[2]) _.ops.pop();
+
+          _.trys.pop();
+
+          continue;
+      }
+
+      op = body.call(thisArg, _);
+    } catch (e) {
+      op = [6, e];
+      y = 0;
+    } finally {
+      f = t = 0;
+    }
+
+    if (op[0] & 5) throw op[1];
+    return {
+      value: op[0] ? op[1] : void 0,
+      done: true
+    };
+  }
+}
+
+function __exportStar(m, exports) {
+  for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+}
+
+function __values(o) {
+  var m = typeof Symbol === "function" && o[Symbol.iterator],
+      i = 0;
+  if (m) return m.call(o);
+  return {
+    next: function () {
+      if (o && i >= o.length) o = void 0;
+      return {
+        value: o && o[i++],
+        done: !o
+      };
+    }
+  };
+}
+
+function __read(o, n) {
+  var m = typeof Symbol === "function" && o[Symbol.iterator];
+  if (!m) return o;
+  var i = m.call(o),
+      r,
+      ar = [],
+      e;
+
+  try {
+    while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+  } catch (error) {
+    e = {
+      error: error
+    };
+  } finally {
+    try {
+      if (r && !r.done && (m = i["return"])) m.call(i);
+    } finally {
+      if (e) throw e.error;
+    }
+  }
+
+  return ar;
+}
+
+function __spread() {
+  for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
+
+  return ar;
+}
+
+function __spreadArrays() {
+  for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+
+  for (var r = Array(s), k = 0, i = 0; i < il; i++) for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++) r[k] = a[j];
+
+  return r;
+}
+
+;
+
+function __await(v) {
+  return this instanceof __await ? (this.v = v, this) : new __await(v);
+}
+
+function __asyncGenerator(thisArg, _arguments, generator) {
+  if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+  var g = generator.apply(thisArg, _arguments || []),
+      i,
+      q = [];
+  return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () {
+    return this;
+  }, i;
+
+  function verb(n) {
+    if (g[n]) i[n] = function (v) {
+      return new Promise(function (a, b) {
+        q.push([n, v, a, b]) > 1 || resume(n, v);
+      });
+    };
+  }
+
+  function resume(n, v) {
+    try {
+      step(g[n](v));
+    } catch (e) {
+      settle(q[0][3], e);
+    }
+  }
+
+  function step(r) {
+    r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r);
+  }
+
+  function fulfill(value) {
+    resume("next", value);
+  }
+
+  function reject(value) {
+    resume("throw", value);
+  }
+
+  function settle(f, v) {
+    if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]);
+  }
+}
+
+function __asyncDelegator(o) {
+  var i, p;
+  return i = {}, verb("next"), verb("throw", function (e) {
+    throw e;
+  }), verb("return"), i[Symbol.iterator] = function () {
+    return this;
+  }, i;
+
+  function verb(n, f) {
+    i[n] = o[n] ? function (v) {
+      return (p = !p) ? {
+        value: __await(o[n](v)),
+        done: n === "return"
+      } : f ? f(v) : v;
+    } : f;
+  }
+}
+
+function __asyncValues(o) {
+  if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+  var m = o[Symbol.asyncIterator],
+      i;
+  return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () {
+    return this;
+  }, i);
+
+  function verb(n) {
+    i[n] = o[n] && function (v) {
+      return new Promise(function (resolve, reject) {
+        v = o[n](v), settle(resolve, reject, v.done, v.value);
+      });
+    };
+  }
+
+  function settle(resolve, reject, d, v) {
+    Promise.resolve(v).then(function (v) {
+      resolve({
+        value: v,
+        done: d
+      });
+    }, reject);
+  }
+}
+
+function __makeTemplateObject(cooked, raw) {
+  if (Object.defineProperty) {
+    Object.defineProperty(cooked, "raw", {
+      value: raw
+    });
+  } else {
+    cooked.raw = raw;
+  }
+
+  return cooked;
+}
+
+;
+
+function __importStar(mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  result.default = mod;
+  return result;
+}
+
+function __importDefault(mod) {
+  return mod && mod.__esModule ? mod : {
+    default: mod
+  };
+}
+},{}],"../node_modules/@asciiroth/core/lib/Npc.class.js":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var _1 = require("./");
+var Npc = /** @class */ (function (_super) {
+    tslib_1.__extends(Npc, _super);
+    function Npc(options) {
+        return _super.call(this, options) || this;
+    }
+    return Npc;
+}(_1.Entity));
+exports.Npc = Npc;
+
+},{"tslib":"../node_modules/@asciiroth/core/node_modules/tslib/tslib.es6.js","./":"../node_modules/@asciiroth/core/lib/index.js"}],"../node_modules/@asciiroth/core/lib/Player.class.js":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var _1 = require("./");
+var Player = /** @class */ (function () {
+    function Player(options) {
+        var _this = this;
+        this.inventory = new _1.Inventory();
+        this.xp = 0;
+        this.coords = [0, 0];
+        this.maxHp = 10;
+        this.hp = 10;
+        this.strength = 5;
+        this.defence = 5;
+        this.completedIntroduction = false;
+        this.actions = {
+            walk: function (game, payload) {
+                switch (payload.direction || '') {
+                    case 'north':
+                        if (_this.zone.areCoordsInGrid(_this.coords[0], _this.coords[1] + 1)) {
+                            _this.coords = [_this.coords[0], _this.coords[1] + 1];
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+                    case 'south':
+                        if (_this.zone.areCoordsInGrid(_this.coords[0], _this.coords[1] - 1)) {
+                            _this.coords = [_this.coords[0], _this.coords[1] - 1];
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+                }
             }
-
-        }
-
-      case GameStates.InGame:
+        };
+        Object.assign(this, options);
     }
-  };
-
-  return DomRightClass;
-}();
-
-var domRight = new DomRightClass();
-var domImages = new DomImages();
-var caption = document.querySelector('#right .caption');
-var captionEvents = {
-  clear: function clear() {
-    caption.innerHTML = '';
-  },
-  addHtml: function addHtml(html) {
-    captionEvents.clear();
-    caption.insertAdjacentHTML('afterbegin', html);
-  }
-};
-
-var handleKeyUpEvent = function handleKeyUpEvent(event) {
-  domRight.redrawRight(event);
-  intellisense.keyUpHandler(event);
-
-  if (event.keyCode === 13) {
-    event.preventDefault();
-    output("" + event.target.innerText, {
-      isUserInput: true
+    Object.defineProperty(Player.prototype, "spells", {
+        get: function () {
+            return this._spells.map(function (spellId) { return spellId; }); // Map all ids to actual spells
+        },
+        enumerable: true,
+        configurable: true
     });
+    Player.prototype.hasCompleted = function () {
+        var questIds = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            questIds[_i] = arguments[_i];
+        }
+        return questIds.reduce(function (completedAll, questId) {
+            if (!completedAll) {
+                return false;
+            }
+            return;
+            // return ifCompleted(questId);
+        }, true);
+    };
+    // public action(payload: PlayerAction) {
+    //     switch (payload.action) {
+    //         case EntityActions.Walk:
+    //             const [x, y] = this.coords;
+    //             const [direction] = payload.data.args;
+    //             switch (EntityDirections[direction]) {
+    //                 case EntityDirections.North:
+    //                     if (this.world.areCoordsInGrid(x, y + 1)) {
+    //                         this.coords = [x, y + 1];
+    //                         return true;
+    //                     } else {
+    //                         return false;
+    //                     }
+    //                 case EntityDirections.East:
+    //                     if (this.world.areCoordsInGrid(x + 1, y)) {
+    //                         this.coords = [x + 1, y];
+    //                         return true;
+    //                     } else {
+    //                         return false;
+    //                     }
+    //                 case EntityDirections.South:
+    //                     if (this.world.areCoordsInGrid(x, y - 1)) {
+    //                         this.coords = [x, y - 1];
+    //                         return true;
+    //                     } else {
+    //                         return false;
+    //                     }
+    //                 case EntityDirections.West:
+    //                     if (this.world.areCoordsInGrid(x - 1, y)) {
+    //                         this.coords = [x - 1, y];
+    //                         return true;
+    //                     } else {
+    //                         return false;
+    //                     }
+    //                 default:
+    //                     return false;
+    //             }
+    //         case EntityActions.Talk:
+    //             break;
+    //         case EntityActions.Attack:
+    //             this.removeHp(payload.data.hp);
+    //             break;
+    //     }
+    // }
+    Player.prototype.addAction = function (actionSkeleton) {
+        this.actions[actionSkeleton.name] = actionSkeleton.action;
+    };
+    Player.prototype.action = function (action) {
+        this.actions[action.name](this._game, action.payload);
+    };
+    Player.prototype.setName = function (name) {
+        this.name = name;
+    };
+    Player.prototype.setRace = function (race) {
+        this.race = race;
+    };
+    Player.prototype.setClass = function (playerClass) {
+        this.class = playerClass;
+    };
+    Player.prototype.removeHp = function (amount) {
+        return this.hp -= amount;
+    };
+    Player.prototype.addHp = function (amount) {
+        if (amount) {
+            return this.hp += amount;
+        }
+        return this.hp = this.maxHp;
+    };
+    return Player;
+}());
+exports.Player = Player;
 
-    var _a = transformInput(event.target.innerText),
-        command = _a[0],
-        args = _a.slice(1);
-
-    switch (gameState) {
-      case GameStates.CreateCharacter:
-        createCharacterHandler(command);
-        break;
-
-      case GameStates.LoadCharacter:
-        loadCharacterHandler(command);
-        break;
-
-      case GameStates.InGame:
-        inGameHandler(command, args);
-        break;
+},{"./":"../node_modules/@asciiroth/core/lib/index.js"}],"../node_modules/@asciiroth/core/lib/Quest.class.js":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var Quest = /** @class */ (function () {
+    function Quest(name) {
+        if (name === void 0) { name = 'hello'; }
+        this.name = name;
     }
+    return Quest;
+}());
+exports.Quest = Quest;
+// going to have things like:
+// {
+// 	questGiver: npcId | name,
+// 	startCondition(){}
+// 	endCondition(){}
+// 	minLevel: 5
+// 	rewards: [
+// 		{
+// 			item: id | name,
+// 			quantity: 1,
+// 		}
+// 	],
+// 	questStartDialogue: string
+// 	questEndDialogue: string
+// 	questInProgressDialogue: string
+//
+// }
 
-    event.target.innerHTML = '';
-    domLeft.scrollTop = domLeft.scrollHeight;
-    gameLoop();
-  }
-};
+},{}],"../node_modules/@asciiroth/core/lib/Race.class.js":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var Race = /** @class */ (function () {
+    function Race(name) {
+        if (name === void 0) { name = 'hello'; }
+        this.name = name;
+    }
+    return Race;
+}());
+exports.Race = Race;
+// maybe things like
+// {
+// 	racialBonus(player) {
+// 		player.intelligence + 2;
+// player.addSpell('Epic Racial Heal', ...);
+// 	},
+// description: string
+// }
 
-mainInput.addEventListener('keyup', handleKeyUpEvent);
-domLeft.addEventListener('click', function () {
-  mainInput.focus();
-}); // Intellisense
+},{}],"../node_modules/@asciiroth/core/lib/Stage.class.js":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var Stage = /** @class */ (function () {
+    function Stage(name) {
+        if (name === void 0) { name = 'hello'; }
+        this.name = name;
+    }
+    return Stage;
+}());
+exports.Stage = Stage;
 
-var IntellisenseClass =
-/** @class */
-function () {
-  function IntellisenseClass() {
-    var _this = this;
-
-    this._domIntellisense = document.querySelector('#intellisense');
-    this.isOpen = false;
-    this.suggestions = [];
-    this.highlightedIndex = -1;
-    mainInput.addEventListener('blur', function () {
-      _this.hide();
-    }); // mainInput.addEventListener('keyup', event => {
-    //     this.updateSuggestions(event);
-    //     this.redraw(event);
-    // });
-
-    mainInput.addEventListener('keydown', function (event) {
-      _this.navigationHandler(event);
+},{}],"../node_modules/@asciiroth/core/lib/Stages.class.js":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var _1 = require("./");
+var Stages = /** @class */ (function () {
+    function Stages() {
+        this._stages = [];
+    }
+    Stages.prototype.addStage = function (name) {
+        var stage = new _1.Stage(name);
+        this._stages[stage.name] = stage;
+    };
+    Stages.prototype.removeStage = function (name) {
+        delete this._stages[name];
+    };
+    Object.defineProperty(Stages.prototype, "stages", {
+        get: function () {
+            return Object.values(this._stages);
+        },
+        enumerable: true,
+        configurable: true
     });
-  }
+    return Stages;
+}());
+exports.Stages = Stages;
 
-  IntellisenseClass.prototype.keyUpHandler = function (event) {
-    this.updateSuggestions(event);
-    this.redraw(event);
-  };
-
-  IntellisenseClass.prototype.keyDownHandler = function (event) {
-    this.navigationHandler(event);
-  };
-
-  IntellisenseClass.prototype.show = function () {
-    this._domIntellisense.style.opacity = '1';
-    this.isOpen = true;
-    this.highlightedIndex = -1;
-  };
-
-  IntellisenseClass.prototype.hide = function () {
-    this._domIntellisense.style.opacity = '0';
-    this.isOpen = false;
-    this.clear();
-  };
-
-  IntellisenseClass.prototype.toggle = function () {
-    if (this._domIntellisense.style.opacity === '1') {
-      this._domIntellisense.style.opacity = '0';
-    } else {
-      this._domIntellisense.style.opacity = '1';
+},{"./":"../node_modules/@asciiroth/core/lib/index.js"}],"../node_modules/@asciiroth/core/lib/World.class.js":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var _1 = require("./");
+var World = /** @class */ (function () {
+    function World(name) {
+        this.name = name;
+        this._zones = new _1.Zones();
     }
-  };
+    Object.defineProperty(World.prototype, "zones", {
+        get: function () {
+            return this._zones;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    World.prototype.getZone = function (zone) {
+        return this._zones.findZone(zone);
+    };
+    World.prototype.addZone = function (zone) {
+        this._zones.addZone(zone);
+    };
+    return World;
+}());
+exports.World = World;
 
-  IntellisenseClass.prototype.clear = function () {
-    this._domIntellisense.innerHTML = '';
-  };
-
-  IntellisenseClass.prototype.positionLeft = function (left) {
-    // 10 is the approximate, but sorta acurate width of a single char in this font
-    // 23 is roughly the left padding
-    this._domIntellisense.style.left = 23 + left * 10 + "px";
-  };
-
-  IntellisenseClass.prototype.updateSuggestions = function (event) {
-    var _a = transformInput(event.target.innerText),
-        command = _a[0],
-        args = _a.slice(1);
-
-    this.suggestions = this.calculateSuggestions(command, args).slice();
-  };
-
-  IntellisenseClass.prototype.navigationHandler = function (event) {
-    if (event.keyCode !== 40 && event.keyCode !== 38) {
-      return;
-    }
-
-    event.preventDefault();
-
-    if (event.keyCode === 40) {
-      // down arrow
-      if (!this.isOpen) {
-        this.show();
-      } else {
-        if (this.suggestions.length) {
-          if (this.highlightedIndex + 1 <= this.suggestions.length - 1) {
-            this.highlightedIndex = this.highlightedIndex + 1;
-          }
+},{"./":"../node_modules/@asciiroth/core/lib/index.js"}],"../node_modules/@asciiroth/core/lib/Zone.class.js":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var Zone = /** @class */ (function () {
+    function Zone(options) {
+        this.grid = [[]];
+        this.name = options.name;
+        if (options.grid) {
+            this.setGrid(options.grid);
         }
-      }
     }
-
-    if (event.keyCode === 38) {
-      // up arrow
-      if (this.isOpen) {
-        if (this.suggestions.length) {
-          if (this.highlightedIndex - 1 >= -1) {
-            this.highlightedIndex = this.highlightedIndex - 1;
-          }
+    Zone.prototype.setGrid = function (grid) {
+        this.grid = grid;
+    };
+    Zone.prototype.getLocationAtCoords = function (x, y) {
+        return this.grid[x][y];
+    };
+    Zone.prototype.areCoordsInGrid = function (x, y) {
+        return this.grid[x] !== undefined && this.grid[x][y] !== undefined ? true : false;
+    };
+    Zone.prototype.getCurrentAvailableDirections = function (x, y) {
+        var directions = [];
+        if (this.areCoordsInGrid(x + 1, y)) {
+            directions.push('East');
         }
-      }
-    }
-
-    this.redraw(event);
-  };
-
-  IntellisenseClass.prototype.mouseOverHandler = function (event) {};
-
-  IntellisenseClass.prototype.scrollToPosition = function (px) {
-    this._domIntellisense.scrollTop = px;
-  };
-
-  IntellisenseClass.prototype.redraw = function (event) {
-    var _this = this;
-
-    event.preventDefault();
-
-    if (event.target.innerText.length <= 0 && event.keyCode !== 40 && event.keyCode !== 38 && event.keyCode !== 13) {
-      this.hide();
-      event.stopPropagation();
-      return;
-    }
-
-    if (event.keyCode === 13) {
-      this.hide();
-      event = null;
-
-      if (this.highlightedIndex > -1 && this.suggestions[this.highlightedIndex]) {
-        mainInput.innerHTML = this.suggestions[this.highlightedIndex];
-      }
-
-      return;
-    }
-
-    var pos = getCaretPosition(event.target);
-    this.clear();
-
-    if (this.suggestions.length) {
-      if (!this.isOpen) {
-        this.show();
-      }
-
-      this.positionLeft(pos);
-
-      this._domIntellisense.insertAdjacentHTML('afterbegin', this.suggestions.reduce(function (html, suggestion, index) {
-        return html += "\n                <p\n                    class=\"" + (_this.highlightedIndex === index ? 'highlighted' : '') + "\"\n                    data-value=\"" + suggestion + "\"\n                    data-index=\"" + index + "\"\n                >\n                    " + suggestion + "\n                </p>\n                ";
-      }, ''));
-
-      var selectedElement = document.querySelector('#intellisense .highlighted');
-
-      if (selectedElement) {
-        if (selectedElement.offsetTop >= this._domIntellisense.scrollTop + this._domIntellisense.getBoundingClientRect().height) {
-          this.scrollToPosition(selectedElement.offsetTop);
-        } else if (selectedElement.offsetTop < this._domIntellisense.scrollTop) {
-          this.scrollToPosition(selectedElement.offsetTop);
+        if (this.areCoordsInGrid(x, y - 1)) {
+            directions.push('South');
         }
-      }
-    } else {
-      this.hide();
-    }
-  };
-
-  IntellisenseClass.prototype.calculateSuggestions = function (command, args) {
-    if (command === void 0) {
-      command = '';
-    }
-
-    if (args === void 0) {
-      args = [];
-    }
-
-    switch (gameState) {
-      case GameStates.CreateCharacter:
-        switch (createCharacterState) {
-          case CreateCharacterStates.ChooseName:
-            return [];
-
-          case CreateCharacterStates.ChooseRace:
-            return Object.keys(enums_1.Races).slice();
-
-          case CreateCharacterStates.ChooseClass:
-            return Object.keys(enums_1.Classes).slice();
+        if (this.areCoordsInGrid(x - 1, y)) {
+            directions.push('West');
         }
-
-        break;
-
-      case GameStates.InGame:
-        if (enums_1.EntityActions[command]) {
-          switch (enums_1.EntityActions[command]) {
-            case enums_1.EntityActions.Walk:
-              return world.getCurrentAvailableDirections.apply(world, player.coords).slice();
-
-            case enums_1.EntityActions.Look:
-              return world.getWorldLocation.apply(world, player.coords).entities.filter(function (entity) {
-                return entity.description;
-              }).map(function (entity) {
-                return capitalizeFirstLetter(entity.name);
-              }).slice();
-
-            default:
-              return world.getWorldLocation.apply(world, player.coords).entities.filter(function (entity) {
-                return entity.hasAction(enums_1.EntityActions[command]);
-              }).map(function (entity) {
-                return capitalizeFirstLetter(entity.name);
-              }).slice();
-          }
+        if (this.areCoordsInGrid(x, y + 1)) {
+            directions.push('North');
         }
+        return directions;
+    };
+    return Zone;
+}());
+exports.Zone = Zone;
 
-        return Object.keys(enums_1.EntityActions).slice();
-
-      default:
-        return [];
+},{}],"../node_modules/@asciiroth/core/lib/Zones.class.js":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var Zones = /** @class */ (function () {
+    function Zones() {
     }
-  };
+    Object.defineProperty(Zones.prototype, "zones", {
+        get: function () {
+            return this._zones;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Zones.prototype.findZone = function (zone) {
+        return this._zones.find(function (_zone) { return _zone.name === zone.name; });
+    };
+    Zones.prototype.addZone = function (zone) {
+        if (!this.findZone(zone)) {
+            this._zones.push(zone);
+        }
+    };
+    Zones.prototype.removeZone = function (zone) {
+        this._zones = this._zones.filter(function (_zone) { return _zone.name !== zone.name; });
+    };
+    return Zones;
+}());
+exports.Zones = Zones;
 
-  return IntellisenseClass;
-}();
+},{}],"../node_modules/@asciiroth/core/lib/index.js":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var Ability_class_1 = require("./Ability.class");
+exports.Ability = Ability_class_1.Ability;
+var AbilityBook_class_1 = require("./AbilityBook.class");
+exports.AbilityBook = AbilityBook_class_1.AbilityBook;
+var Class_class_1 = require("./Class.class");
+exports.Class = Class_class_1.Class;
+var Entity_class_1 = require("./Entity.class");
+exports.Entity = Entity_class_1.Entity;
+var Faction_class_1 = require("./Faction.class");
+exports.Faction = Faction_class_1.Faction;
+var Game_class_1 = require("./Game.class");
+exports.Game = Game_class_1.Game;
+var Input_class_1 = require("./Input.class");
+exports.Input = Input_class_1.Input;
+var Location_class_1 = require("./Location.class");
+exports.Location = Location_class_1.Location;
+var Inventory_class_1 = require("./Inventory.class");
+exports.Inventory = Inventory_class_1.Inventory;
+var Npc_class_1 = require("./Npc.class");
+exports.Npc = Npc_class_1.Npc;
+var Player_class_1 = require("./Player.class");
+exports.Player = Player_class_1.Player;
+var Quest_class_1 = require("./Quest.class");
+exports.Quest = Quest_class_1.Quest;
+var Race_class_1 = require("./Race.class");
+exports.Race = Race_class_1.Race;
+var Stage_class_1 = require("./Stage.class");
+exports.Stage = Stage_class_1.Stage;
+var Stages_class_1 = require("./Stages.class");
+exports.Stages = Stages_class_1.Stages;
+var World_class_1 = require("./World.class");
+exports.World = World_class_1.World;
+var Zone_class_1 = require("./Zone.class");
+exports.Zone = Zone_class_1.Zone;
+var Zones_class_1 = require("./Zones.class");
+exports.Zones = Zones_class_1.Zones;
 
-var intellisense = new IntellisenseClass(); // Initial Load
+},{"./Ability.class":"../node_modules/@asciiroth/core/lib/Ability.class.js","./AbilityBook.class":"../node_modules/@asciiroth/core/lib/AbilityBook.class.js","./Class.class":"../node_modules/@asciiroth/core/lib/Class.class.js","./Entity.class":"../node_modules/@asciiroth/core/lib/Entity.class.js","./Faction.class":"../node_modules/@asciiroth/core/lib/Faction.class.js","./Game.class":"../node_modules/@asciiroth/core/lib/Game.class.js","./Input.class":"../node_modules/@asciiroth/core/lib/Input.class.js","./Location.class":"../node_modules/@asciiroth/core/lib/Location.class.js","./Inventory.class":"../node_modules/@asciiroth/core/lib/Inventory.class.js","./Npc.class":"../node_modules/@asciiroth/core/lib/Npc.class.js","./Player.class":"../node_modules/@asciiroth/core/lib/Player.class.js","./Quest.class":"../node_modules/@asciiroth/core/lib/Quest.class.js","./Race.class":"../node_modules/@asciiroth/core/lib/Race.class.js","./Stage.class":"../node_modules/@asciiroth/core/lib/Stage.class.js","./Stages.class":"../node_modules/@asciiroth/core/lib/Stages.class.js","./World.class":"../node_modules/@asciiroth/core/lib/World.class.js","./Zone.class":"../node_modules/@asciiroth/core/lib/Zone.class.js","./Zones.class":"../node_modules/@asciiroth/core/lib/Zones.class.js"}],"index.ts":[function(require,module,exports) {
+"use strict";
 
-var initialLoad = function initialLoad() {
-  welcomeMessages(); // if (!localStorage.key('character')){
-  // load saved character
-  // loadCharacter()
-  // } else {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-  createNewCharacter(); // }
-};
+require("babel-polyfill"); // import { World, Player, Npc, Location } from './game/classes'
+// import { Classes, Races, EntityActions } from './game/enums';
+// import { FactionData } from './game/data/factions';
+// import { RaceData } from './game/data/races';
+// import { ClassData } from './game/data/classes';
 
-initialLoad(); // Gameloop
 
-var gameLoop = function gameLoop() {
-  switch (gameState) {
-    case GameStates.CreateCharacter:
-      output(createCharacterFlow[createCharacterState].output);
-      break;
+var core_1 = require("@asciiroth/core");
 
-    case GameStates.LoadCharacter:
-      // loadCharacterHandler(command, input)
-      break;
-
-    case GameStates.InGame:
-      //currentStatus(player);
-      domRight.setBackroundImage(world.getWorldLocation.apply(world, player.coords).image);
-      captionEvents.addHtml("\n                <p>" + world.getWorldLocation.apply(world, player.coords).description + "</p>\n            ");
-      break;
-  }
-};
-
-gameLoop();
-},{"tslib":"../node_modules/tslib/tslib.es6.js","babel-polyfill":"../node_modules/babel-polyfill/lib/index.js","./game/classes":"game/classes/index.js","./game/enums":"game/enums/index.ts","./game/data/factions":"game/data/factions.ts","./game/data/races":"game/data/races.ts","./game/data/classes":"game/data/classes.ts","./game/npcs":"game/npcs/index.ts"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+var game = new core_1.Game('hello');
+var world = new core_1.World();
+var location1 = new core_1.Location({
+  name: 'test1'
+});
+var location2 = new core_1.Location({
+  name: 'test2'
+});
+var zone = new core_1.Zone({
+  name: 'hello',
+  grid: [[location1, location2]]
+});
+var player = new core_1.Player({
+  name: 'jacob',
+  zone: zone,
+  coords: [0, 0]
+});
+window['game'] = game;
+window['world'] = world;
+window['location1'] = location1;
+window['location2'] = location2;
+window['zone'] = zone;
+window['player'] = player; //
+// declare const document: HTMLDocument;
+//
+// import * as Npcs from './game/npcs';
+//
+// const capitalizeFirstLetter = (string: string): string => string[0].toUpperCase() + string.slice(1);
+//
+// const calculateDamage = (strength: number, defence: number): number => {
+//     return strength * (defence / defence);
+// }
+//
+// const getCaretPosition = (editableDiv: HTMLElement) => {
+//     let caretPos: any = 0;
+//     let sel: any = 0;
+//     let range: any = 0;
+//     if (window.getSelection) {
+//         sel = window.getSelection();
+//         if (sel.rangeCount) {
+//             range = sel.getRangeAt(0);
+//             if (range.commonAncestorContainer.parentNode == editableDiv) {
+//                 caretPos = range.endOffset;
+//             }
+//         }
+//     } else if (document.selection && document.selection.createRange) {
+//         range = document.selection.createRange();
+//         if (range.parentElement() == editableDiv) {
+//             var tempEl = document.createElement("span");
+//             editableDiv.insertBefore(tempEl, editableDiv.firstChild);
+//             var tempRange = range.duplicate();
+//             tempRange.moveToElementText(tempEl);
+//             tempRange.setEndPoint("EndToEnd", range);
+//             caretPos = tempRange.text.length;
+//         }
+//     }
+//     return caretPos;
+// }
+//
+// /*
+//     This is the main world grid. It is a 2d grid set into tiles for each area.
+//     Currently only Elwyn Forest is in the game, however more can easily be added.
+// */
+// const world = new World([
+//     [
+//         new Location(
+//             'Forest\'s Edge',
+//             'The trees are thinning and traversing the forest becomes easier. But it\'s far from safe - This area is filled with makeshift camps full of Gnolls. Sounds like ravenous dogs and smells of barbecue fill the air.',
+//             'https://vignette.wikia.nocookie.net/wowwiki/images/2/28/Forest%27s_Edge.jpg/revision/latest?cb=20130509202609',
+//             [
+//                 Npcs.Hogger,
+//                 new Npcs.Gnoll,
+//                 new Npcs.Gnoll,
+//                 new Npcs.Gnoll,
+//             ],
+//         ),
+//         undefined,
+//         undefined,
+//     ],
+//     [
+//         new Location(
+//             'Fargodeep Mine',
+//             'As you step through the trees towards the mine, the sounds of mining and excavating grow louder. As you peer round the rocky outcrop, you see a mine entrance bustling with Kobolds.',
+//             'https://vignette.wikia.nocookie.net/wowwiki/images/b/b3/Fargodeep_Mine.jpg/revision/latest?cb=20130509195948',
+//             [
+//                 new Npcs.Kobold(),
+//                 new Npcs.Kobold(),
+//                 new Npcs.Kobold(),
+//                 new Npcs.Kobold(),
+//                 new Npcs.Kobold(),
+//                 new Npcs.Kobold(),
+//             ],
+//         ),
+//         new Location(
+//             'Goldshire',
+//             'You stand in the square of a quaint village, south of Stormwind, nestled deep in Elwyn Forest. The town is alive, people buying and selling - but it\'s the sound of the blacksmith\'s hammer that cuts through the air.',
+//             'https://steemitimages.com/DQmV3CeLfrZtHQ4uchLy9yxBPvZQvjNj7HeRVQHmUJBvcJD/world-of-warcraft-wow-2569.jpg',
+//             [
+//                 Npcs.SmithArgus,
+//                 new Npcs.Guard(),
+//             ],
+//         ),
+//         new Location(
+//             'Stormwind Gates',
+//             'The majestic Stormwind Gates. All around you is bustling in the summer breeze as a crowd of people weave in and out of the city gates.',
+//             'https://bnetcmsus-a.akamaihd.net/cms/content_entry_media/OCX0QPKBLRHQ1465832713312.jpg',
+//             [
+//                 new Npcs.Guard(),
+//                 new Npcs.Guard(),
+//             ]
+//         ),
+//     ],
+//     [
+//         undefined,
+//         new Location(
+//             'Stone Cairn Lake',
+//             'You emerge from the thick trees, before you is a cool, clear lake. In the centre of the lake is a small island covered in ruins. The water\'s edge teems with Murlocs, you must be silent here.',
+//             'https://vignette.wikia.nocookie.net/wowwiki/images/8/8c/Stone_Cairn_Lake.jpg/revision/latest?cb=20130510021922',
+//             [
+//                 new Npcs.Murloc(),
+//                 new Npcs.Murloc(),
+//                 new Npcs.Murloc(),
+//                 new Npcs.Murloc(),
+//                 new Npcs.Murloc(),
+//             ],
+//         ),
+//         new Location(
+//             'Northshire Valley',
+//             'A quiet valley surrounding Northshire Abbey. This place has recently been the training ground for Alliance army human recruits.',
+//             'https://vignette.wikia.nocookie.net/wowwiki/images/d/dd/Northshire_Valley.jpg/revision/latest/scale-to-width-down/2000?cb=20171203170351',
+//             [
+//                 new Npcs.Guard(),
+//             ],
+//         ),
+//     ],
+//     [
+//         undefined,
+//         undefined,
+//         new Location(
+//             'Northshire Abbey',
+//             'A grand abbey, built to worship the Gods.',
+//             'https://vignette.wikia.nocookie.net/wowwiki/images/d/dd/Northshire_Valley.jpg/revision/latest/scale-to-width-down/2000?cb=20171203170351',
+//             [
+//                 Npcs.MarshalMcBride,
+//                 new Npcs.Wolf(),
+//             ]
+//         ),
+//     ]
+// ]);
+//
+// let player: Player;
+//
+// enum GameStates {
+//     CreateCharacter,
+//     LoadCharacter,
+//     InGame,
+// }
+//
+// enum CreateCharacterStates {
+//     ChooseName,
+//     ChooseRace,
+//     ChooseClass,
+// }
+//
+// let gameState: GameStates;
+// let createCharacterState: CreateCharacterStates;
+//
+//
+// window['world'] = world;
+// window['player'] = player;
+//
+// const handlerActions: { [id: string]: Function } = {
+//
+//     // eg: walk east
+//     [EntityActions.Walk](command: EntityActions, args: string[]): void {
+//         const success = player.action({
+//             action: command,
+//             data: {
+//                 args,
+//             }
+//         });
+//
+//         if (!success) {
+//             output('Cannot walk in that direction', {
+//                 classes: 'error',
+//             });
+//         }
+//
+//         currentStatus(player);
+//     },
+//
+//     // eg: talk abby
+//     [EntityActions.Talk](command: EntityActions, args: string[]): void {
+//         let [target, subject] = args;
+//
+//         if (!target) {
+//             output(`Who would you like to talk to?`);
+//             return;
+//         }
+//
+//         const npc: Npc = <Npc>world
+//             .getWorldLocation(...player.coords)
+//             .entities
+//             .find(entity => {
+//                 return entity.referenceNames.includes(target.toLowerCase());
+//             });
+//
+//         if (!npc) {
+//             output(`Hmm ${target} doesn't seem to be here...`);
+//             return;
+//         }
+//
+//         if (!npc.hasAction(EntityActions.Talk)) {
+//             output(`Doesn't seem like ${target} wants to talk...`)
+//             return;
+//         }
+//
+//         const speech = npc.action({
+//             action: EntityActions.Talk,
+//             data: {
+//                 talkSubject: subject,
+//             },
+//         });
+//
+//         output(`${npc.name}: <span class="speech">"${speech}"</span>`);
+//     },
+//
+//     // eg: attack wolf
+//     [EntityActions.Attack](command: EntityActions, args: string[]): void {
+//         const [target] = args;
+//         const currentLocation = world.getWorldLocation(...player.coords);
+//         let enemy: Partial<Npc> = currentLocation.findEntity(target);
+//
+//         if (!enemy) {
+//             output(`Cannot find ${target || 'that target'}`);
+//             return;
+//         }
+//
+//         if (enemy.friendly) {
+//             output('Cannot attack that target');
+//             return;
+//         }
+//
+//         if (player.combatSelectedEnemy) {
+//             if (enemy.id === player.combatSelectedEnemy.id) {
+//                 enemy = player.combatSelectedEnemy;
+//             }
+//         }
+//
+//         player.combatSelectedEnemy = enemy;
+//
+//         // Attack enemy
+//
+//         const enemyDamage: number = calculateDamage(player.strength, enemy.defence)
+//
+//         enemy.action({
+//             action: EntityActions.Attack,
+//             data: {
+//                 hp: enemyDamage,
+//             },
+//         });
+//
+//         output(`🗡 Attacked ${target} for ${enemyDamage} damage! ${target}'s hp: ${enemy.hp}`);
+//
+//         if (enemy.hp <= 0) {
+//             output(`You have killed the ${enemy.name}`);
+//             currentLocation.removeEntity(enemy.id);
+//             player.combatSelectedEnemy = null;
+//             return;
+//         }
+//
+//         // Enemy attacks player
+//
+//         const playerDamage: number = calculateDamage(enemy.strength, player.defence)
+//
+//         player.action({
+//             action: EntityActions.Attack,
+//             data: {
+//                 hp: playerDamage,
+//             },
+//         });
+//
+//         output(`🛡 ${target} attacks you for ${playerDamage} damage! Your hp: ${player.hp}`);
+//
+//         if (player.hp <= 0) {
+//             output(`You have died! Respawning...`);
+//             player.combatSelectedEnemy = null;
+//             respawn(player);
+//         }
+//
+//     },
+//
+//     [EntityActions.Look](command: EntityActions, args: string[]): void {
+//         if (args.length) {
+//             const [targetName] = args;
+//             const currentLocation = world.getWorldLocation(...player.coords);
+//             let target: Partial<Npc> = currentLocation.findEntity(targetName);
+//
+//             if (target) {
+//                 output(`<span class="info">${target.description}</span>`);
+//             }
+//         } else {
+//             currentStatus(player);
+//         }
+//     },
+//
+//     // [EntityActions.New](): void {
+//     //     createNewCharacter();
+//     // }
+//
+// }
+//
+// const currentStatus = (player: Player) => {
+//     const currentLocation = world.getWorldLocation(...player.coords);
+//     output(`You are currently in ${currentLocation.name}`, {
+//         tag: 'span',
+//     });
+//     output(`As you look around you see: ${currentLocation.entities.map(entity => (`<span class="info"> ${entity.name}</span>`))} `);
+// }
+//
+// const respawn = (player: Player) => {
+//     player.addHp();
+//     player.coords = [2, 2];
+//     currentStatus(player);
+// }
+//
+// const outputDiv = document.querySelector('#output');
+//
+// const output = (text: string = '', options: Partial<{
+//     isUserInput: boolean,
+//     tag: string,
+//     classes: string,
+// }> = {}) => {
+//     if (text.length <= 0) {
+//         return;
+//     }
+//
+//     outputDiv
+//         .insertAdjacentHTML(
+//             'beforeend',
+//             `<${options.tag || 'p'} class="${options.isUserInput ? 'user-input' : ''} ${options.classes}" >${text}</${options.tag}>`
+//         );
+// }
+//
+// const welcomeMessages = () => {
+//     output('Welcome to Asciiroth!', {
+//         tag: 'h1',
+//     });
+//
+//     output('You can use the ⬇ (down arrow) anytime to bring up a list of available commands.', {
+//         tag: 'i',
+//         classes: 'info',
+//     })
+// }
+//
+// const createNewCharacter = () => {
+//     player = new Player({
+//         name: null,
+//         class: null,
+//         race: null,
+//         coords: [2, 2],
+//         world,
+//     });
+//
+//     gameState = GameStates.CreateCharacter;
+//     createCharacterState = CreateCharacterStates.ChooseName;
+// }
+//
+// const transformInput = (input: string): string[] => {
+//     return input
+//         .split(' ')
+//         .filter(arg => arg || '')
+//         .map(arg => arg.toLowerCase())
+//         .map(arg => capitalizeFirstLetter(arg))
+//         .map(arg => arg.trim());
+// }
+//
+// const createCharacterFlow = {
+//     start: CreateCharacterStates.ChooseName,
+//     end: {
+//         callback: () => {
+//             output(`Welcome to the world ${player.name}`)
+//             gameState = GameStates.InGame;
+//             currentStatus(player);
+//         },
+//     },
+//     [CreateCharacterStates.ChooseName]: {
+//         output: 'What is your name?',
+//         callback: (input: string): boolean => {
+//             const [name] = transformInput(input);
+//             player.setName(name);
+//             return;
+//         },
+//         next: CreateCharacterStates.ChooseRace,
+//     },
+//     [CreateCharacterStates.ChooseRace]: {
+//         output: 'What is your race?',
+//         callback: (input: string): null | string => {
+//             const [race] = transformInput(input);
+//             if (Races[race]) {
+//                 player.setRace(Races[race]);
+//                 return;
+//             }
+//
+//             return `Race "${race}" doesn't exist`;
+//         },
+//         next: CreateCharacterStates.ChooseClass,
+//     },
+//     [CreateCharacterStates.ChooseClass]: {
+//         output: 'What is your class?',
+//         callback: (input: string): null | string => {
+//             const [_class] = transformInput(input);
+//             if (Classes[_class]) {
+//                 player.setClass(Classes[_class]);
+//                 return;
+//             }
+//
+//             return `class "${_class}" doesn't exist`;
+//         }
+//     },
+// }
+//
+// // State handlers
+//
+// const createCharacterHandler = (input: string) => {
+//     const error = createCharacterFlow[createCharacterState].callback(input);
+//
+//     if (error) {
+//         output(<string>error, {
+//             classes: 'error',
+//         });
+//         return;
+//     }
+//
+//     domRight.clear();
+//
+//     if (createCharacterFlow[createCharacterState].next) {
+//         createCharacterState = createCharacterFlow[createCharacterState].next;
+//
+//         return;
+//     }
+//
+//     createCharacterFlow.end.callback();
+//     return;
+// }
+//
+// const loadCharacterHandler = (input: string) => {
+//
+// }
+//
+// const inGameHandler = (command: string, args: string[]) => {
+//     command = EntityActions[command];
+//
+//     if (command && handlerActions[command]) {
+//         handlerActions[command](command, args);
+//
+//     } else {
+//         output(`That is not a valid command`, {
+//             classes: 'error',
+//         });
+//     }
+// }
+//
+// // Main input
+//
+// const mainInput: HTMLElement = document.querySelector('#main-input');
+// const domLeft: HTMLElement = document.querySelector('#left');
+//
+// class DomImages {
+//     private _imageCache: {
+//         [url: string]: HTMLImageElement;
+//     } = {}
+//
+//     public async loadImage(imageUrl: string): Promise<HTMLImageElement> {
+//         return new Promise((resolve) => {
+//             if (this._imageCache[imageUrl]) {
+//                 resolve(this._imageCache[imageUrl]);
+//                 return;
+//             }
+//
+//             const image = new Image();
+//             image.onload = () => {
+//                 this._imageCache[imageUrl] = image;
+//                 resolve(image);
+//             }
+//             image.src = imageUrl;
+//         });
+//     }
+//
+//     public get imageCache(): {
+//         [url: string]: HTMLImageElement;
+//     } {
+//         return this._imageCache;
+//     }
+// }
+//
+// const sleep = async seconds => {
+//     return new Promise(resolve => {
+//         setTimeout(() => {
+//             resolve();
+//         }, seconds * 1000);
+//     })
+// }
+//
+// class DomRightClass {
+//
+//     public readonly domRight: HTMLElement = document.querySelector('#right');
+//     private _currentImage: HTMLImageElement;
+//
+//     public async setBackroundImage(imageUrl: string) {
+//         this.hide();
+//
+//         const image: HTMLImageElement = await domImages.loadImage(imageUrl);
+//
+//         if (this._currentImage && this._currentImage.parentNode) {
+//             if (this._currentImage.src !== imageUrl) {
+//                 await sleep(0.6);
+//                 this._currentImage.parentNode.replaceChild(image, this._currentImage);
+//             }
+//         } else {
+//             this.domRight.appendChild(image);
+//         }
+//
+//         this._currentImage = image;
+//
+//         this.show();
+//     }
+//
+//     public get currentImage() {
+//         return this._currentImage;
+//     }
+//
+//     public hide() {
+//         this.domRight.style.opacity = '0';
+//     }
+//
+//     public show() {
+//         this.domRight.style.opacity = '1';
+//     }
+//
+//     public addClass(className: string) {
+//         this.domRight.className = '';
+//         this.domRight.classList.add(className);
+//     }
+//
+//     public removeClass(className: string) {
+//         this.domRight.classList.remove(className);
+//     }
+//
+//     public clear() {
+//         this.hide();
+//         if (this._currentImage && this._currentImage.parentNode) {
+//             this._currentImage.parentNode.removeChild(this.currentImage);
+//             this._currentImage = null;
+//         }
+//
+//         captionEvents.clear();
+//     }
+//
+//     public redrawRight(event: KeyboardEvent) {
+//         const [command, ...args] = transformInput(event.target.innerText)
+//
+//         switch (gameState) {
+//             case GameStates.CreateCharacter:
+//                 switch (createCharacterState) {
+//                     case CreateCharacterStates.ChooseRace:
+//                         if (Races[command]) {
+//                             if (FactionData.Horde.races.includes(Races[command])) {
+//                                 domRight.addClass('horde');
+//                                 domRight.setBackroundImage(FactionData.Horde.background_characterCreate);
+//                                 captionEvents.addHtml(`
+//     								<h2>The Horde</h2>
+//     								<p>${ FactionData.Horde.description}</p>
+//     								<h2>${ command}s</h2>
+//     								<p>${RaceData[command].description}</p>
+//     							`);
+//                             }
+//
+//                             if (FactionData.Alliance.races.includes(Races[command])) {
+//                                 domRight.addClass('alliance');
+//                                 domRight.setBackroundImage(FactionData.Alliance.background_characterCreate);
+//                                 captionEvents.addHtml(`
+//     								<h2>The Alliance</h2>
+//     								<p>${ FactionData.Alliance.description}</p>
+//     								<h2>${ command}s</h2>
+//     								<p>${RaceData[command].description}</p>
+//     							`);
+//                             }
+//                         } else {
+//                             domRight.hide();
+//                         }
+//                         break;
+//                     case CreateCharacterStates.ChooseClass:
+//                         if (ClassData[Classes[command]]) {
+//                             domRight.setBackroundImage(ClassData[Classes[command]].image);
+//                             captionEvents.addHtml(`
+//     							<h2>${ command}s</h2>
+//     							<p>${ ClassData[Classes[command]].description}</p>
+//     						`);
+//                         } else {
+//                             domRight.hide();
+//                             captionEvents.clear();
+//                         }
+//                 }
+//             case GameStates.InGame:
+//
+//         }
+//     }
+// }
+//
+// const domRight = new DomRightClass();
+// const domImages = new DomImages();
+//
+// const caption = document.querySelector('#right .caption');
+//
+// const captionEvents = {
+//     clear: () => {
+//         caption.innerHTML = '';
+//     },
+//     addHtml: (html: string) => {
+//         captionEvents.clear();
+//         caption.insertAdjacentHTML('afterbegin', html);
+//     }
+// }
+//
+// const handleKeyUpEvent = (event: KeyboardEvent) => {
+//
+//     domRight.redrawRight(event);
+//     intellisense.keyUpHandler(event);
+//
+//     if (event.keyCode === 13) {
+//         event.preventDefault();
+//         output(`${event.target.innerText}`, {
+//             isUserInput: true,
+//         });
+//
+//         let [command, ...args] = transformInput(event.target.innerText);
+//
+//         switch (gameState) {
+//             case GameStates.CreateCharacter:
+//                 createCharacterHandler(command);
+//                 break;
+//
+//             case GameStates.LoadCharacter:
+//                 loadCharacterHandler(command)
+//                 break;
+//
+//             case GameStates.InGame:
+//                 inGameHandler(command, args);
+//                 break;
+//         }
+//
+//         event.target.innerHTML = '';
+//         domLeft.scrollTop = domLeft.scrollHeight;
+//         gameLoop();
+//     }
+// }
+//
+// mainInput.addEventListener('keyup', handleKeyUpEvent);
+//
+// domLeft.addEventListener('click', () => {
+//     mainInput.focus();
+// })
+//
+// // Intellisense
+//
+// class IntellisenseClass {
+//     private _domIntellisense: HTMLElement = document.querySelector('#intellisense');
+//     private isOpen: boolean = false;
+//     private suggestions: string[] = [];
+//     private highlightedIndex: number = -1;
+//
+//     constructor() {
+//         mainInput.addEventListener('blur', () => {
+//             this.hide();
+//         });
+//
+//         // mainInput.addEventListener('keyup', event => {
+//         //     this.updateSuggestions(event);
+//         //     this.redraw(event);
+//         // });
+//
+//         mainInput.addEventListener('keydown', event => {
+//             this.navigationHandler(event);
+//         });
+//     }
+//
+//     public keyUpHandler(event: KeyboardEvent) {
+//         this.updateSuggestions(event);
+//         this.redraw(event);
+//     }
+//
+//     public keyDownHandler(event: KeyboardEvent) {
+//         this.navigationHandler(event);
+//     }
+//
+//     public show(): void {
+//         this._domIntellisense.style.opacity = '1';
+//         this.isOpen = true;
+//         this.highlightedIndex = -1;
+//     }
+//
+//     public hide(): void {
+//         this._domIntellisense.style.opacity = '0';
+//         this.isOpen = false;
+//         this.clear();
+//     }
+//
+//     public toggle(): void {
+//         if (this._domIntellisense.style.opacity === '1') {
+//             this._domIntellisense.style.opacity = '0';
+//         } else {
+//             this._domIntellisense.style.opacity = '1';
+//         }
+//     }
+//
+//     public clear(): void {
+//         this._domIntellisense.innerHTML = '';
+//     }
+//
+//     public positionLeft(left: number): void {
+//         // 10 is the approximate, but sorta acurate width of a single char in this font
+//         // 23 is roughly the left padding
+//         this._domIntellisense.style.left = `${23 + (left * 10)}px`;
+//     }
+//
+//     private updateSuggestions(event: KeyboardEvent): void {
+//         const [command, ...args] = transformInput(event.target.innerText);
+//         this.suggestions = [...this.calculateSuggestions(command, args)];
+//     }
+//
+//     private navigationHandler(event: KeyboardEvent) {
+//         if (event.keyCode !== 40 && event.keyCode !== 38) {
+//             return;
+//         }
+//
+//         event.preventDefault();
+//
+//         if (event.keyCode === 40) { // down arrow
+//             if (!this.isOpen) {
+//                 this.show();
+//             } else {
+//                 if (this.suggestions.length) {
+//                     if (this.highlightedIndex + 1 <= this.suggestions.length - 1) {
+//                         this.highlightedIndex = this.highlightedIndex + 1;
+//                     }
+//                 }
+//             }
+//         }
+//
+//         if (event.keyCode === 38) { // up arrow
+//             if (this.isOpen) {
+//                 if (this.suggestions.length) {
+//                     if (this.highlightedIndex - 1 >= -1) {
+//                         this.highlightedIndex = this.highlightedIndex - 1;
+//                     }
+//                 }
+//             }
+//         }
+//
+//         this.redraw(event);
+//     }
+//
+//     private mouseOverHandler(event: any) {
+//
+//     }
+//
+//     private scrollToPosition(px: number) {
+//         this._domIntellisense.scrollTop = px;
+//     }
+//
+//     public redraw(event: any): void {
+//         event.preventDefault();
+//
+//         if (event.target.innerText.length <= 0 && (event.keyCode !== 40 && event.keyCode !== 38 && event.keyCode !== 13)) {
+//             this.hide();
+//             event.stopPropagation();
+//             return;
+//         }
+//
+//         if (event.keyCode === 13) {
+//             this.hide();
+//             event = null;
+//             if (this.highlightedIndex > -1 && this.suggestions[this.highlightedIndex]) {
+//                 mainInput.innerHTML = this.suggestions[this.highlightedIndex];
+//             }
+//             return;
+//         }
+//
+//         const pos = getCaretPosition(event.target);
+//
+//         this.clear();
+//
+//         if (this.suggestions.length) {
+//
+//             if (!this.isOpen) {
+//                 this.show();
+//             }
+//
+//             this.positionLeft(pos);
+//             this._domIntellisense.insertAdjacentHTML('afterbegin', this.suggestions.reduce((html, suggestion, index) => {
+//                 return html += `
+//                 <p
+//                     class="${ this.highlightedIndex === index ? 'highlighted' : ''}"
+//                     data-value="${ suggestion}"
+//                     data-index="${ index}"
+//                 >
+//                     ${ suggestion}
+//                 </p>
+//                 `;
+//             }, ''))
+//
+//             const selectedElement: HTMLElement = document.querySelector('#intellisense .highlighted');
+//
+//             if (selectedElement) {
+//                 if (selectedElement.offsetTop >= this._domIntellisense.scrollTop + this._domIntellisense.getBoundingClientRect().height) {
+//                     this.scrollToPosition(selectedElement.offsetTop);
+//                 } else if (selectedElement.offsetTop < this._domIntellisense.scrollTop) {
+//                     this.scrollToPosition(selectedElement.offsetTop);
+//                 }
+//             }
+//
+//         } else {
+//             this.hide();
+//         }
+//     }
+//
+//     private calculateSuggestions(command: string = '', args: string[] = []): any[] {
+//         switch (gameState) {
+//             case GameStates.CreateCharacter:
+//                 switch (createCharacterState) {
+//                     case CreateCharacterStates.ChooseName:
+//                         return [];
+//                     case CreateCharacterStates.ChooseRace:
+//                         return [
+//                             ...Object.keys(Races),
+//                         ];
+//                     case CreateCharacterStates.ChooseClass:
+//                         return [
+//                             ...Object.keys(Classes),
+//                         ];
+//                 }
+//                 break;
+//             case GameStates.InGame:
+//
+//                 if (EntityActions[command]) {
+//                     switch (EntityActions[command]) {
+//                         case EntityActions.Walk:
+//                             return [
+//                                 ...world
+//                                     .getCurrentAvailableDirections(...player.coords),
+//                             ]
+//                         case EntityActions.Look:
+//                             return [
+//                                 ...world
+//                                     .getWorldLocation(...player.coords)
+//                                     .entities
+//                                     .filter(entity => entity.description)
+//                                     .map(entity => capitalizeFirstLetter(entity.name)),
+//                             ];
+//                         default:
+//                             return [
+//                                 ...world
+//                                     .getWorldLocation(...player.coords)
+//                                     .entities
+//                                     .filter(entity => entity.hasAction(EntityActions[command]))
+//                                     .map(entity => capitalizeFirstLetter(entity.name)),
+//                             ];
+//                     }
+//                 }
+//
+//                 return [
+//                     ...Object.keys(EntityActions),
+//                 ];
+//             default:
+//                 return [];
+//         }
+//     }
+// }
+//
+// const intellisense = new IntellisenseClass();
+//
+// // Initial Load
+//
+// const initialLoad = () => {
+//     welcomeMessages();
+//     // if (!localStorage.key('character')){
+//     // load saved character
+//     // loadCharacter()
+//     // } else {
+//     createNewCharacter();
+//     // }
+// }
+//
+// initialLoad();
+//
+// // Gameloop
+// const gameLoop = () => {
+//     switch (gameState) {
+//         case GameStates.CreateCharacter:
+//             output(createCharacterFlow[createCharacterState].output);
+//             break;
+//
+//         case GameStates.LoadCharacter:
+//             // loadCharacterHandler(command, input)
+//             break;
+//
+//         case GameStates.InGame:
+//             //currentStatus(player);
+//             domRight.setBackroundImage(world.getWorldLocation(...player.coords).image);
+//             captionEvents.addHtml(`
+//                 <p>${ world.getWorldLocation(...player.coords).description}</p>
+//             `);
+//             break;
+//     }
+// }
+//
+// gameLoop();
+},{"babel-polyfill":"../node_modules/babel-polyfill/lib/index.js","@asciiroth/core":"../node_modules/@asciiroth/core/lib/index.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -10534,7 +10048,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49981" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49665" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
