@@ -15,35 +15,19 @@ import {
 
 const game = new Game('hello');
 
-class Pig extends Npc {
-	constructor() {
-		super({
-			_game: game,
-			referenceName: 'pig',
-			description: 'a pig',
-			hp: 5,
-			strength: 1,
-			defence: 1,
-			friendly: true,
-		});
-	}
-}
-
-const Pig1 = new Pig();
-
-console.log(Pig1);
-
-let world = new World('testWorld');
+let world = game.newWorld('testWorld');
 
 const location1 = new Location({
     name: 'test1',
-	entities: [
-		Pig1,
-	]
 });
 
 const location2 = new Location({
     name: 'test2'
+});
+
+const location3 = new Location({
+    name: 'test3',
+	coords: [4, 5],
 });
 
 const zone = new Zone({
@@ -53,29 +37,21 @@ const zone = new Zone({
             location1,
             location2
         ]
-    ]
+    ],
+	locations: [
+		location3,
+	]
 });
 
-const player = new Player({
+const player = game.newPlayer({
     name: 'jacob',
     zone,
-	world,
-	game,
     coords: [0, 0],
 });
 
-player.addAction('test', (game: Game, payload: unknown) => {
-	console.log(payload);
-});
-
-player.action('test', {yo: 'waddup'});
-
-game.setWorld(world);
-game.setPlayer(player);
 game.stages.addStage('whatwhat');
 game.setStage('whatwhat');
 
-window['npc1'] = Pig1;
 window['game'] = game;
 window['world'] = world;
 window['location1'] = location1;
