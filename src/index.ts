@@ -9,13 +9,37 @@ import {
     World,
     Zone,
     Location,
-    Player
+    Player,
+	Npc,
 } from '@asciiroth/core';
 
-let world = new World();
+const game = new Game('hello');
+
+class Pig extends Npc {
+	constructor() {
+		super({
+			_game: game,
+			referenceName: 'pig',
+			description: 'a pig',
+			hp: 5,
+			strength: 1,
+			defence: 1,
+			friendly: true,
+		});
+	}
+}
+
+const Pig1 = new Pig();
+
+console.log(Pig1);
+
+let world = new World('testWorld');
 
 const location1 = new Location({
-    name: 'test1'
+    name: 'test1',
+	entities: [
+		Pig1,
+	]
 });
 
 const location2 = new Location({
@@ -31,25 +55,27 @@ const zone = new Zone({
         ]
     ]
 });
+
 const player = new Player({
     name: 'jacob',
     zone,
+	world,
+	game,
     coords: [0, 0],
 });
 
-player.addAction({
-    name: 'test',
-    action: (game: Game, payload: unknown) => {
-        console.log(payload);
-    }
+player.addAction('test', (game: Game, payload: unknown) => {
+	console.log(payload);
 });
 
-const game = new Game('hello');
+player.action('test', {yo: 'waddup'});
 
+game.setWorld(world);
 game.setPlayer(player);
 game.stages.addStage('whatwhat');
 game.setStage('whatwhat');
 
+window['npc1'] = Pig1;
 window['game'] = game;
 window['world'] = world;
 window['location1'] = location1;
