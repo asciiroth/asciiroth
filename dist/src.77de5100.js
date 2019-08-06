@@ -8171,7 +8171,40 @@ var Entity = /** @class */ (function () {
 }());
 exports.Entity = Entity;
 
-},{}],"../node_modules/@asciiroth/core/lib/Faction.class.js":[function(require,module,exports) {
+},{}],"../node_modules/@asciiroth/core/lib/Entities.class.js":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var _1 = require("./");
+var Entities = /** @class */ (function () {
+    function Entities() {
+        this._entities = {};
+    }
+    Entities.prototype.addEntity = function (options) {
+        var entity = new _1.Entity(name);
+        this._entities[entity.id] = entity;
+    };
+    Entities.prototype.addNpc = function (options) {
+        var npc = new _1.Npc(name);
+        this._entities[npc.id] = npc;
+    };
+    Entities.prototype.removeEntity = function (name) {
+        delete this._entities[name];
+    };
+    Entities.prototype.findEntity = function (name) {
+        return this._entities[name];
+    };
+    Object.defineProperty(Entities.prototype, "entities", {
+        get: function () {
+            return Object.values(this._entities);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return Entities;
+}());
+exports.Entities = Entities;
+
+},{"./":"../node_modules/@asciiroth/core/lib/index.js"}],"../node_modules/@asciiroth/core/lib/Faction.class.js":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Faction = /** @class */ (function () {
@@ -9053,7 +9086,7 @@ var World = /** @class */ (function () {
     }
     Object.defineProperty(World.prototype, "zones", {
         get: function () {
-            return this._zones;
+            return this._zones.zones;
         },
         enumerable: true,
         configurable: true
@@ -9061,8 +9094,10 @@ var World = /** @class */ (function () {
     World.prototype.getZone = function (zone) {
         return this._zones.findZone(zone);
     };
-    World.prototype.addZone = function (zone) {
-        this._zones.addZone(zone);
+    World.prototype.newZone = function (zone) {
+        var newZone = new _1.Zone(zone);
+        this._zones.addZone(newZone);
+        return newZone;
     };
     return World;
 }());
@@ -9075,11 +9110,13 @@ var Zone = /** @class */ (function () {
     function Zone(options) {
         var _this = this;
         this.grid = [[]];
+        this.locations = [];
         this.name = options.name;
         if (options.grid) {
             this.setGrid(options.grid);
         }
         if (options.locations) {
+            this.locations = options.locations.slice();
             options.locations.forEach(function (location) {
                 if (!location.coords) {
                     throw new Error(location.name + " in zone: " + _this.name + " must have coordinates unless specifying 'grid' option.");
@@ -9126,6 +9163,7 @@ exports.Zone = Zone;
 Object.defineProperty(exports, "__esModule", { value: true });
 var Zones = /** @class */ (function () {
     function Zones() {
+        this._zones = [];
     }
     Object.defineProperty(Zones.prototype, "zones", {
         get: function () {
@@ -9160,6 +9198,8 @@ var Class_class_1 = require("./Class.class");
 exports.Class = Class_class_1.Class;
 var Entity_class_1 = require("./Entity.class");
 exports.Entity = Entity_class_1.Entity;
+var Entities_class_1 = require("./Entities.class");
+exports.Entities = Entities_class_1.Entities;
 var Faction_class_1 = require("./Faction.class");
 exports.Faction = Faction_class_1.Faction;
 var Game_class_1 = require("./Game.class");
@@ -9191,7 +9231,7 @@ exports.Zone = Zone_class_1.Zone;
 var Zones_class_1 = require("./Zones.class");
 exports.Zones = Zones_class_1.Zones;
 
-},{"./Ability.class":"../node_modules/@asciiroth/core/lib/Ability.class.js","./AbilityBook.class":"../node_modules/@asciiroth/core/lib/AbilityBook.class.js","./Class.class":"../node_modules/@asciiroth/core/lib/Class.class.js","./Entity.class":"../node_modules/@asciiroth/core/lib/Entity.class.js","./Faction.class":"../node_modules/@asciiroth/core/lib/Faction.class.js","./Game.class":"../node_modules/@asciiroth/core/lib/Game.class.js","./Input.class":"../node_modules/@asciiroth/core/lib/Input.class.js","./Location.class":"../node_modules/@asciiroth/core/lib/Location.class.js","./Inventory.class":"../node_modules/@asciiroth/core/lib/Inventory.class.js","./Npc.class":"../node_modules/@asciiroth/core/lib/Npc.class.js","./Pet.class":"../node_modules/@asciiroth/core/lib/Pet.class.js","./Player.class":"../node_modules/@asciiroth/core/lib/Player.class.js","./Quest.class":"../node_modules/@asciiroth/core/lib/Quest.class.js","./Race.class":"../node_modules/@asciiroth/core/lib/Race.class.js","./Stage.class":"../node_modules/@asciiroth/core/lib/Stage.class.js","./Stages.class":"../node_modules/@asciiroth/core/lib/Stages.class.js","./World.class":"../node_modules/@asciiroth/core/lib/World.class.js","./Zone.class":"../node_modules/@asciiroth/core/lib/Zone.class.js","./Zones.class":"../node_modules/@asciiroth/core/lib/Zones.class.js"}],"index.ts":[function(require,module,exports) {
+},{"./Ability.class":"../node_modules/@asciiroth/core/lib/Ability.class.js","./AbilityBook.class":"../node_modules/@asciiroth/core/lib/AbilityBook.class.js","./Class.class":"../node_modules/@asciiroth/core/lib/Class.class.js","./Entity.class":"../node_modules/@asciiroth/core/lib/Entity.class.js","./Entities.class":"../node_modules/@asciiroth/core/lib/Entities.class.js","./Faction.class":"../node_modules/@asciiroth/core/lib/Faction.class.js","./Game.class":"../node_modules/@asciiroth/core/lib/Game.class.js","./Input.class":"../node_modules/@asciiroth/core/lib/Input.class.js","./Location.class":"../node_modules/@asciiroth/core/lib/Location.class.js","./Inventory.class":"../node_modules/@asciiroth/core/lib/Inventory.class.js","./Npc.class":"../node_modules/@asciiroth/core/lib/Npc.class.js","./Pet.class":"../node_modules/@asciiroth/core/lib/Pet.class.js","./Player.class":"../node_modules/@asciiroth/core/lib/Player.class.js","./Quest.class":"../node_modules/@asciiroth/core/lib/Quest.class.js","./Race.class":"../node_modules/@asciiroth/core/lib/Race.class.js","./Stage.class":"../node_modules/@asciiroth/core/lib/Stage.class.js","./Stages.class":"../node_modules/@asciiroth/core/lib/Stages.class.js","./World.class":"../node_modules/@asciiroth/core/lib/World.class.js","./Zone.class":"../node_modules/@asciiroth/core/lib/Zone.class.js","./Zones.class":"../node_modules/@asciiroth/core/lib/Zones.class.js"}],"index.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9219,7 +9259,7 @@ var location3 = new core_1.Location({
   name: 'test3',
   coords: [4, 5]
 });
-var zone = new core_1.Zone({
+var zone = world.newZone({
   name: 'hello',
   grid: [[location1, location2]],
   locations: [location3]
@@ -10160,7 +10200,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51136" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56133" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

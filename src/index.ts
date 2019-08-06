@@ -30,7 +30,7 @@ const location3 = new Location({
 	coords: [4, 5],
 });
 
-const zone = new Zone({
+const zone = world.newZone({
     name: 'hello',
     grid: [
         [
