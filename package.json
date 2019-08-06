@@ -11,12 +11,17 @@
 		"build": "npx parcel build src/index.html --experimental-scope-hoisting --public-url /asciiroth/dist/"
 	},
 	"devDependencies": {
+		"@vue/component-compiler-utils": "^3.0.0",
 		"parcel-bundler": "^1.12.3",
 		"sass": "^1.22.7",
-		"typescript": "^3.5.3"
+		"typescript": "^3.5.3",
+		"vue-template-compiler": "^2.6.10"
 	},
 	"dependencies": {
 		"babel-polyfill": "^6.26.0",
-		"tslib": "^1.10.0"
+		"tslib": "^1.10.0",
+		"vue": "^2.6.10",
+		"vue-hot-reload-api": "^2.3.3",
+		"vuex": "^3.1.1"
 	}
 }

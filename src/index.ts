@@ -1,63 +1,64 @@
 import 'babel-polyfill'
+import './game/components';
 // import { World, Player, Npc, Location } from './game/classes'
 // import { Classes, Races, EntityActions } from './game/enums';
 // import { FactionData } from './game/data/factions';
 // import { RaceData } from './game/data/races';
 // import { ClassData } from './game/data/classes';
-import {
-    Game,
-    World,
-    Zone,
-    Location,
-    Player,
-	Npc,
-} from '@asciiroth/core';
-
-const game = new Game('hello');
-
-let world = game.newWorld('testWorld');
-
-const location1 = new Location({
-    name: 'test1',
-});
-
-const location2 = new Location({
-    name: 'test2'
-});
-
-const location3 = new Location({
-    name: 'test3',
-	coords: [4, 5],
-});
-
-const zone = world.newZone({
-    name: 'hello',
-    grid: [
-        [
-            location1,
-            location2
-        ]
-    ],
-	locations: [
-		location3,
-	]
-});
-
-const player = game.newPlayer({
-    name: 'jacob',
-    zone,
-    coords: [0, 0],
-});
-
-game.stages.addStage('whatwhat');
-game.setStage('whatwhat');
-
-window['game'] = game;
-window['world'] = world;
-window['location1'] = location1;
-window['location2'] = location2;
-window['zone'] = zone;
-window['player'] = player;
+// import {
+//     Game,
+//     World,
+//     Zone,
+//     Location,
+//     Player,
+// 	Npc,
+// } from '@asciiroth/core';
+//
+// const game = new Game('hello');
+//
+// let world = game.newWorld('testWorld');
+//
+// const location1 = new Location({
+//     name: 'test1',
+// });
+//
+// const location2 = new Location({
+//     name: 'test2'
+// });
+//
+// const location3 = new Location({
+//     name: 'test3',
+// 	coords: [4, 5],
+// });
+//
+// const zone = world.newZone({
+//     name: 'hello',
+//     grid: [
+//         [
+//             location1,
+//             location2
+//         ]
+//     ],
+// 	locations: [
+// 		location3,
+// 	]
+// });
+//
+// const player = game.newPlayer({
+//     name: 'jacob',
+//     zone,
+//     coords: [0, 0],
+// });
+//
+// game.stages.addStage('whatwhat');
+// game.setStage('whatwhat');
+//
+// window['game'] = game;
+// window['world'] = world;
+// window['location1'] = location1;
+// window['location2'] = location2;
+// window['zone'] = zone;
+// window['player'] = player;
 
 //
 // declare const document: HTMLDocument;
