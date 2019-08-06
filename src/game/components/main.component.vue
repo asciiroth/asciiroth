@@ -3,6 +3,9 @@
 		<div id="left">
 			<h1>hello world</h1>
 			<p>current location: {{ playerCurrentLocation.name }}</p>
+			<div class="output">
+				<p v-for="output in game.output">{{ output }}</p>
+			</div>
 			<input
 				type="text"
 				@keydown.38.40.prevent
@@ -53,6 +56,7 @@
 		methods: {
 			handleInput(e) {
 				const [ command, ...args ] = e.target.value.split(' ');
+				this.game.addOutput(`${ command } ${ args }`);
 				if (command === 'walk') {
 					if (!args || !args.length) {
 						console.error('direction is not defined');

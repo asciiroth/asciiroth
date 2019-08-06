@@ -18249,6 +18249,16 @@ var Game = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(Game.prototype, "output", {
+        get: function () {
+            return this._output;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Game.prototype.addOutput = function (output) {
+        this._output.push(output);
+    };
     return Game;
 }());
 exports.Game = Game;
@@ -19565,6 +19575,8 @@ exports.default = {
           command = _a[0],
           args = _a.slice(1);
 
+      this.game.addOutput(command + " " + args);
+
       if (command === 'walk') {
         if (!args || !args.length) {
           console.error('direction is not defined');
@@ -19588,14 +19600,14 @@ exports.default = {
     }
   }
 };
-        var $a49a64 = exports.default || module.exports;
+        var $2e9fa6 = exports.default || module.exports;
       
-      if (typeof $a49a64 === 'function') {
-        $a49a64 = $a49a64.options;
+      if (typeof $2e9fa6 === 'function') {
+        $2e9fa6 = $2e9fa6.options;
       }
     
         /* template */
-        Object.assign($a49a64, (function () {
+        Object.assign($2e9fa6, (function () {
           var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -19607,6 +19619,15 @@ exports.default = {
       _c("p", [
         _vm._v("current location: " + _vm._s(_vm.playerCurrentLocation.name))
       ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "output" },
+        _vm._l(_vm.game.output, function(output) {
+          return _c("p", [_vm._v(_vm._s(output))])
+        }),
+        0
+      ),
       _vm._v(" "),
       _c("input", {
         attrs: { type: "text" },
@@ -19644,7 +19665,7 @@ render._withStripped = true
             render: render,
             staticRenderFns: staticRenderFns,
             _compiled: true,
-            _scopeId: "data-v-a49a64",
+            _scopeId: "data-v-2e9fa6",
             functional: undefined
           };
         })());
@@ -19657,9 +19678,9 @@ render._withStripped = true
         if (api.compatible) {
           module.hot.accept();
           if (!module.hot.data) {
-            api.createRecord('$a49a64', $a49a64);
+            api.createRecord('$2e9fa6', $2e9fa6);
           } else {
-            api.reload('$a49a64', $a49a64);
+            api.reload('$2e9fa6', $2e9fa6);
           }
         }
 
@@ -20688,7 +20709,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53691" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50524" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
