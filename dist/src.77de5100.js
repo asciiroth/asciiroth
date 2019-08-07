@@ -18106,224 +18106,6 @@ var Class = /** @class */ (function () {
 }());
 exports.Class = Class;
 
-},{}],"../node_modules/@asciiroth/core/lib/Entity.class.js":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var Entity = /** @class */ (function () {
-    function Entity(options) {
-        Object.assign(this, options);
-    }
-    Entity.prototype.setId = function (id) {
-        this.id = id;
-    };
-    Entity.prototype.hasAction = function (action) {
-        if (this.actions.includes(action)) {
-            return true;
-        }
-        return false;
-    };
-    return Entity;
-}());
-exports.Entity = Entity;
-
-},{}],"../node_modules/@asciiroth/core/lib/Entities.class.js":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var _1 = require("./");
-var Entities = /** @class */ (function () {
-    function Entities() {
-        this._entities = {};
-    }
-    Entities.prototype.addEntity = function (options) {
-        var entity = new _1.Entity(name);
-        this._entities[entity.id] = entity;
-    };
-    Entities.prototype.addNpc = function (options) {
-        var npc = new _1.Npc(name);
-        this._entities[npc.id] = npc;
-    };
-    Entities.prototype.removeEntity = function (name) {
-        delete this._entities[name];
-    };
-    Entities.prototype.findEntity = function (name) {
-        return this._entities[name];
-    };
-    Object.defineProperty(Entities.prototype, "entities", {
-        get: function () {
-            return Object.values(this._entities);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return Entities;
-}());
-exports.Entities = Entities;
-
-},{"./":"../node_modules/@asciiroth/core/lib/index.js"}],"../node_modules/@asciiroth/core/lib/Faction.class.js":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var Faction = /** @class */ (function () {
-    function Faction(name) {
-        if (name === void 0) { name = 'hello'; }
-        this.name = name;
-    }
-    return Faction;
-}());
-exports.Faction = Faction;
-
-},{}],"../node_modules/@asciiroth/core/lib/Game.class.js":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var _1 = require("./");
-var Game = /** @class */ (function () {
-    function Game(_name) {
-        this._name = _name;
-        this._stages = new _1.Stages();
-        this._output = [];
-    }
-    Object.defineProperty(Game.prototype, "name", {
-        get: function () {
-            return this._name;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Game.prototype.newWorld = function (name) {
-        this._world = new _1.World(name);
-        return this._world;
-    };
-    Game.prototype.setWorld = function (world) {
-        this._world = world;
-    };
-    Object.defineProperty(Game.prototype, "world", {
-        get: function () {
-            return this._world;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Game.prototype.newPlayer = function (options) {
-        if (!this.world) {
-            throw new Error('Game must have a world before you can add a new player.');
-        }
-        options.world = this._world;
-        options.game = this;
-        this._player = new _1.Player(options);
-        return this._player;
-    };
-    Game.prototype.setPlayer = function (player) {
-        this._player = player;
-    };
-    Object.defineProperty(Game.prototype, "player", {
-        get: function () {
-            return this._player;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(Game.prototype, "stage", {
-        get: function () {
-            return this._stage.name;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Game.prototype.setStage = function (stageName) {
-        var stage = this._stages.findStage(stageName);
-        if (stage) {
-            this._stage = stage;
-            return;
-        }
-        throw new Error("Cannot find stage " + stageName);
-    };
-    Object.defineProperty(Game.prototype, "stages", {
-        get: function () {
-            return this._stages;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(Game.prototype, "entities", {
-        get: function () {
-            return this._entities;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(Game.prototype, "output", {
-        get: function () {
-            return this._output;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Game.prototype.addOutput = function (output) {
-        this._output.push(output);
-    };
-    return Game;
-}());
-exports.Game = Game;
-
-},{"./":"../node_modules/@asciiroth/core/lib/index.js"}],"../node_modules/@asciiroth/core/lib/Input.class.js":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var Input = /** @class */ (function () {
-    function Input(name) {
-        if (name === void 0) { name = 'hello'; }
-        this.name = name;
-    }
-    return Input;
-}());
-exports.Input = Input;
-// this could be passed a dom element and an event with a keycode and a callback. It will check for all the things and then fire a callback 
-
-},{}],"../node_modules/@asciiroth/core/lib/Location.class.js":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var Location = /** @class */ (function () {
-    function Location(options) {
-        var _this = this;
-        this.entities = [];
-        this.name = options.name || '';
-        this.description = options.description || '';
-        this.image = options.description || '';
-        this.coords = options.coords || null;
-        if (options.entities) {
-            options.entities.forEach(function (entity) { return _this.addEntity(entity); });
-        }
-    }
-    Location.prototype.addEntity = function (entity) {
-        entity.setId(this.generateId());
-        this.entities.push(entity);
-    };
-    Location.prototype.removeEntity = function (entityId) {
-        this.entities = this.entities.filter(function (entity) { return entity.id !== entityId; });
-    };
-    Location.prototype.findEntity = function (name) {
-        if (!name) {
-            return null;
-        }
-        return this.entities.find(function (entity) { return entity.referenceNames.map(function (name) { return name.toLowerCase(); }).includes(name.toLowerCase()); });
-    };
-    Location.prototype.generateId = function () {
-        return "e_" + performance.now();
-    };
-    return Location;
-}());
-exports.Location = Location;
-
-},{}],"../node_modules/@asciiroth/core/lib/Inventory.class.js":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var Inventory = /** @class */ (function () {
-    function Inventory(name) {
-        if (name === void 0) { name = 'hello'; }
-        this.name = name;
-    }
-    return Inventory;
-}());
-exports.Inventory = Inventory;
-
 },{}],"../node_modules/@asciiroth/core/node_modules/tslib/tslib.es6.js":[function(require,module,exports) {
 "use strict";
 
@@ -18748,6 +18530,247 @@ function __importDefault(mod) {
     default: mod
   };
 }
+},{}],"../node_modules/@asciiroth/core/lib/Entity.class.js":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var Entity = /** @class */ (function () {
+    function Entity(options) {
+        if (options.actions) {
+            this.actions = tslib_1.__assign({}, this.actions, options.actions);
+            delete options.actions;
+        }
+        Object.assign(this, options);
+        this.setId(performance.now());
+    }
+    Entity.prototype.setId = function (id) {
+        this.id = id;
+    };
+    Entity.prototype.hasAction = function (action) {
+        if (this.actions.includes(action)) {
+            return true;
+        }
+        return false;
+    };
+    Entity.prototype.action = function (action, payload) {
+        return this.actions[action](this._game, payload);
+    };
+    Entity.prototype.addAction = function (name, action) {
+        this.actions[name] = action;
+    };
+    return Entity;
+}());
+exports.Entity = Entity;
+
+},{"tslib":"../node_modules/@asciiroth/core/node_modules/tslib/tslib.es6.js"}],"../node_modules/@asciiroth/core/lib/Entities.class.js":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var _1 = require("./");
+var Entities = /** @class */ (function () {
+    function Entities() {
+        this._entities = {};
+    }
+    Entities.prototype.addEntity = function (options) {
+        var entity = new _1.Entity(options);
+        this._entities[entity.id] = entity;
+        return this._entities[entity.id];
+    };
+    Entities.prototype.addNpc = function (options) {
+        console.log(options);
+        var npc = new _1.Npc(options);
+        this._entities[npc.id] = npc;
+        return this._entities[npc.id];
+    };
+    Entities.prototype.removeEntity = function (name) {
+        delete this._entities[name];
+    };
+    Entities.prototype.findEntity = function (name) {
+        return this._entities[name];
+    };
+    Object.defineProperty(Entities.prototype, "entities", {
+        get: function () {
+            return Object.values(this._entities);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return Entities;
+}());
+exports.Entities = Entities;
+
+},{"./":"../node_modules/@asciiroth/core/lib/index.js"}],"../node_modules/@asciiroth/core/lib/Faction.class.js":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var Faction = /** @class */ (function () {
+    function Faction(name) {
+        if (name === void 0) { name = 'hello'; }
+        this.name = name;
+    }
+    return Faction;
+}());
+exports.Faction = Faction;
+
+},{}],"../node_modules/@asciiroth/core/lib/Game.class.js":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var _1 = require("./");
+var Game = /** @class */ (function () {
+    function Game(_name) {
+        this._name = _name;
+        this._stages = new _1.Stages();
+        this._entities = new _1.Entities();
+        this._output = [];
+    }
+    Object.defineProperty(Game.prototype, "name", {
+        get: function () {
+            return this._name;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Game.prototype.newWorld = function (name) {
+        this._world = new _1.World(name);
+        return this._world;
+    };
+    Game.prototype.setWorld = function (world) {
+        this._world = world;
+    };
+    Object.defineProperty(Game.prototype, "world", {
+        get: function () {
+            return this._world;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Game.prototype.newPlayer = function (options) {
+        if (!this.world) {
+            throw new Error('Game must have a world before you can add a new player.');
+        }
+        options.world = this._world;
+        options.game = this;
+        this._player = new _1.Player(options);
+        return this._player;
+    };
+    Game.prototype.setPlayer = function (player) {
+        this._player = player;
+    };
+    Object.defineProperty(Game.prototype, "player", {
+        get: function () {
+            return this._player;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Game.prototype, "stage", {
+        get: function () {
+            return this._stage.name;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Game.prototype.setStage = function (stageName) {
+        var stage = this._stages.findStage(stageName);
+        if (stage) {
+            this._stage = stage;
+            return;
+        }
+        throw new Error("Cannot find stage " + stageName);
+    };
+    Object.defineProperty(Game.prototype, "stages", {
+        get: function () {
+            return this._stages;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Game.prototype, "entities", {
+        get: function () {
+            return this._entities;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Game.prototype, "output", {
+        get: function () {
+            return this._output;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Game.prototype.addOutput = function (output) {
+        this._output.push(output);
+    };
+    Game.prototype.newEntity = function (options) {
+        return this._entities.addEntity(tslib_1.__assign({}, options, { _game: this }));
+    };
+    Game.prototype.newNpc = function (options) {
+        return this._entities.addNpc(tslib_1.__assign({}, options, { _game: this }));
+    };
+    return Game;
+}());
+exports.Game = Game;
+
+},{"tslib":"../node_modules/@asciiroth/core/node_modules/tslib/tslib.es6.js","./":"../node_modules/@asciiroth/core/lib/index.js"}],"../node_modules/@asciiroth/core/lib/Input.class.js":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var Input = /** @class */ (function () {
+    function Input(name) {
+        if (name === void 0) { name = 'hello'; }
+        this.name = name;
+    }
+    return Input;
+}());
+exports.Input = Input;
+// this could be passed a dom element and an event with a keycode and a callback. It will check for all the things and then fire a callback 
+
+},{}],"../node_modules/@asciiroth/core/lib/Location.class.js":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var Location = /** @class */ (function () {
+    function Location(options) {
+        var _this = this;
+        this.entities = [];
+        this.name = options.name || '';
+        this.description = options.description || '';
+        this.image = options.description || '';
+        this.coords = options.coords || null;
+        if (options.entities) {
+            options.entities.forEach(function (entity) { return _this.addEntity(entity); });
+        }
+    }
+    Location.prototype.addEntity = function (entity) {
+        entity.setId(this.generateId());
+        this.entities.push(entity);
+    };
+    Location.prototype.removeEntity = function (entityId) {
+        this.entities = this.entities.filter(function (entity) { return entity.id !== entityId; });
+    };
+    Location.prototype.findEntity = function (name) {
+        if (!name) {
+            return null;
+        }
+        return this.entities.find(function (entity) { return entity.referenceNames.filter(function (name) { return name.toLowerCase(); }).includes(name.toLowerCase()); });
+    };
+    Location.prototype.generateId = function () {
+        return "e_" + performance.now();
+    };
+    return Location;
+}());
+exports.Location = Location;
+
+},{}],"../node_modules/@asciiroth/core/lib/Inventory.class.js":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var Inventory = /** @class */ (function () {
+    function Inventory(name) {
+        if (name === void 0) { name = 'hello'; }
+        this.name = name;
+    }
+    return Inventory;
+}());
+exports.Inventory = Inventory;
+
 },{}],"../node_modules/@asciiroth/core/lib/Npc.class.js":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -18782,14 +18805,8 @@ var Npc = /** @class */ (function (_super) {
         Object.assign(_this, options);
         return _this;
     }
-    Npc.prototype.action = function (action, payload) {
-        return this.actions[action](this._game, payload);
-    };
     Npc.prototype.removeHp = function (amount) {
         return this.hp -= amount;
-    };
-    Npc.prototype.addAction = function (name, action) {
-        this.actions[name] = action;
     };
     return Npc;
 }(_1.Entity));
@@ -19551,14 +19568,29 @@ exports.default = {
   data: function data() {
     var game = new core_1.Game('World of Asciiroth');
     var world = game.newWorld('Eastern Kingdoms');
+    var a = game.newNpc({
+      name: 'Hooligan',
+      referenceNames: ['hooligan'],
+      actions: {
+        rally: function rally(game, payload) {
+          console.log('ruugabuuga');
+        }
+      }
+    });
     var zone = world.newZone({
       name: 'Elwynn Forest',
       locations: [new core_1.Location({
         name: 'Northshire Abbey',
         coords: [0, 1],
         entities: [new core_1.Entity({
-          name: 'Broom'
-        })]
+          name: 'Broom',
+          referenceNames: ['broom'],
+          actions: {
+            talk: function talk(game, payload) {
+              console.log('a');
+            }
+          }
+        }), a]
       }), new core_1.Location({
         name: 'Northshire Valley',
         coords: [0, 0],
@@ -19572,6 +19604,7 @@ exports.default = {
     });
     return {
       game: game,
+      a: a,
       currentInput: ''
     };
   },
@@ -19618,14 +19651,14 @@ exports.default = {
     }
   }
 };
-        var $b420d8 = exports.default || module.exports;
+        var $a49a64 = exports.default || module.exports;
       
-      if (typeof $b420d8 === 'function') {
-        $b420d8 = $b420d8.options;
+      if (typeof $a49a64 === 'function') {
+        $a49a64 = $a49a64.options;
       }
     
         /* template */
-        Object.assign($b420d8, (function () {
+        Object.assign($a49a64, (function () {
           var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -19705,7 +19738,7 @@ render._withStripped = true
             render: render,
             staticRenderFns: staticRenderFns,
             _compiled: true,
-            _scopeId: "data-v-b420d8",
+            _scopeId: "data-v-a49a64",
             functional: undefined
           };
         })());
@@ -19718,9 +19751,9 @@ render._withStripped = true
         if (api.compatible) {
           module.hot.accept();
           if (!module.hot.data) {
-            api.createRecord('$b420d8', $b420d8);
+            api.createRecord('$a49a64', $a49a64);
           } else {
-            api.reload('$b420d8', $b420d8);
+            api.reload('$a49a64', $a49a64);
           }
         }
 
@@ -20749,7 +20782,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60139" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51480" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

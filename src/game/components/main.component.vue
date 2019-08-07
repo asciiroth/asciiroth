@@ -34,6 +34,17 @@
 		data() {
 			const game = new Game('World of Asciiroth')
 			const world = game.newWorld('Eastern Kingdoms')
+
+			const a = game.newNpc({
+				name: 'Hooligan',
+				referenceNames: ['hooligan'],
+				actions: {
+					rally: (game, payload) => {
+						console.log('ruugabuuga');
+					},
+				},
+			})
+
 			const zone = world.newZone({
 				name: 'Elwynn Forest',
 				locations: [
@@ -43,7 +54,14 @@
 						entities: [
 							new Entity({
 								name: 'Broom',
+								referenceNames: ['broom'],
+								actions: {
+									talk: (game, payload) => {
+										console.log('a');
+									}
+								}
 							}),
+							a,
 						],
 					}),
 					new Location({
@@ -54,7 +72,7 @@
 						],
 					}),
 				],
-			}),
+			})
 
 			const player = game.newPlayer({
 				name: 'Jacob',
@@ -64,6 +82,7 @@
 
 			return {
 				game,
+				a,
 				currentInput: '',
 			}
 		},
