@@ -1,7 +1,8 @@
-import { Npc } from '../classes';
-import { EntityActions } from '../enums';
+import {
+	Npc,
+} from '@asciiroth/core';
 
-class AbbyClass extends Npc {
+export class AbbyClass extends Npc {
 	constructor() {
 		super({
 			referenceNames: ['Abby'],
@@ -11,14 +12,9 @@ class AbbyClass extends Npc {
 			hp: 100,
 			strength: 100,
 			defence: 100,
-			actions: [
-				EntityActions.Talk,
-			],
 			speech: {
 				default: 'hello there young one...',
 			}
 		})
 	}
 }
-
-export const Abby = new AbbyClass();
