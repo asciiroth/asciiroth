@@ -19572,7 +19572,7 @@ exports.default = {
       name: 'Hooligan',
       referenceNames: ['hooligan'],
       actions: {
-        rally: function rally(game, payload) {
+        rally: function rally(_game, payload) {
           console.log('ruugabuuga');
         }
       }

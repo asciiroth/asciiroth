@@ -29,6 +29,71 @@
 
 	import { AbbyClass } from '../NPCs/abby.npc';
 
+	/*
+
+	Npc {
+		speech: {
+			default: ‘hello’,
+		}
+	}
+
+	Listeners {
+		private _listeners: [];
+
+		constructor(listeners) {
+			listeners.forEach(listener => {
+				this._listeners.push(window.addEventListener(listener));
+			});
+		}
+	}
+
+	// TBH THIS MAYBE COULD JUST BE ON THE GAME CLASS
+	CommandController {
+		private game: Game;
+		private listeners: Listeners;
+		private actions: {
+			// Name: () =>
+			move(game, args) {
+				const locationEntity =
+				entity = something
+				entity.coords =
+			}
+		}}
+
+		constructor(actions, listeners, game) {
+			this.actions = {…this.actions, …actions);
+			this.listeners = new Listeners(listeners);
+			this.game = game;
+		}
+
+		command(command, ..args) {
+			this.actions[command](this.game, args);
+		}
+	}
+
+	Game {
+		Entities,
+		Locations,
+		Zones,
+	}
+
+	Location {
+		Zone // so now location has a reference to zone, instead of zone having a list of locations
+		…location
+	}
+
+	Entities // same as current Entities cache
+		Entity // Same as current entity class
+
+		Const inputController = new InputController({
+		actions: {
+			talk(game, args) { 			// stuff
+			}
+		}
+	})
+
+	*/
+
 	export default {
 		name: 'MainComponent',
 		data() {
@@ -38,12 +103,22 @@
 			const a = game.newNpc({
 				name: 'Hooligan',
 				referenceNames: ['hooligan'],
-				actions: {
-					rally: (game, payload) => {
-						console.log('ruugabuuga');
-					},
-				},
+				// actions: {
+				// 	rally: (_game, payload) => {
+				// 		console.log('ruugabuuga');
+				// 	},
+
+				// },
+
 			})
+
+			// const commandClass = new commandClass (game,){
+			// 	private game: game;
+			//
+			// 	actions: {
+			// 		rally: (game)
+			// 	}
+			// }
 
 			const zone = world.newZone({
 				name: 'Elwynn Forest',
