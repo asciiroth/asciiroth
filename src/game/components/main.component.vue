@@ -98,66 +98,70 @@
 		name: 'MainComponent',
 		data() {
 			const game = new Game('World of Asciiroth')
-			const world = game.newWorld('Eastern Kingdoms')
 
-			const a = game.newNpc({
-				name: 'Hooligan',
-				referenceNames: ['hooligan'],
-				// actions: {
-				// 	rally: (_game, payload) => {
-				// 		console.log('ruugabuuga');
-				// 	},
+			const stage = game.addStage('characterSelect');
 
-				// },
-
-			})
-
-			// const commandClass = new commandClass (game,){
-			// 	private game: game;
+			game.setStage(stage);
+			// const world = game.newWorld('Eastern Kingdoms')
 			//
-			// 	actions: {
-			// 		rally: (game)
-			// 	}
-			// }
-
-			const zone = world.newZone({
-				name: 'Elwynn Forest',
-				locations: [
-					new Location({
-						name: 'Northshire Abbey',
-						coords: [0, 1],
-						entities: [
-							new Entity({
-								name: 'Broom',
-								referenceNames: ['broom'],
-								actions: {
-									talk: (game, payload) => {
-										console.log('a');
-									}
-								}
-							}),
-							a,
-						],
-					}),
-					new Location({
-						name: 'Northshire Valley',
-						coords: [0, 0],
-						entities: [
-							new AbbyClass(),
-						],
-					}),
-				],
-			})
-
-			const player = game.newPlayer({
-				name: 'Jacob',
-				zone,
-				coords: [0, 0],
-			});
+			// const a = game.newNpc({
+			// 	name: 'Hooligan',
+			// 	referenceNames: ['hooligan'],
+			// 	// actions: {
+			// 	// 	rally: (_game, payload) => {
+			// 	// 		console.log('ruugabuuga');
+			// 	// 	},
+			//
+			// 	// },
+			//
+			// })
+			//
+			// // const commandClass = new commandClass (game,){
+			// // 	private game: game;
+			// //
+			// // 	actions: {
+			// // 		rally: (game)
+			// // 	}
+			// // }
+			//
+			// const zone = world.newZone({
+			// 	name: 'Elwynn Forest',
+			// 	locations: [
+			// 		new Location({
+			// 			name: 'Northshire Abbey',
+			// 			coords: [0, 1],
+			// 			entities: [
+			// 				new Entity({
+			// 					name: 'Broom',
+			// 					referenceNames: ['broom'],
+			// 					actions: {
+			// 						talk: (game, payload) => {
+			// 							console.log('a');
+			// 						}
+			// 					}
+			// 				}),
+			// 				a,
+			// 			],
+			// 		}),
+			// 		new Location({
+			// 			name: 'Northshire Valley',
+			// 			coords: [0, 0],
+			// 			entities: [
+			// 				new AbbyClass(),
+			// 			],
+			// 		}),
+			// 	],
+			// })
+			//
+			// const player = game.newPlayer({
+			// 	name: 'Jacob',
+			// 	zone,
+			// 	coords: [0, 0],
+			// });
 
 			return {
 				game,
-				a,
+				// a,
 				currentInput: '',
 			}
 		},

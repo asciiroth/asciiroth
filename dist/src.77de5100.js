@@ -18610,15 +18610,78 @@ var Faction = /** @class */ (function () {
 }());
 exports.Faction = Faction;
 
+},{}],"../node_modules/@asciiroth/core/lib/stores/Base.store.js":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var BaseStore = /** @class */ (function () {
+    function BaseStore(items) {
+        this._items = [];
+        if (items) {
+            this._items = items.slice();
+        }
+    }
+    Object.defineProperty(BaseStore.prototype, "items", {
+        get: function () {
+            return this._items;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    BaseStore.prototype.find = function (item) {
+        return this._items.find(function (_a) {
+            var id = _a.id;
+            return id === item.id;
+        });
+    };
+    BaseStore.prototype.findIndex = function (item) {
+        return this._items.findIndex(function (_a) {
+            var id = _a.id;
+            return id === item.id;
+        });
+    };
+    BaseStore.prototype.add = function (items) {
+        if (Array.isArray(items)) {
+            for (var _i = 0, items_1 = items; _i < items_1.length; _i++) {
+                var item = items_1[_i];
+                this.addSingleItem(item);
+            }
+            return items;
+        }
+        return this.addSingleItem(items);
+    };
+    BaseStore.prototype.addSingleItem = function (item) {
+        item.id = this.generateId();
+        this._items.push(item);
+        return item;
+    };
+    BaseStore.prototype.delete = function (item) {
+        this._items = this._items.filter(function (_item) { return _item.id !== item.id; });
+    };
+    BaseStore.prototype.update = function (item) {
+        this._items = this._items.map(function (_item) {
+            if (_item.id === item.id) {
+                _item = item;
+            }
+            return item;
+        });
+    };
+    BaseStore.prototype.generateId = function () {
+        return "asciiroth_" + performance.now();
+    };
+    return BaseStore;
+}());
+exports.BaseStore = BaseStore;
+
 },{}],"../node_modules/@asciiroth/core/lib/Game.class.js":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = require("tslib");
 var _1 = require("./");
+var Base_store_1 = require("./stores/Base.store");
 var Game = /** @class */ (function () {
     function Game(_name) {
         this._name = _name;
-        this._stages = new _1.Stages();
+        this._stages = new Base_store_1.BaseStore();
         this._entities = new _1.Entities();
         this._output = [];
     }
@@ -18669,13 +18732,15 @@ var Game = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    Game.prototype.setStage = function (stageName) {
-        var stage = this._stages.findStage(stageName);
+    Game.prototype.addStage = function (name) {
+        var stage = new _1.Stage(name);
+        this._stages.add(stage);
+    };
+    Game.prototype.setStage = function (stage) {
         if (stage) {
             this._stage = stage;
             return;
         }
-        throw new Error("Cannot find stage " + stageName);
     };
     Object.defineProperty(Game.prototype, "stages", {
         get: function () {
@@ -18711,7 +18776,7 @@ var Game = /** @class */ (function () {
 }());
 exports.Game = Game;
 
-},{"tslib":"../node_modules/@asciiroth/core/node_modules/tslib/tslib.es6.js","./":"../node_modules/@asciiroth/core/lib/index.js"}],"../node_modules/@asciiroth/core/lib/Input.class.js":[function(require,module,exports) {
+},{"tslib":"../node_modules/@asciiroth/core/node_modules/tslib/tslib.es6.js","./":"../node_modules/@asciiroth/core/lib/index.js","./stores/Base.store":"../node_modules/@asciiroth/core/lib/stores/Base.store.js"}],"../node_modules/@asciiroth/core/lib/Input.class.js":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Input = /** @class */ (function () {
@@ -18984,9 +19049,9 @@ exports.Race = Race;
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Stage = /** @class */ (function () {
-    function Stage(name) {
-        if (name === void 0) { name = 'hello'; }
+    function Stage(name, id) {
         this.name = name;
+        this.id = id;
     }
     return Stage;
 }());
@@ -19177,42 +19242,7 @@ exports.Zone = Zone_class_1.Zone;
 var Zones_class_1 = require("./Zones.class");
 exports.Zones = Zones_class_1.Zones;
 
-},{"./Ability.class":"../node_modules/@asciiroth/core/lib/Ability.class.js","./AbilityBook.class":"../node_modules/@asciiroth/core/lib/AbilityBook.class.js","./Class.class":"../node_modules/@asciiroth/core/lib/Class.class.js","./Entity.class":"../node_modules/@asciiroth/core/lib/Entity.class.js","./Entities.class":"../node_modules/@asciiroth/core/lib/Entities.class.js","./Faction.class":"../node_modules/@asciiroth/core/lib/Faction.class.js","./Game.class":"../node_modules/@asciiroth/core/lib/Game.class.js","./Input.class":"../node_modules/@asciiroth/core/lib/Input.class.js","./Location.class":"../node_modules/@asciiroth/core/lib/Location.class.js","./Inventory.class":"../node_modules/@asciiroth/core/lib/Inventory.class.js","./Npc.class":"../node_modules/@asciiroth/core/lib/Npc.class.js","./Pet.class":"../node_modules/@asciiroth/core/lib/Pet.class.js","./Player.class":"../node_modules/@asciiroth/core/lib/Player.class.js","./Quest.class":"../node_modules/@asciiroth/core/lib/Quest.class.js","./Race.class":"../node_modules/@asciiroth/core/lib/Race.class.js","./Stage.class":"../node_modules/@asciiroth/core/lib/Stage.class.js","./Stages.class":"../node_modules/@asciiroth/core/lib/Stages.class.js","./World.class":"../node_modules/@asciiroth/core/lib/World.class.js","./Zone.class":"../node_modules/@asciiroth/core/lib/Zone.class.js","./Zones.class":"../node_modules/@asciiroth/core/lib/Zones.class.js"}],"game/NPCs/abby.npc.ts":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var tslib_1 = require("tslib");
-
-var core_1 = require("@asciiroth/core");
-
-var AbbyClass =
-/** @class */
-function (_super) {
-  tslib_1.__extends(AbbyClass, _super);
-
-  function AbbyClass() {
-    return _super.call(this, {
-      referenceNames: ['Abby'],
-      name: 'Abby',
-      description: 'A lady stand before the Abbey and greets new adventurers.',
-      friendly: true,
-      hp: 100,
-      strength: 100,
-      defence: 100,
-      speech: {
-        default: 'hello there young one...'
-      }
-    }) || this;
-  }
-
-  return AbbyClass;
-}(core_1.Npc);
-
-exports.AbbyClass = AbbyClass;
-},{"tslib":"../node_modules/tslib/tslib.es6.js","@asciiroth/core":"../node_modules/@asciiroth/core/lib/index.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+},{"./Ability.class":"../node_modules/@asciiroth/core/lib/Ability.class.js","./AbilityBook.class":"../node_modules/@asciiroth/core/lib/AbilityBook.class.js","./Class.class":"../node_modules/@asciiroth/core/lib/Class.class.js","./Entity.class":"../node_modules/@asciiroth/core/lib/Entity.class.js","./Entities.class":"../node_modules/@asciiroth/core/lib/Entities.class.js","./Faction.class":"../node_modules/@asciiroth/core/lib/Faction.class.js","./Game.class":"../node_modules/@asciiroth/core/lib/Game.class.js","./Input.class":"../node_modules/@asciiroth/core/lib/Input.class.js","./Location.class":"../node_modules/@asciiroth/core/lib/Location.class.js","./Inventory.class":"../node_modules/@asciiroth/core/lib/Inventory.class.js","./Npc.class":"../node_modules/@asciiroth/core/lib/Npc.class.js","./Pet.class":"../node_modules/@asciiroth/core/lib/Pet.class.js","./Player.class":"../node_modules/@asciiroth/core/lib/Player.class.js","./Quest.class":"../node_modules/@asciiroth/core/lib/Quest.class.js","./Race.class":"../node_modules/@asciiroth/core/lib/Race.class.js","./Stage.class":"../node_modules/@asciiroth/core/lib/Stage.class.js","./Stages.class":"../node_modules/@asciiroth/core/lib/Stages.class.js","./World.class":"../node_modules/@asciiroth/core/lib/World.class.js","./Zone.class":"../node_modules/@asciiroth/core/lib/Zone.class.js","./Zones.class":"../node_modules/@asciiroth/core/lib/Zones.class.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -19560,51 +19590,138 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var core_1 = require("@asciiroth/core");
+/*
 
-var abby_npc_1 = require("../NPCs/abby.npc");
+Npc {
+    speech: {
+        default: ‘hello’,
+    }
+}
+
+Listeners {
+    private _listeners: [];
+
+    constructor(listeners) {
+        listeners.forEach(listener => {
+            this._listeners.push(window.addEventListener(listener));
+        });
+    }
+}
+
+// TBH THIS MAYBE COULD JUST BE ON THE GAME CLASS
+CommandController {
+    private game: Game;
+    private listeners: Listeners;
+    private actions: {
+        // Name: () =>
+        move(game, args) {
+            const locationEntity =
+            entity = something
+            entity.coords =
+        }
+    }}
+
+    constructor(actions, listeners, game) {
+        this.actions = {…this.actions, …actions);
+        this.listeners = new Listeners(listeners);
+        this.game = game;
+    }
+
+    command(command, ..args) {
+        this.actions[command](this.game, args);
+    }
+}
+
+Game {
+    Entities,
+    Locations,
+    Zones,
+}
+
+Location {
+    Zone // so now location has a reference to zone, instead of zone having a list of locations
+    …location
+}
+
+Entities // same as current Entities cache
+    Entity // Same as current entity class
+
+    Const inputController = new InputController({
+    actions: {
+        talk(game, args) {
+            // stuff
+        }
+    }
+})
+
+*/
+
 
 exports.default = {
   name: 'MainComponent',
   data: function data() {
     var game = new core_1.Game('World of Asciiroth');
-    var world = game.newWorld('Eastern Kingdoms');
-    var a = game.newNpc({
-      name: 'Hooligan',
-      referenceNames: ['hooligan'],
-      actions: {
-        rally: function rally(_game, payload) {
-          console.log('ruugabuuga');
-        }
-      }
-    });
-    var zone = world.newZone({
-      name: 'Elwynn Forest',
-      locations: [new core_1.Location({
-        name: 'Northshire Abbey',
-        coords: [0, 1],
-        entities: [new core_1.Entity({
-          name: 'Broom',
-          referenceNames: ['broom'],
-          actions: {
-            talk: function talk(game, payload) {
-              console.log('a');
-            }
-          }
-        }), a]
-      }), new core_1.Location({
-        name: 'Northshire Valley',
-        coords: [0, 0],
-        entities: [new abby_npc_1.AbbyClass()]
-      })]
-    });
-    var player = game.newPlayer({
-      name: 'Jacob',
-      zone: zone,
-      coords: [0, 0]
-    });
+    var stage = game.addStage('characterSelect');
+    game.setStage(stage); // const world = game.newWorld('Eastern Kingdoms')
+    //
+    // const a = game.newNpc({
+    // 	name: 'Hooligan',
+    // 	referenceNames: ['hooligan'],
+    // 	// actions: {
+    // 	// 	rally: (_game, payload) => {
+    // 	// 		console.log('ruugabuuga');
+    // 	// 	},
+    //
+    // 	// },
+    //
+    // })
+    //
+    // // const commandClass = new commandClass (game,){
+    // // 	private game: game;
+    // //
+    // // 	actions: {
+    // // 		rally: (game)
+    // // 	}
+    // // }
+    //
+    // const zone = world.newZone({
+    // 	name: 'Elwynn Forest',
+    // 	locations: [
+    // 		new Location({
+    // 			name: 'Northshire Abbey',
+    // 			coords: [0, 1],
+    // 			entities: [
+    // 				new Entity({
+    // 					name: 'Broom',
+    // 					referenceNames: ['broom'],
+    // 					actions: {
+    // 						talk: (game, payload) => {
+    // 							console.log('a');
+    // 						}
+    // 					}
+    // 				}),
+    // 				a,
+    // 			],
+    // 		}),
+    // 		new Location({
+    // 			name: 'Northshire Valley',
+    // 			coords: [0, 0],
+    // 			entities: [
+    // 				new AbbyClass(),
+    // 			],
+    // 		}),
+    // 	],
+    // })
+    //
+    // const player = game.newPlayer({
+    // 	name: 'Jacob',
+    // 	zone,
+    // 	coords: [0, 0],
+    // });
+
     return {
       game: game,
-      a: a,
+      // a,
       currentInput: ''
     };
   },
@@ -19764,7 +19881,7 @@ render._withStripped = true
       
       }
     })();
-},{"@asciiroth/core":"../node_modules/@asciiroth/core/lib/index.js","../NPCs/abby.npc":"game/NPCs/abby.npc.ts","_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"../node_modules/vue-hot-reload-api/dist/index.js","vue":"../node_modules/vue/dist/vue.runtime.esm.js"}],"game/components/index.ts":[function(require,module,exports) {
+},{"@asciiroth/core":"../node_modules/@asciiroth/core/lib/index.js","_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"../node_modules/vue-hot-reload-api/dist/index.js","vue":"../node_modules/vue/dist/vue.runtime.esm.js"}],"game/components/index.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -20782,7 +20899,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51480" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50905" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
