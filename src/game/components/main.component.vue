@@ -104,11 +104,29 @@
 		data() {
 			const game = new Game('World of Asciiroth')
 
-			const stage = game.createStage(GameStages.CharacterSelect);
+			const world = game.newWorld('Eastern Kingdoms');
 
-			console.log(stage);
+			const zone = game.newZone({
+				name: 'Zone 1',
+			});
 
-			game.setStage(GameStages.CharacterSelect);
+			const location = game.newLocation({
+				name: 'Location 1',
+			});
+
+			const player = game.newPlayer({
+				name: 'Jacob',
+				world,
+				zone,
+				location,
+			})
+
+
+			//const stage = game.createStage(GameStages.CharacterSelect);
+
+			//console.log(stage);
+
+			//game.setStage(GameStages.CharacterSelect);
 			// const world = game.newWorld('Eastern Kingdoms')
 			//
 			// const a = game.newNpc({
@@ -166,6 +184,8 @@
 			// 	coords: [0, 0],
 			// });
 
+			window['game'] = game;
+
 			return {
 				game,
 				// a,
@@ -179,27 +199,7 @@
 
 				this.currentInput = '';
 
-				if (command === 'walk') {
-					if (!args || !args.length) {
-						this.game.addOutput('Direction is not defined');
-					}
-
-					this.game.player.action(command, {
-						direction: args[0],
-					});
-				}
-
-				if (command === 'talk') {
-					if (!args || !args.length) {
-						this.game.addOutput('Who would you like to talk to?');
-					}
-
-					const target = this.playerCurrentLocation.findEntity(args[0]);
-
-					target.action(command, {
-						talkSubject: args[1] || undefined,
-					});
-				}
+				this.game.action(command, args);
 			}
 		},
 		computed: {

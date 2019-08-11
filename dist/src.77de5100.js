@@ -18082,18 +18082,6 @@ var Ability = /** @class */ (function () {
 }());
 exports.Ability = Ability;
 
-},{}],"../node_modules/@asciiroth/core/lib/AbilityBook.class.js":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var AbilityBook = /** @class */ (function () {
-    function AbilityBook(name) {
-        if (name === void 0) { name = 'hello'; }
-        this.name = name;
-    }
-    return AbilityBook;
-}());
-exports.AbilityBook = AbilityBook;
-
 },{}],"../node_modules/@asciiroth/core/lib/Class.class.js":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -18541,11 +18529,7 @@ var Entity = /** @class */ (function () {
             delete options.actions;
         }
         Object.assign(this, options);
-        this.setId(performance.now());
     }
-    Entity.prototype.setId = function (id) {
-        this.id = id;
-    };
     Entity.prototype.hasAction = function (action) {
         if (this.actions.includes(action)) {
             return true;
@@ -18617,12 +18601,19 @@ var BaseStore = /** @class */ (function () {
     function BaseStore(items) {
         this._items = [];
         if (items) {
-            this._items = items.slice();
+            this.add(items);
         }
     }
     Object.defineProperty(BaseStore.prototype, "items", {
         get: function () {
             return this._items;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(BaseStore.prototype, "active", {
+        get: function () {
+            return this._activeItem;
         },
         enumerable: true,
         configurable: true
@@ -18662,7 +18653,9 @@ var BaseStore = /** @class */ (function () {
         return this.addSingleItem(items);
     };
     BaseStore.prototype.addSingleItem = function (item) {
-        item.id = this.generateId();
+        if (!item.id) {
+            item.id = this.generateId();
+        }
         this._items.push(item);
         return item;
     };
@@ -18677,6 +18670,9 @@ var BaseStore = /** @class */ (function () {
             return item;
         });
     };
+    BaseStore.prototype.setActive = function (item) {
+        this._activeItem = this.find(item);
+    };
     BaseStore.prototype.generateId = function () {
         return "asciiroth_" + performance.now();
     };
@@ -18690,34 +18686,92 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = require("tslib");
 var _1 = require("./");
 var Base_store_1 = require("./stores/Base.store");
-var Stages = /** @class */ (function () {
-    function Stages() {
-        this._stages = new Base_store_1.BaseStore();
-    }
-    Stages.prototype.createStage = function (name) {
-        var stage = new _1.Stage(name);
-        this._stages.add(stage);
-        return stage;
-    };
-    return Stages;
-}());
-var Entities = /** @class */ (function () {
-    function Entities() {
-        this._entities = new Base_store_1.BaseStore();
-    }
-    Entities.prototype.createEntity = function (entityOptions) {
-        var entity = new _1.Entity(entityOptions);
-        this._entities.add(entity);
-        return entity;
-    };
-    return Entities;
-}());
+// class Stages {
+// 	private _stages: BaseStore<Stage> = new BaseStore<Stage>();
+//
+// 	public createStage(name: string): Stage {
+//         const stage = new Stage(name);
+//         this._stages.add(stage);
+// 		return stage;
+//     }
+// }
+//
+// class Entities {
+// 	private _entities: BaseStore<Entity> = new BaseStore<Entity>();
+//
+// 	public createEntity(entityOptions: EntityProperties) {
+// 		const entity: Entity = new Entity(entityOptions);
+// 		this._entities.add(entity);
+// 		return entity;
+// 	}
+// }
 var Game = /** @class */ (function () {
     function Game(_name) {
-        _this = _super.call(this) || this;
+        var _this = this;
         this._name = _name;
-        this._entities = new Entities();
+        this._stages = new Base_store_1.BaseStore();
+        this._zones = new Base_store_1.BaseStore();
+        this._worlds = new Base_store_1.BaseStore();
+        this._locations = new Base_store_1.BaseStore();
+        this._npcs = new Base_store_1.BaseStore();
+        this._entities = new Base_store_1.BaseStore();
+        this._quests = new Base_store_1.BaseStore();
+        this._abilities = new Base_store_1.BaseStore();
         this._output = [];
+        this._actions = {
+            talk: function (args) {
+                // args will be something like ['abby']
+                var name = args[0], subject = args[1];
+                if (!name) {
+                    return _this.addOutput('Who would you like to talk to?');
+                }
+                var target = _this._npcs.find(name);
+                if (target.speech[subject]) {
+                    return _this.addOutput(target.speech[subject]);
+                }
+                _this.addOutput(target.speech.default);
+            },
+            walk: function (args) {
+                var _a;
+                var direction = args[0];
+                if (!direction) {
+                    return _this.addOutput('Which direction would you like to walk?');
+                }
+                var availableDirections = (_a = _this._player.zone).getAvailableDirections.apply(_a, _this._player.coords);
+                console.log(availableDirections);
+                // switch (direction || '') {
+                //     case 'north':
+                //         if (this._player.zone.areCoordsInGrid(this.coords[0], this.coords[1] + 1)) {
+                //             this.coords = [this.coords[0], this.coords[1] + 1];
+                //             return true;
+                //         } else {
+                //             return false;
+                //         }
+                //     case 'east':
+                //         if (this._player.zone.areCoordsInGrid(this.coords[0] + 1, this.coords[1])) {
+                //             this.coords = [this.coords[0] + 1, this.coords[1]];
+                //             return true;
+                //         } else {
+                //             return false;
+                //         }
+                //     case 'south':
+                //         if (this._player.zone.areCoordsInGrid(this.coords[0], this.coords[1] - 1)) {
+                //             this.coords = [this.coords[0], this.coords[1] - 1];
+                //             return true;
+                //         } else {
+                //             return false;
+                //         }
+                //     case 'south':
+                //         if (this._player.zone.areCoordsInGrid(this.coords[0] - 1, this.coords[1])) {
+                //             this.coords = [this.coords[0] - 1, this.coords[1]];
+                //             return true;
+                //         } else {
+                //             return false;
+                //         }
+                // }
+            }
+        };
+        // super();
     }
     Object.defineProperty(Game.prototype, "name", {
         get: function () {
@@ -18726,25 +18780,89 @@ var Game = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    Game.prototype.newWorld = function (name) {
-        this._world = new _1.World(name);
-        return this._world;
+    Game.prototype.action = function (command, args) {
+        this._actions[command](args);
     };
-    Game.prototype.setWorld = function (world) {
-        this._world = world;
-    };
-    Object.defineProperty(Game.prototype, "world", {
+    Object.defineProperty(Game.prototype, "stage", {
+        // Stages
         get: function () {
-            return this._world;
+            return this._stages.active.name;
         },
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(Game.prototype, "stages", {
+        get: function () {
+            return this._stages;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Game.prototype.addStage = function (name) {
+        var stage = new _1.Stage(name);
+        this._stages.add(stage);
+        return stage;
+    };
+    Game.prototype.setStage = function (stage) {
+        this._stages.setActive(stage);
+    };
+    // Worlds
+    Game.prototype.newWorld = function (name) {
+        var world = new _1.World(name);
+        this._worlds.add(world);
+        return world;
+    };
+    Game.prototype.setWorld = function (world) {
+        this._worlds.setActive(world);
+    };
+    Object.defineProperty(Game.prototype, "world", {
+        get: function () {
+            return this._worlds.active;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Game.prototype, "worlds", {
+        get: function () {
+            return this._worlds;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    // Zones
+    Game.prototype.newZone = function (name) {
+        var zone = new _1.Zone(name);
+        this._zones.add(zone);
+        return zone;
+    };
+    Game.prototype.setZone = function (zone) {
+        this._zones.setActive(zone);
+    };
+    Object.defineProperty(Game.prototype, "zones", {
+        get: function () {
+            return this._zones;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    // Locations
+    Game.prototype.newLocation = function (options) {
+        var location = new _1.Location(options);
+        this._locations.add(location);
+        return location;
+    };
+    Object.defineProperty(Game.prototype, "locations", {
+        get: function () {
+            return this._locations;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    // Player
     Game.prototype.newPlayer = function (options) {
-        if (!this.world) {
+        if (!options.world) {
             throw new Error('Game must have a world before you can add a new player.');
         }
-        options.world = this._world;
         this._player = new _1.Player(options);
         return this._player;
     };
@@ -18758,34 +18876,22 @@ var Game = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(Game.prototype, "stage", {
-        get: function () {
-            return this._stage.name;
-        },
-        enumerable: true,
-        configurable: true
-    });
     Object.defineProperty(Game.prototype, "entities", {
-        // public addStage(name: string): Stage {
-        //     const stage = new Stage(name);
-        //     this._stages.add(stage);
-        // 	return stage;
-        // }
-        //
-        // public setStage(stage: Stage | string): void {
-        // 	this._stage = this._stages.find(stage);
-        // }
-        //
-        // public get stages(): BaseStore<Stage> {
-        //     return this._stages;
-        // }
+        // Entities
         get: function () {
-            return this._entities;
+            return this._entities.items;
         },
         enumerable: true,
         configurable: true
     });
+    Game.prototype.newEntity = function (options) {
+        return this._entities.add(new _1.Entity(tslib_1.__assign({}, options, { _game: this })));
+    };
+    Game.prototype.newNpc = function (options) {
+        return this._entities.add(new _1.Npc(tslib_1.__assign({}, options, { _game: this })));
+    };
     Object.defineProperty(Game.prototype, "output", {
+        // Output
         get: function () {
             return this._output;
         },
@@ -18794,12 +18900,6 @@ var Game = /** @class */ (function () {
     });
     Game.prototype.addOutput = function (output) {
         this._output.push(output);
-    };
-    Game.prototype.newEntity = function (options) {
-        return this._entities.addEntity(tslib_1.__assign({}, options, { _game: this }));
-    };
-    Game.prototype.newNpc = function (options) {
-        return this._entities.addNpc(tslib_1.__assign({}, options, { _game: this }));
     };
     return Game;
 }());
@@ -18821,39 +18921,23 @@ exports.Input = Input;
 },{}],"../node_modules/@asciiroth/core/lib/Location.class.js":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var Base_store_1 = require("./stores/Base.store");
 var Location = /** @class */ (function () {
     function Location(options) {
-        var _this = this;
-        this.entities = [];
+        this.entities = new Base_store_1.BaseStore();
         this.name = options.name || '';
         this.description = options.description || '';
         this.image = options.description || '';
         this.coords = options.coords || null;
         if (options.entities) {
-            options.entities.forEach(function (entity) { return _this.addEntity(entity); });
+            this.entities.add(options.entities);
         }
     }
-    Location.prototype.addEntity = function (entity) {
-        entity.setId(this.generateId());
-        this.entities.push(entity);
-    };
-    Location.prototype.removeEntity = function (entityId) {
-        this.entities = this.entities.filter(function (entity) { return entity.id !== entityId; });
-    };
-    Location.prototype.findEntity = function (name) {
-        if (!name) {
-            return null;
-        }
-        return this.entities.find(function (entity) { return entity.referenceNames.filter(function (name) { return name.toLowerCase(); }).includes(name.toLowerCase()); });
-    };
-    Location.prototype.generateId = function () {
-        return "e_" + performance.now();
-    };
     return Location;
 }());
 exports.Location = Location;
 
-},{}],"../node_modules/@asciiroth/core/lib/Inventory.class.js":[function(require,module,exports) {
+},{"./stores/Base.store":"../node_modules/@asciiroth/core/lib/stores/Base.store.js"}],"../node_modules/@asciiroth/core/lib/Inventory.class.js":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Inventory = /** @class */ (function () {
@@ -18872,29 +18956,36 @@ var tslib_1 = require("tslib");
 var _1 = require("./");
 var Npc = /** @class */ (function (_super) {
     tslib_1.__extends(Npc, _super);
+    // public actions: {
+    //     [name: string]: Function,
+    // } = {
+    //         'talk': (game: Game, payload?: NpcActionPayload) => {
+    //             if (payload && payload.talkSubject) {
+    //                 switch (payload.talkSubject) {
+    //                     default:
+    //                         game.addOutput(<string>this.speech.default);
+    //                 }
+    //             }
+    //
+    //             if (!payload && this.speech && this.speech.default) {
+    //                 game.addOutput(<string>this.speech.default);
+    //             }
+    //
+    //             game.addOutput(`${this.name} doesn't seem to want to talk...`);
+    //             return;
+    //         },
+    //         'attack': (game: Game, payload: NpcActionPayload) => {
+    //             this.removeHp(payload.hp);
+    //         }
+    //     }
     function Npc(options) {
         var _this = _super.call(this, options) || this;
         _this.hp = 5;
         _this.strength = 5;
         _this.defence = 5;
         _this.friendly = true;
-        _this.actions = {
-            'talk': function (game, payload) {
-                if (payload && payload.talkSubject) {
-                    switch (payload.talkSubject) {
-                        default:
-                            game.addOutput(_this.speech.default);
-                    }
-                }
-                if (!payload && _this.speech && _this.speech.default) {
-                    game.addOutput(_this.speech.default);
-                }
-                game.addOutput(_this.name + " doesn't seem to want to talk...");
-                return;
-            },
-            'attack': function (game, payload) {
-                _this.removeHp(payload.hp);
-            }
+        _this.speech = {
+            default: 'Hello there',
         };
         Object.assign(_this, options);
         return _this;
@@ -18921,8 +19012,43 @@ exports.Pet = Pet;
 Object.defineProperty(exports, "__esModule", { value: true });
 var _1 = require("./");
 var Player = /** @class */ (function () {
+    // public actions: {
+    //     [name: string]: Function,
+    // } = {
+    //         walk: (game: Game, payload: PlayerActionPayload) => {
+    //             switch (payload.direction || '') {
+    //                 case 'north':
+    //                     if (this.zone.areCoordsInGrid(this.coords[0], this.coords[1] + 1)) {
+    //                         this.coords = [this.coords[0], this.coords[1] + 1];
+    //                         return true;
+    //                     } else {
+    //                         return false;
+    //                     }
+    // 				case 'east':
+    //                     if (this.zone.areCoordsInGrid(this.coords[0] + 1, this.coords[1])) {
+    //                         this.coords = [this.coords[0] + 1, this.coords[1]];
+    //                         return true;
+    //                     } else {
+    //                         return false;
+    //                     }
+    //                 case 'south':
+    //                     if (this.zone.areCoordsInGrid(this.coords[0], this.coords[1] - 1)) {
+    //                         this.coords = [this.coords[0], this.coords[1] - 1];
+    //                         return true;
+    //                     } else {
+    //                         return false;
+    //                     }
+    // 				case 'south':
+    //                     if (this.zone.areCoordsInGrid(this.coords[0] - 1, this.coords[1])) {
+    //                         this.coords = [this.coords[0] - 1, this.coords[1]];
+    //                         return true;
+    //                     } else {
+    //                         return false;
+    //                     }
+    //             }
+    //         }
+    //     }
     function Player(options) {
-        var _this = this;
         this.inventory = new _1.Inventory();
         this.xp = 0;
         this.coords = [0, 0];
@@ -18933,44 +19059,6 @@ var Player = /** @class */ (function () {
         this.completedIntroduction = false;
         this.onDeath = function (game) {
             console.log('u ded');
-        };
-        this.actions = {
-            walk: function (game, payload) {
-                switch (payload.direction || '') {
-                    case 'north':
-                        if (_this.zone.areCoordsInGrid(_this.coords[0], _this.coords[1] + 1)) {
-                            _this.coords = [_this.coords[0], _this.coords[1] + 1];
-                            return true;
-                        }
-                        else {
-                            return false;
-                        }
-                    case 'east':
-                        if (_this.zone.areCoordsInGrid(_this.coords[0] + 1, _this.coords[1])) {
-                            _this.coords = [_this.coords[0] + 1, _this.coords[1]];
-                            return true;
-                        }
-                        else {
-                            return false;
-                        }
-                    case 'south':
-                        if (_this.zone.areCoordsInGrid(_this.coords[0], _this.coords[1] - 1)) {
-                            _this.coords = [_this.coords[0], _this.coords[1] - 1];
-                            return true;
-                        }
-                        else {
-                            return false;
-                        }
-                    case 'south':
-                        if (_this.zone.areCoordsInGrid(_this.coords[0] - 1, _this.coords[1])) {
-                            _this.coords = [_this.coords[0] - 1, _this.coords[1]];
-                            return true;
-                        }
-                        else {
-                            return false;
-                        }
-                }
-            }
         };
         Object.assign(this, options);
     }
@@ -18994,12 +19082,13 @@ var Player = /** @class */ (function () {
             // return ifCompleted(questId);
         }, true);
     };
-    Player.prototype.addAction = function (name, action) {
-        this.actions[name] = action;
-    };
-    Player.prototype.action = function (action, payload) {
-        this.actions[action](this._game, payload);
-    };
+    // public addAction(name: string, action: Function): void {
+    //     this.actions[name] = action;
+    // }
+    //
+    // public action(action: string, payload: PlayerActionPayload) {
+    //     this.actions[action](this._game, payload);
+    // }
     Player.prototype.setName = function (name) {
         this.name = name;
     };
@@ -19118,32 +19207,15 @@ exports.Stages = Stages;
 },{"./":"../node_modules/@asciiroth/core/lib/index.js"}],"../node_modules/@asciiroth/core/lib/World.class.js":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var _1 = require("./");
 var World = /** @class */ (function () {
     function World(name) {
         this.name = name;
-        this._zones = new _1.Zones();
     }
-    Object.defineProperty(World.prototype, "zones", {
-        get: function () {
-            return this._zones.zones;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    World.prototype.getZone = function (zone) {
-        return this._zones.findZone(zone);
-    };
-    World.prototype.newZone = function (zone) {
-        var newZone = new _1.Zone(zone);
-        this._zones.addZone(newZone);
-        return newZone;
-    };
     return World;
 }());
 exports.World = World;
 
-},{"./":"../node_modules/@asciiroth/core/lib/index.js"}],"../node_modules/@asciiroth/core/lib/Zone.class.js":[function(require,module,exports) {
+},{}],"../node_modules/@asciiroth/core/lib/Zone.class.js":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Zone = /** @class */ (function () {
@@ -19178,19 +19250,25 @@ var Zone = /** @class */ (function () {
     Zone.prototype.areCoordsInGrid = function (x, y) {
         return this.grid[x] !== undefined && this.grid[x][y] !== undefined ? true : false;
     };
-    Zone.prototype.getCurrentAvailableDirections = function (x, y) {
-        var directions = [];
-        if (this.areCoordsInGrid(x + 1, y)) {
-            directions.push('East');
+    Zone.prototype.getAvailableDirections = function (x, y) {
+        var directions = {};
+        var directionCoords = {
+            north: [x, y + 1],
+            east: [x + 1, y],
+            south: [x, y - 1],
+            west: [x - 1, y],
+        };
+        if (this.areCoordsInGrid.apply(this, directionCoords.north)) {
+            directions.north = this.getLocationAtCoords.apply(this, directionCoords.north);
         }
-        if (this.areCoordsInGrid(x, y - 1)) {
-            directions.push('South');
+        if (this.areCoordsInGrid.apply(this, directionCoords.east)) {
+            directions.east = this.getLocationAtCoords.apply(this, directionCoords.east);
         }
-        if (this.areCoordsInGrid(x - 1, y)) {
-            directions.push('West');
+        if (this.areCoordsInGrid.apply(this, directionCoords.south)) {
+            directions.south = this.getLocationAtCoords.apply(this, directionCoords.south);
         }
-        if (this.areCoordsInGrid(x, y + 1)) {
-            directions.push('North');
+        if (this.areCoordsInGrid.apply(this, directionCoords.west)) {
+            directions.west = this.getLocationAtCoords.apply(this, directionCoords.west);
         }
         return directions;
     };
@@ -19232,8 +19310,6 @@ exports.Zones = Zones;
 Object.defineProperty(exports, "__esModule", { value: true });
 var Ability_class_1 = require("./Ability.class");
 exports.Ability = Ability_class_1.Ability;
-var AbilityBook_class_1 = require("./AbilityBook.class");
-exports.AbilityBook = AbilityBook_class_1.AbilityBook;
 var Class_class_1 = require("./Class.class");
 exports.Class = Class_class_1.Class;
 var Entity_class_1 = require("./Entity.class");
@@ -19271,7 +19347,7 @@ exports.Zone = Zone_class_1.Zone;
 var Zones_class_1 = require("./Zones.class");
 exports.Zones = Zones_class_1.Zones;
 
-},{"./Ability.class":"../node_modules/@asciiroth/core/lib/Ability.class.js","./AbilityBook.class":"../node_modules/@asciiroth/core/lib/AbilityBook.class.js","./Class.class":"../node_modules/@asciiroth/core/lib/Class.class.js","./Entity.class":"../node_modules/@asciiroth/core/lib/Entity.class.js","./Entities.class":"../node_modules/@asciiroth/core/lib/Entities.class.js","./Faction.class":"../node_modules/@asciiroth/core/lib/Faction.class.js","./Game.class":"../node_modules/@asciiroth/core/lib/Game.class.js","./Input.class":"../node_modules/@asciiroth/core/lib/Input.class.js","./Location.class":"../node_modules/@asciiroth/core/lib/Location.class.js","./Inventory.class":"../node_modules/@asciiroth/core/lib/Inventory.class.js","./Npc.class":"../node_modules/@asciiroth/core/lib/Npc.class.js","./Pet.class":"../node_modules/@asciiroth/core/lib/Pet.class.js","./Player.class":"../node_modules/@asciiroth/core/lib/Player.class.js","./Quest.class":"../node_modules/@asciiroth/core/lib/Quest.class.js","./Race.class":"../node_modules/@asciiroth/core/lib/Race.class.js","./Stage.class":"../node_modules/@asciiroth/core/lib/Stage.class.js","./Stages.class":"../node_modules/@asciiroth/core/lib/Stages.class.js","./World.class":"../node_modules/@asciiroth/core/lib/World.class.js","./Zone.class":"../node_modules/@asciiroth/core/lib/Zone.class.js","./Zones.class":"../node_modules/@asciiroth/core/lib/Zones.class.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+},{"./Ability.class":"../node_modules/@asciiroth/core/lib/Ability.class.js","./Class.class":"../node_modules/@asciiroth/core/lib/Class.class.js","./Entity.class":"../node_modules/@asciiroth/core/lib/Entity.class.js","./Entities.class":"../node_modules/@asciiroth/core/lib/Entities.class.js","./Faction.class":"../node_modules/@asciiroth/core/lib/Faction.class.js","./Game.class":"../node_modules/@asciiroth/core/lib/Game.class.js","./Input.class":"../node_modules/@asciiroth/core/lib/Input.class.js","./Location.class":"../node_modules/@asciiroth/core/lib/Location.class.js","./Inventory.class":"../node_modules/@asciiroth/core/lib/Inventory.class.js","./Npc.class":"../node_modules/@asciiroth/core/lib/Npc.class.js","./Pet.class":"../node_modules/@asciiroth/core/lib/Pet.class.js","./Player.class":"../node_modules/@asciiroth/core/lib/Player.class.js","./Quest.class":"../node_modules/@asciiroth/core/lib/Quest.class.js","./Race.class":"../node_modules/@asciiroth/core/lib/Race.class.js","./Stage.class":"../node_modules/@asciiroth/core/lib/Stage.class.js","./Stages.class":"../node_modules/@asciiroth/core/lib/Stages.class.js","./World.class":"../node_modules/@asciiroth/core/lib/World.class.js","./Zone.class":"../node_modules/@asciiroth/core/lib/Zone.class.js","./Zones.class":"../node_modules/@asciiroth/core/lib/Zones.class.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -19697,9 +19773,22 @@ exports.default = {
   name: 'MainComponent',
   data: function data() {
     var game = new core_1.Game('World of Asciiroth');
-    var stage = game.createStage(GameStages.CharacterSelect);
-    console.log(stage);
-    game.setStage(GameStages.CharacterSelect); // const world = game.newWorld('Eastern Kingdoms')
+    var world = game.newWorld('Eastern Kingdoms');
+    var zone = game.newZone({
+      name: 'Zone 1'
+    });
+    var location = game.newLocation({
+      name: 'Location 1'
+    });
+    var player = game.newPlayer({
+      name: 'Jacob',
+      world: world,
+      zone: zone,
+      location: location
+    }); //const stage = game.createStage(GameStages.CharacterSelect);
+    //console.log(stage);
+    //game.setStage(GameStages.CharacterSelect);
+    // const world = game.newWorld('Eastern Kingdoms')
     //
     // const a = game.newNpc({
     // 	name: 'Hooligan',
@@ -19756,6 +19845,7 @@ exports.default = {
     // 	coords: [0, 0],
     // });
 
+    window['game'] = game;
     return {
       game: game,
       // a,
@@ -19770,27 +19860,7 @@ exports.default = {
 
       this.game.addOutput(command + " " + args);
       this.currentInput = '';
-
-      if (command === 'walk') {
-        if (!args || !args.length) {
-          this.game.addOutput('Direction is not defined');
-        }
-
-        this.game.player.action(command, {
-          direction: args[0]
-        });
-      }
-
-      if (command === 'talk') {
-        if (!args || !args.length) {
-          this.game.addOutput('Who would you like to talk to?');
-        }
-
-        var target = this.playerCurrentLocation.findEntity(args[0]);
-        target.action(command, {
-          talkSubject: args[1] || undefined
-        });
-      }
+      this.game.action(command, args);
     }
   },
   computed: {
@@ -19805,14 +19875,14 @@ exports.default = {
     }
   }
 };
-        var $b420d8 = exports.default || module.exports;
+        var $2e9fa6 = exports.default || module.exports;
       
-      if (typeof $b420d8 === 'function') {
-        $b420d8 = $b420d8.options;
+      if (typeof $2e9fa6 === 'function') {
+        $2e9fa6 = $2e9fa6.options;
       }
     
         /* template */
-        Object.assign($b420d8, (function () {
+        Object.assign($2e9fa6, (function () {
           var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -19892,7 +19962,7 @@ render._withStripped = true
             render: render,
             staticRenderFns: staticRenderFns,
             _compiled: true,
-            _scopeId: "data-v-b420d8",
+            _scopeId: "data-v-2e9fa6",
             functional: undefined
           };
         })());
@@ -19905,9 +19975,9 @@ render._withStripped = true
         if (api.compatible) {
           module.hot.accept();
           if (!module.hot.data) {
-            api.createRecord('$b420d8', $b420d8);
+            api.createRecord('$2e9fa6', $2e9fa6);
           } else {
-            api.reload('$b420d8', $b420d8);
+            api.reload('$2e9fa6', $2e9fa6);
           }
         }
 
@@ -20936,7 +21006,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50897" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64821" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
