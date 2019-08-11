@@ -114,13 +114,23 @@
 				name: 'Location 2',
 			});
 
+			const location3 = game.newLocation({
+				name: 'Location 3',
+			});
+
 			const zone = game.newZone({
 				name: 'Zone 1',
 				grid: [
 					[
-						location1,
 						location2,
 					],
+					[
+						location1,
+
+					],
+					[
+						location3,
+					]
 				],
 			});
 
@@ -128,7 +138,7 @@
 				name: 'Jacob',
 				world,
 				zone,
-				location,
+				location1,
 			})
 
 			//const stage = game.createStage(GameStages.CharacterSelect);

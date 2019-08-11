@@ -18830,8 +18830,8 @@ var Game = /** @class */ (function () {
         configurable: true
     });
     // Zones
-    Game.prototype.newZone = function (name) {
-        var zone = new _1.Zone(name);
+    Game.prototype.newZone = function (options) {
+        var zone = new _1.Zone(options);
         this._zones.add(zone);
         return zone;
     };
@@ -18928,11 +18928,21 @@ var Location = /** @class */ (function () {
         this.name = options.name || '';
         this.description = options.description || '';
         this.image = options.description || '';
-        this.coords = options.coords || null;
+        this._coords = options.coords || null;
         if (options.entities) {
             this.entities.add(options.entities);
         }
     }
+    Object.defineProperty(Location.prototype, "coords", {
+        get: function () {
+            return this._coords;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Location.prototype.setCoords = function (x, y) {
+        this._coords = [x, y];
+    };
     return Location;
 }());
 exports.Location = Location;
@@ -19228,21 +19238,33 @@ var Zone = /** @class */ (function () {
             this.setGrid(options.grid);
         }
         if (options.locations) {
-            this.locations = options.locations.slice();
+            this.locations = options.locations;
             options.locations.forEach(function (location) {
-                if (!location.coords) {
-                    throw new Error(location.name + " in zone: " + _this.name + " must have coordinates unless specifying 'grid' option.");
-                }
-                var _a = location.coords, x = _a[0], y = _a[1];
-                if (!_this.grid[x]) {
-                    _this.grid[x] = [];
-                }
-                _this.grid[x][y] = location;
+                _this.addLocation(location);
             });
         }
     }
+    Zone.prototype.addLocation = function (location) {
+        if (!location.coords) {
+            throw new Error(location.name + " in zone: " + this.name + " must have coordinates unless specifying 'grid' option.");
+        }
+        var _a = location.coords, x = _a[0], y = _a[1];
+        if (!this.grid[x]) {
+            this.grid[x] = [];
+        }
+        this.grid[x][y] = location;
+    };
     Zone.prototype.setGrid = function (grid) {
         this.grid = grid;
+        for (var x = 0; x < grid.length; x++) {
+            for (var y = 0; y < grid.length; y++) {
+                if (grid[x][y]) {
+                    grid[x][y].setCoords(x, y);
+                }
+            }
+        }
+        var locations = grid.flat();
+        this.locations = locations;
     };
     Zone.prototype.getLocationAtCoords = function (x, y) {
         return this.grid[x][y];
@@ -19270,6 +19292,7 @@ var Zone = /** @class */ (function () {
         if (this.areCoordsInGrid.apply(this, directionCoords.west)) {
             directions.west = this.getLocationAtCoords.apply(this, directionCoords.west);
         }
+        console.log(this.grid);
         return directions;
     };
     return Zone;
@@ -19780,15 +19803,18 @@ exports.default = {
     var location2 = game.newLocation({
       name: 'Location 2'
     });
+    var location3 = game.newLocation({
+      name: 'Location 3'
+    });
     var zone = game.newZone({
       name: 'Zone 1',
-      grid: [[location1, location2]]
+      grid: [[location2], [location1], [location3]]
     });
     var player = game.newPlayer({
       name: 'Jacob',
       world: world,
       zone: zone,
-      location: location
+      location1: location1
     }); //const stage = game.createStage(GameStages.CharacterSelect);
     //console.log(stage);
     //game.setStage(GameStages.CharacterSelect);
@@ -21010,7 +21036,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64821" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51274" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
