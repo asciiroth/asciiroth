@@ -18628,12 +18628,24 @@ var BaseStore = /** @class */ (function () {
         configurable: true
     });
     BaseStore.prototype.find = function (item) {
+        if (typeof item === 'string') {
+            return this._items.find(function (_a) {
+                var name = _a.name;
+                return name === item;
+            });
+        }
         return this._items.find(function (_a) {
             var id = _a.id;
             return id === item.id;
         });
     };
     BaseStore.prototype.findIndex = function (item) {
+        if (typeof item === 'string' || typeof item === 'number') {
+            return this._items.findIndex(function (_a) {
+                var name = _a.name;
+                return name === item;
+            });
+        }
         return this._items.findIndex(function (_a) {
             var id = _a.id;
             return id === item.id;
@@ -18678,11 +18690,33 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = require("tslib");
 var _1 = require("./");
 var Base_store_1 = require("./stores/Base.store");
+var Stages = /** @class */ (function () {
+    function Stages() {
+        this._stages = new Base_store_1.BaseStore();
+    }
+    Stages.prototype.createStage = function (name) {
+        var stage = new _1.Stage(name);
+        this._stages.add(stage);
+        return stage;
+    };
+    return Stages;
+}());
+var Entities = /** @class */ (function () {
+    function Entities() {
+        this._entities = new Base_store_1.BaseStore();
+    }
+    Entities.prototype.createEntity = function (entityOptions) {
+        var entity = new _1.Entity(entityOptions);
+        this._entities.add(entity);
+        return entity;
+    };
+    return Entities;
+}());
 var Game = /** @class */ (function () {
     function Game(_name) {
+        _this = _super.call(this) || this;
         this._name = _name;
-        this._stages = new Base_store_1.BaseStore();
-        this._entities = new _1.Entities();
+        this._entities = new Entities();
         this._output = [];
     }
     Object.defineProperty(Game.prototype, "name", {
@@ -18711,7 +18745,6 @@ var Game = /** @class */ (function () {
             throw new Error('Game must have a world before you can add a new player.');
         }
         options.world = this._world;
-        options.game = this;
         this._player = new _1.Player(options);
         return this._player;
     };
@@ -18732,24 +18765,20 @@ var Game = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    Game.prototype.addStage = function (name) {
-        var stage = new _1.Stage(name);
-        this._stages.add(stage);
-    };
-    Game.prototype.setStage = function (stage) {
-        if (stage) {
-            this._stage = stage;
-            return;
-        }
-    };
-    Object.defineProperty(Game.prototype, "stages", {
-        get: function () {
-            return this._stages;
-        },
-        enumerable: true,
-        configurable: true
-    });
     Object.defineProperty(Game.prototype, "entities", {
+        // public addStage(name: string): Stage {
+        //     const stage = new Stage(name);
+        //     this._stages.add(stage);
+        // 	return stage;
+        // }
+        //
+        // public setStage(stage: Stage | string): void {
+        // 	this._stage = this._stages.find(stage);
+        // }
+        //
+        // public get stages(): BaseStore<Stage> {
+        //     return this._stages;
+        // }
         get: function () {
             return this._entities;
         },
@@ -19657,12 +19686,20 @@ Entities // same as current Entities cache
 */
 
 
+var GameStages;
+
+(function (GameStages) {
+  GameStages[GameStages["CharacterSelect"] = 0] = "CharacterSelect";
+  GameStages[GameStages["InGame"] = 1] = "InGame";
+})(GameStages || (GameStages = {}));
+
 exports.default = {
   name: 'MainComponent',
   data: function data() {
     var game = new core_1.Game('World of Asciiroth');
-    var stage = game.addStage('characterSelect');
-    game.setStage(stage); // const world = game.newWorld('Eastern Kingdoms')
+    var stage = game.createStage(GameStages.CharacterSelect);
+    console.log(stage);
+    game.setStage(GameStages.CharacterSelect); // const world = game.newWorld('Eastern Kingdoms')
     //
     // const a = game.newNpc({
     // 	name: 'Hooligan',
@@ -19768,14 +19805,14 @@ exports.default = {
     }
   }
 };
-        var $a49a64 = exports.default || module.exports;
+        var $b420d8 = exports.default || module.exports;
       
-      if (typeof $a49a64 === 'function') {
-        $a49a64 = $a49a64.options;
+      if (typeof $b420d8 === 'function') {
+        $b420d8 = $b420d8.options;
       }
     
         /* template */
-        Object.assign($a49a64, (function () {
+        Object.assign($b420d8, (function () {
           var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -19855,7 +19892,7 @@ render._withStripped = true
             render: render,
             staticRenderFns: staticRenderFns,
             _compiled: true,
-            _scopeId: "data-v-a49a64",
+            _scopeId: "data-v-b420d8",
             functional: undefined
           };
         })());
@@ -19868,9 +19905,9 @@ render._withStripped = true
         if (api.compatible) {
           module.hot.accept();
           if (!module.hot.data) {
-            api.createRecord('$a49a64', $a49a64);
+            api.createRecord('$b420d8', $b420d8);
           } else {
-            api.reload('$a49a64', $a49a64);
+            api.reload('$b420d8', $b420d8);
           }
         }
 
@@ -20899,7 +20936,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50905" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50897" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

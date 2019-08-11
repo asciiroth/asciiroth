@@ -94,14 +94,21 @@
 
 	*/
 
+	enum GameStages {
+		CharacterSelect,
+		InGame,
+	}
+
 	export default {
 		name: 'MainComponent',
 		data() {
 			const game = new Game('World of Asciiroth')
 
-			const stage = game.addStage('characterSelect');
+			const stage = game.createStage(GameStages.CharacterSelect);
 
-			game.setStage(stage);
+			console.log(stage);
+
+			game.setStage(GameStages.CharacterSelect);
 			// const world = game.newWorld('Eastern Kingdoms')
 			//
 			// const a = game.newNpc({
