@@ -106,12 +106,22 @@
 
 			const world = game.newWorld('Eastern Kingdoms');
 
-			const zone = game.newZone({
-				name: 'Zone 1',
+			const location1 = game.newLocation({
+				name: 'Location 1',
 			});
 
-			const location = game.newLocation({
-				name: 'Location 1',
+			const location2 = game.newLocation({
+				name: 'Location 2',
+			});
+
+			const zone = game.newZone({
+				name: 'Zone 1',
+				grid: [
+					[
+						location1,
+						location2,
+					],
+				],
 			});
 
 			const player = game.newPlayer({
@@ -120,7 +130,6 @@
 				zone,
 				location,
 			})
-
 
 			//const stage = game.createStage(GameStages.CharacterSelect);
 

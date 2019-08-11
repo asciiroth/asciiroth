@@ -19774,11 +19774,15 @@ exports.default = {
   data: function data() {
     var game = new core_1.Game('World of Asciiroth');
     var world = game.newWorld('Eastern Kingdoms');
-    var zone = game.newZone({
-      name: 'Zone 1'
-    });
-    var location = game.newLocation({
+    var location1 = game.newLocation({
       name: 'Location 1'
+    });
+    var location2 = game.newLocation({
+      name: 'Location 2'
+    });
+    var zone = game.newZone({
+      name: 'Zone 1',
+      grid: [[location1, location2]]
     });
     var player = game.newPlayer({
       name: 'Jacob',
