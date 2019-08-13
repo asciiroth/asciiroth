@@ -105,9 +105,20 @@
 			const game = new Game('World of Asciiroth')
 
 			const world = game.newWorld('Eastern Kingdoms');
+			game.setWorld(world);
+
+			const abby = game.newNpc({
+				name: 'Abby',
+				referenceNames: ['Abby'],
+				
+			})
 
 			const location1 = game.newLocation({
 				name: 'Location 1',
+				entities: [
+					abby,
+
+				]
 			});
 
 			const location2 = game.newLocation({
@@ -138,7 +149,7 @@
 				name: 'Jacob',
 				world,
 				zone,
-				location1,
+				location: location1,
 			})
 
 			//const stage = game.createStage(GameStages.CharacterSelect);
@@ -226,7 +237,7 @@
 				if (!this.game.world) {
 					return 'no location';
 				}
-				return this.game.player.zone.getLocationAtCoords(...this.game.player.coords);
+				return this.game.player.location;
 			}
 		}
 	}

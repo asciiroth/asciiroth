@@ -18622,7 +18622,7 @@ var BaseStore = /** @class */ (function () {
         if (typeof item === 'string') {
             return this._items.find(function (_a) {
                 var name = _a.name;
-                return name === item;
+                return name.toLowerCase() === item;
             });
         }
         return this._items.find(function (_a) {
@@ -18721,11 +18721,14 @@ var Game = /** @class */ (function () {
         this._actions = {
             talk: function (args) {
                 // args will be something like ['abby']
-                var name = args[0], subject = args[1];
+                var _a = args.map(function (item) { return item.toLowerCase(); }), name = _a[0], subject = _a[1];
                 if (!name) {
                     return _this.addOutput('Who would you like to talk to?');
                 }
-                var target = _this._npcs.find(name);
+                var target = _this.player.location.entities.find(name);
+                if (!target) {
+                    return _this.addOutput("Cannot find " + name);
+                }
                 if (target.speech[subject]) {
                     return _this.addOutput(target.speech[subject]);
                 }
@@ -18738,37 +18741,10 @@ var Game = /** @class */ (function () {
                     return _this.addOutput('Which direction would you like to walk?');
                 }
                 var availableDirections = (_a = _this._player.zone).getAvailableDirections.apply(_a, _this._player.coords);
-                console.log(availableDirections);
-                // switch (direction || '') {
-                //     case 'north':
-                //         if (this._player.zone.areCoordsInGrid(this.coords[0], this.coords[1] + 1)) {
-                //             this.coords = [this.coords[0], this.coords[1] + 1];
-                //             return true;
-                //         } else {
-                //             return false;
-                //         }
-                //     case 'east':
-                //         if (this._player.zone.areCoordsInGrid(this.coords[0] + 1, this.coords[1])) {
-                //             this.coords = [this.coords[0] + 1, this.coords[1]];
-                //             return true;
-                //         } else {
-                //             return false;
-                //         }
-                //     case 'south':
-                //         if (this._player.zone.areCoordsInGrid(this.coords[0], this.coords[1] - 1)) {
-                //             this.coords = [this.coords[0], this.coords[1] - 1];
-                //             return true;
-                //         } else {
-                //             return false;
-                //         }
-                //     case 'south':
-                //         if (this._player.zone.areCoordsInGrid(this.coords[0] - 1, this.coords[1])) {
-                //             this.coords = [this.coords[0] - 1, this.coords[1]];
-                //             return true;
-                //         } else {
-                //             return false;
-                //         }
-                // }
+                if (availableDirections[direction]) {
+                    return _this._player.setLocation(availableDirections[direction]);
+                }
+                return _this.addOutput('Cannot move in that direction');
             }
         };
         // super();
@@ -18885,10 +18861,10 @@ var Game = /** @class */ (function () {
         configurable: true
     });
     Game.prototype.newEntity = function (options) {
-        return this._entities.add(new _1.Entity(tslib_1.__assign({}, options, { _game: this })));
+        return this._entities.add(new _1.Entity(tslib_1.__assign({}, options)));
     };
     Game.prototype.newNpc = function (options) {
-        return this._entities.add(new _1.Npc(tslib_1.__assign({}, options, { _game: this })));
+        return this._entities.add(new _1.Npc(tslib_1.__assign({}, options)));
     };
     Object.defineProperty(Game.prototype, "output", {
         // Output
@@ -19071,6 +19047,9 @@ var Player = /** @class */ (function () {
             console.log('u ded');
         };
         Object.assign(this, options);
+        if (options.location && !options.coords) {
+            this.coords = options.location.coords;
+        }
     }
     Object.defineProperty(Player.prototype, "spells", {
         get: function () {
@@ -19107,6 +19086,10 @@ var Player = /** @class */ (function () {
     };
     Player.prototype.setZone = function (zone) {
         this.zone = zone;
+    };
+    Player.prototype.setLocation = function (location) {
+        this.location = location;
+        this.coords = location.coords;
     };
     Player.prototype.setClass = function (playerClass) {
         this.class = playerClass;
@@ -19257,7 +19240,7 @@ var Zone = /** @class */ (function () {
     Zone.prototype.setGrid = function (grid) {
         this.grid = grid;
         for (var x = 0; x < grid.length; x++) {
-            for (var y = 0; y < grid.length; y++) {
+            for (var y = 0; y < grid[x].length; y++) {
                 if (grid[x][y]) {
                     grid[x][y].setCoords(x, y);
                 }
@@ -19292,7 +19275,6 @@ var Zone = /** @class */ (function () {
         if (this.areCoordsInGrid.apply(this, directionCoords.west)) {
             directions.west = this.getLocationAtCoords.apply(this, directionCoords.west);
         }
-        console.log(this.grid);
         return directions;
     };
     return Zone;
@@ -19797,8 +19779,14 @@ exports.default = {
   data: function data() {
     var game = new core_1.Game('World of Asciiroth');
     var world = game.newWorld('Eastern Kingdoms');
+    game.setWorld(world);
+    var abby = game.newNpc({
+      name: 'Abby',
+      referenceNames: ['Abby']
+    });
     var location1 = game.newLocation({
-      name: 'Location 1'
+      name: 'Location 1',
+      entities: [abby]
     });
     var location2 = game.newLocation({
       name: 'Location 2'
@@ -19814,7 +19802,7 @@ exports.default = {
       name: 'Jacob',
       world: world,
       zone: zone,
-      location1: location1
+      location: location1
     }); //const stage = game.createStage(GameStages.CharacterSelect);
     //console.log(stage);
     //game.setStage(GameStages.CharacterSelect);
@@ -19895,24 +19883,22 @@ exports.default = {
   },
   computed: {
     playerCurrentLocation: function playerCurrentLocation() {
-      var _a;
-
       if (!this.game.world) {
         return 'no location';
       }
 
-      return (_a = this.game.player.zone).getLocationAtCoords.apply(_a, this.game.player.coords);
+      return this.game.player.location;
     }
   }
 };
-        var $2e9fa6 = exports.default || module.exports;
+        var $a49a64 = exports.default || module.exports;
       
-      if (typeof $2e9fa6 === 'function') {
-        $2e9fa6 = $2e9fa6.options;
+      if (typeof $a49a64 === 'function') {
+        $a49a64 = $a49a64.options;
       }
     
         /* template */
-        Object.assign($2e9fa6, (function () {
+        Object.assign($a49a64, (function () {
           var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -19992,7 +19978,7 @@ render._withStripped = true
             render: render,
             staticRenderFns: staticRenderFns,
             _compiled: true,
-            _scopeId: "data-v-2e9fa6",
+            _scopeId: "data-v-a49a64",
             functional: undefined
           };
         })());
@@ -20005,9 +19991,9 @@ render._withStripped = true
         if (api.compatible) {
           module.hot.accept();
           if (!module.hot.data) {
-            api.createRecord('$2e9fa6', $2e9fa6);
+            api.createRecord('$a49a64', $a49a64);
           } else {
-            api.reload('$2e9fa6', $2e9fa6);
+            api.reload('$a49a64', $a49a64);
           }
         }
 
@@ -21036,7 +21022,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51274" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61327" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
