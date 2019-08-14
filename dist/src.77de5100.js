@@ -18594,6 +18594,19 @@ var Faction = /** @class */ (function () {
 }());
 exports.Faction = Faction;
 
+},{}],"../node_modules/@asciiroth/core/lib/utils/Utils.class.js":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var Utils = /** @class */ (function () {
+    function Utils() {
+    }
+    Utils.calculateBaseDamage = function (strength, defence) {
+        return strength * (defence / defence);
+    };
+    return Utils;
+}());
+exports.Utils = Utils;
+
 },{}],"../node_modules/@asciiroth/core/lib/stores/Base.store.js":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -18685,26 +18698,8 @@ exports.BaseStore = BaseStore;
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = require("tslib");
 var _1 = require("./");
+var Utils_class_1 = require("./utils/Utils.class");
 var Base_store_1 = require("./stores/Base.store");
-// class Stages {
-// 	private _stages: BaseStore<Stage> = new BaseStore<Stage>();
-//
-// 	public createStage(name: string): Stage {
-//         const stage = new Stage(name);
-//         this._stages.add(stage);
-// 		return stage;
-//     }
-// }
-//
-// class Entities {
-// 	private _entities: BaseStore<Entity> = new BaseStore<Entity>();
-//
-// 	public createEntity(entityOptions: EntityProperties) {
-// 		const entity: Entity = new Entity(entityOptions);
-// 		this._entities.add(entity);
-// 		return entity;
-// 	}
-// }
 var Game = /** @class */ (function () {
     function Game(_name) {
         var _this = this;
@@ -18725,7 +18720,7 @@ var Game = /** @class */ (function () {
                 if (!name) {
                     return _this.addOutput('Who would you like to talk to?');
                 }
-                var target = _this.player.location.entities.find(name);
+                var target = _this.player.location.find(name);
                 if (!target) {
                     return _this.addOutput("Cannot find " + name);
                 }
@@ -18745,7 +18740,16 @@ var Game = /** @class */ (function () {
                     return _this._player.setLocation(availableDirections[direction]);
                 }
                 return _this.addOutput('Cannot move in that direction');
-            }
+            },
+            attack: function (args) {
+                var name = args.map(function (item) { return item.toLowerCase(); })[0];
+                var target = _this.player.location.find(name);
+                if (!target) {
+                    return _this.addOutput("Cannot find " + name);
+                }
+                var damage = Utils_class_1.Utils.calculateBaseDamage(_this.player.strength, target.defence);
+                console.log(damage);
+            },
         };
         // super();
     }
@@ -18881,7 +18885,7 @@ var Game = /** @class */ (function () {
 }());
 exports.Game = Game;
 
-},{"tslib":"../node_modules/@asciiroth/core/node_modules/tslib/tslib.es6.js","./":"../node_modules/@asciiroth/core/lib/index.js","./stores/Base.store":"../node_modules/@asciiroth/core/lib/stores/Base.store.js"}],"../node_modules/@asciiroth/core/lib/Input.class.js":[function(require,module,exports) {
+},{"tslib":"../node_modules/@asciiroth/core/node_modules/tslib/tslib.es6.js","./":"../node_modules/@asciiroth/core/lib/index.js","./utils/Utils.class":"../node_modules/@asciiroth/core/lib/utils/Utils.class.js","./stores/Base.store":"../node_modules/@asciiroth/core/lib/stores/Base.store.js"}],"../node_modules/@asciiroth/core/lib/Input.class.js":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Input = /** @class */ (function () {
@@ -18900,13 +18904,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Base_store_1 = require("./stores/Base.store");
 var Location = /** @class */ (function () {
     function Location(options) {
-        this.entities = new Base_store_1.BaseStore();
+        this._entities = new Base_store_1.BaseStore();
         this.name = options.name || '';
         this.description = options.description || '';
         this.image = options.description || '';
         this._coords = options.coords || null;
         if (options.entities) {
-            this.entities.add(options.entities);
+            this._entities.add(options.entities);
         }
     }
     Object.defineProperty(Location.prototype, "coords", {
@@ -18919,6 +18923,16 @@ var Location = /** @class */ (function () {
     Location.prototype.setCoords = function (x, y) {
         this._coords = [x, y];
     };
+    Location.prototype.find = function (name) {
+        return this._entities.find(name);
+    };
+    Object.defineProperty(Location.prototype, "entities", {
+        get: function () {
+            return this._entities.items;
+        },
+        enumerable: true,
+        configurable: true
+    });
     return Location;
 }());
 exports.Location = Location;
@@ -21022,7 +21036,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61327" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50710" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
