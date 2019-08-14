@@ -18,7 +18,9 @@
 		"vue-template-compiler": "^2.6.10"
 	},
 	"dependencies": {
+		"autoprefixer": "^9.6.1",
 		"babel-polyfill": "^6.26.0",
+		"postcss-modules": "^1.4.1",
 		"tslib": "^1.10.0",
 		"vue": "^2.6.10",
 		"vue-hot-reload-api": "^2.3.3",

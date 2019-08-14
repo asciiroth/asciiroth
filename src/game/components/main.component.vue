@@ -1,10 +1,32 @@
 <template>
 	<div id="asciiroth">
 		<div id="left">
-			<h1>hello world</h1>
-			<p>current location: {{ playerCurrentLocation.name }}</p>
-			<p>entities in this location {{ playerCurrentLocation.entities }}</p>
+			<h2>{{ player.zone.name }} <span class="small">{{ player.location.name }}</span></h2>
+			<!-- <p>entities in this location {{ player.entities }}</p> -->
+			<div id="entities" class="card">
+				<h3>Around you, you see:</h3>
+				<div class="entity card" v-for="entity in player.location.entities">
+					<div class="card-left">
+						<img :src="entity.custom.image">
+					</div>
+					<div class="card-right">
+						<h4>{{ entity.name }}</h4>
+						<blockquote>{{ entity.description }}</blockquote>
+						<div class="buttons">
+							<button
+								type="button"
+								name="button"
+								v-for="action in entity.actions"
+								>
+								🗣
+								{{ action }}
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
 			<div class="output">
+				<h1>hello world</h1>
 				<p v-for="output in game.output">{{ output }}</p>
 			</div>
 			<input
@@ -110,8 +132,16 @@
 			const abby = game.newNpc({
 				name: 'Abby',
 				referenceNames: ['Abby'],
-				
-			})
+				description: 'ooh lah lah',
+				speech: {
+					wolf: "Uh oh there's a wolf!",
+					default: "Yo waddup",
+				},
+				actions: [ 'talk', 'trade' ],
+				custom: {
+					image: 'https://gamepedia.cursecdn.com/wowpedia/7/7a/Charactercreate-races_human-female.png?version=708cfbd211c07e688fbae08140874518',
+				},
+			});
 
 			const location1 = game.newLocation({
 				name: 'Location 1',
@@ -225,7 +255,7 @@
 		methods: {
 			handleInput(e) {
 				const [ command, ...args ] = e.target.value.split(' ');
-				this.game.addOutput(`${ command } ${ args }`);
+				this.game.addOutput(`${ command } ${ args.join(' ') }`);
 
 				this.currentInput = '';
 
@@ -233,18 +263,115 @@
 			}
 		},
 		computed: {
-			playerCurrentLocation() {
-				if (!this.game.world) {
-					return 'no location';
-				}
-				return this.game.player.location;
-			}
+			player() {
+				return this.game.player;
+			},
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
+	#left {
+		h2 {
+			font-family: "Luckiest Guy";
+			font-weight: 400;
+			font-size: 1.75rem;
+			margin-top: 0;
+
+			.small {
+				font-family: "Poiret One";
+				color: darken(white, 15%);
+				font-size: 1.25rem;
+				display: block;
+			}
+		}
+
+		.card {
+			padding: 15px;
+			box-shadow: 0 0 2px rgba(0,0,0,0.5);
+			border-radius: 5px;
+			border: 0;
+			background-color: #D5DCF9;
+		}
+
+		button {
+			border: none;
+			appearance: none;
+			padding: 0.5rem 1.25rem;
+			border-radius: 20px;
+			background-color:  #F8FA90;
+			font-weight: bold;
+			cursor: pointer;
+
+			&:hover {
+				background-color: darken(#F8FA90, 20%);
+			}
+		}
+
+		#entities {
+			color: #2B2D42;
+
+			& * {
+				font-family: "Montserrat";
+				font-weight: 400;
+				font-size: 1rem;
+			}
+
+			.entity {
+				position: relative;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				padding: 15px;
+				box-shadow: 0 0 4px rgba(0,0,0,0.2);
+				background-color: white;
+
+				.card-left {
+					flex-shrink: 1;
+
+					img {
+						height: 60px;
+						width: 60px;
+						object-fit: cover;
+						border-radius: 50%;
+						box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
+					}
+				}
+
+				.card-right {
+					flex: 1;
+					padding: 0 1rem;
+
+					h4 {
+						font-weight: bold;
+						margin-top: 0;
+					}
+
+					blockquote {
+						border-left: 2px solid rgba(0,0,0,0.1);
+						padding-left: 1rem;
+						margin-left: 0;
+
+						&:after, &:before {
+
+						}
+					}
+
+					.buttons {
+						button {
+							box-shadow: 2px 1px 2px rgba(0,0,0,0.2);
+						}
+
+						button:not(:first-child) {
+							margin-left: 0.5rem;
+						}
+					}
+				}
+			}
+		}
+	}
+
 	input {
-		font-size: 2rem;
+		font-size: 1rem;
 	}
 </style>

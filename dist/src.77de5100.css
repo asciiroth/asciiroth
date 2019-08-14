@@ -1,3 +1,80 @@
-input[data-v-a49a64] {
-  font-size: 2rem;
+#left h2[data-v-2e9fa6] {
+  font-family: "Luckiest Guy";
+  font-weight: 400;
+  font-size: 1.75rem;
+  margin-top: 0;
+}
+#left h2 .small[data-v-2e9fa6] {
+  font-family: "Poiret One";
+  color: #d9d9d9;
+  font-size: 1.25rem;
+  display: block;
+}
+#left .card[data-v-2e9fa6] {
+  padding: 15px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  border: 0;
+  background-color: #D5DCF9;
+}
+#left button[data-v-2e9fa6] {
+  border: none;
+  appearance: none;
+  padding: 0.5rem 1.25rem;
+  border-radius: 20px;
+  background-color: #F8FA90;
+  font-weight: bold;
+  cursor: pointer;
+}
+#left button[data-v-2e9fa6]:hover {
+  background-color: #f2f62e;
+}
+#left #entities[data-v-2e9fa6] {
+  color: #2B2D42;
+}
+#left #entities *[data-v-2e9fa6] {
+  font-family: "Montserrat";
+  font-weight: 400;
+  font-size: 1rem;
+}
+#left #entities .entity[data-v-2e9fa6] {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  background-color: white;
+}
+#left #entities .entity .card-left[data-v-2e9fa6] {
+  flex-shrink: 1;
+}
+#left #entities .entity .card-left img[data-v-2e9fa6] {
+  height: 60px;
+  width: 60px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.2);
+}
+#left #entities .entity .card-right[data-v-2e9fa6] {
+  flex: 1;
+  padding: 0 1rem;
+}
+#left #entities .entity .card-right h4[data-v-2e9fa6] {
+  font-weight: bold;
+  margin-top: 0;
+}
+#left #entities .entity .card-right blockquote[data-v-2e9fa6] {
+  border-left: 2px solid rgba(0, 0, 0, 0.1);
+  padding-left: 1rem;
+  margin-left: 0;
+}
+#left #entities .entity .card-right .buttons button[data-v-2e9fa6] {
+  box-shadow: 2px 1px 2px rgba(0, 0, 0, 0.2);
+}
+#left #entities .entity .card-right .buttons button[data-v-2e9fa6]:not(:first-child) {
+  margin-left: 0.5rem;
+}
+input[data-v-2e9fa6] {
+  font-size: 1rem;
 }

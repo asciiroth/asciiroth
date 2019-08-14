@@ -18524,9 +18524,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = require("tslib");
 var Entity = /** @class */ (function () {
     function Entity(options) {
+        this.actions = [];
         if (options.actions) {
-            this.actions = tslib_1.__assign({}, this.actions, options.actions);
+            this.actions = options.actions.slice();
             delete options.actions;
+            this._custom = tslib_1.__assign({}, this._custom, options.custom);
+            delete options.custom;
         }
         Object.assign(this, options);
     }
@@ -18541,6 +18544,16 @@ var Entity = /** @class */ (function () {
     };
     Entity.prototype.addAction = function (name, action) {
         this.actions[name] = action;
+    };
+    Object.defineProperty(Entity.prototype, "custom", {
+        get: function () {
+            return this._custom;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Entity.prototype.addCustom = function (customProperties) {
+        this._custom = tslib_1.__assign({}, this._custom, customProperties);
     };
     return Entity;
 }());
@@ -18731,7 +18744,7 @@ var Game = /** @class */ (function () {
             },
             walk: function (args) {
                 var _a;
-                var direction = args[0];
+                var direction = args.map(function (item) { return item.toLowerCase(); })[0];
                 if (!direction) {
                     return _this.addOutput('Which direction would you like to walk?');
                 }
@@ -18751,7 +18764,6 @@ var Game = /** @class */ (function () {
                 console.log(damage);
             },
         };
-        // super();
     }
     Object.defineProperty(Game.prototype, "name", {
         get: function () {
@@ -19796,7 +19808,16 @@ exports.default = {
     game.setWorld(world);
     var abby = game.newNpc({
       name: 'Abby',
-      referenceNames: ['Abby']
+      referenceNames: ['Abby'],
+      description: 'ooh lah lah',
+      speech: {
+        wolf: "Uh oh there's a wolf!",
+        default: "Yo waddup"
+      },
+      actions: ['talk', 'trade'],
+      custom: {
+        image: 'https://gamepedia.cursecdn.com/wowpedia/7/7a/Charactercreate-races_human-female.png?version=708cfbd211c07e688fbae08140874518'
+      }
     });
     var location1 = game.newLocation({
       name: 'Location 1',
@@ -19890,55 +19911,91 @@ exports.default = {
           command = _a[0],
           args = _a.slice(1);
 
-      this.game.addOutput(command + " " + args);
+      this.game.addOutput(command + " " + args.join(' '));
       this.currentInput = '';
       this.game.action(command, args);
     }
   },
   computed: {
-    playerCurrentLocation: function playerCurrentLocation() {
-      if (!this.game.world) {
-        return 'no location';
-      }
-
-      return this.game.player.location;
+    player: function player() {
+      return this.game.player;
     }
   }
 };
-        var $a49a64 = exports.default || module.exports;
+        var $2e9fa6 = exports.default || module.exports;
       
-      if (typeof $a49a64 === 'function') {
-        $a49a64 = $a49a64.options;
+      if (typeof $2e9fa6 === 'function') {
+        $2e9fa6 = $2e9fa6.options;
       }
     
         /* template */
-        Object.assign($a49a64, (function () {
+        Object.assign($2e9fa6, (function () {
           var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { attrs: { id: "asciiroth" } }, [
     _c("div", { attrs: { id: "left" } }, [
-      _c("h1", [_vm._v("hello world")]),
-      _vm._v(" "),
-      _c("p", [
-        _vm._v("current location: " + _vm._s(_vm.playerCurrentLocation.name))
-      ]),
-      _vm._v(" "),
-      _c("p", [
-        _vm._v(
-          "entities in this location " +
-            _vm._s(_vm.playerCurrentLocation.entities)
-        )
+      _c("h2", [
+        _vm._v(_vm._s(_vm.player.zone.name) + " "),
+        _c("span", { staticClass: "small" }, [
+          _vm._v(_vm._s(_vm.player.location.name))
+        ])
       ]),
       _vm._v(" "),
       _c(
         "div",
+        { staticClass: "card", attrs: { id: "entities" } },
+        [
+          _c("h3", [_vm._v("Around you, you see:")]),
+          _vm._v(" "),
+          _vm._l(_vm.player.location.entities, function(entity) {
+            return _c("div", { staticClass: "entity card" }, [
+              _c("div", { staticClass: "card-left" }, [
+                _c("img", { attrs: { src: entity.custom.image } })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-right" }, [
+                _c("h4", [_vm._v(_vm._s(entity.name))]),
+                _vm._v(" "),
+                _c("blockquote", [_vm._v(_vm._s(entity.description))]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "buttons" },
+                  _vm._l(entity.actions, function(action) {
+                    return _c(
+                      "button",
+                      { attrs: { type: "button", name: "button" } },
+                      [
+                        _vm._v(
+                          "\n\t\t\t\t\t\t\t🗣\n\t\t\t\t\t\t\t" +
+                            _vm._s(action) +
+                            "\n\t\t\t\t\t\t"
+                        )
+                      ]
+                    )
+                  }),
+                  0
+                )
+              ])
+            ])
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
         { staticClass: "output" },
-        _vm._l(_vm.game.output, function(output) {
-          return _c("p", [_vm._v(_vm._s(output))])
-        }),
-        0
+        [
+          _c("h1", [_vm._v("hello world")]),
+          _vm._v(" "),
+          _vm._l(_vm.game.output, function(output) {
+            return _c("p", [_vm._v(_vm._s(output))])
+          })
+        ],
+        2
       ),
       _vm._v(" "),
       _c("input", {
@@ -19992,7 +20049,7 @@ render._withStripped = true
             render: render,
             staticRenderFns: staticRenderFns,
             _compiled: true,
-            _scopeId: "data-v-a49a64",
+            _scopeId: "data-v-2e9fa6",
             functional: undefined
           };
         })());
@@ -20005,9 +20062,9 @@ render._withStripped = true
         if (api.compatible) {
           module.hot.accept();
           if (!module.hot.data) {
-            api.createRecord('$a49a64', $a49a64);
+            api.createRecord('$2e9fa6', $2e9fa6);
           } else {
-            api.reload('$a49a64', $a49a64);
+            api.reload('$2e9fa6', $2e9fa6);
           }
         }
 
@@ -21036,7 +21093,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50710" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62253" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
