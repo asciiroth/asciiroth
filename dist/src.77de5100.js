@@ -19920,6 +19920,13 @@ exports.default = {
     player: function player() {
       return this.game.player;
     }
+  },
+  filters: {
+    capitalize: function capitalize(value) {
+      if (!value) return '';
+      value = value.toString();
+      return value.charAt(0).toUpperCase() + value.slice(1);
+    }
   }
 };
         var $2e9fa6 = exports.default || module.exports;
@@ -19935,43 +19942,40 @@ exports.default = {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { attrs: { id: "asciiroth" } }, [
-    _c("div", { attrs: { id: "left" } }, [
-      _c("h2", [
-        _vm._v(_vm._s(_vm.player.zone.name) + " "),
-        _c("span", { staticClass: "small" }, [
-          _vm._v(_vm._s(_vm.player.location.name))
-        ])
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "card", attrs: { id: "entities" } },
-        [
-          _c("h3", [_vm._v("Around you, you see:")]),
-          _vm._v(" "),
-          _vm._l(_vm.player.location.entities, function(entity) {
-            return _c("div", { staticClass: "entity card" }, [
-              _c("div", { staticClass: "card-left" }, [
-                _c("img", { attrs: { src: entity.custom.image } })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-right" }, [
-                _c("h4", [_vm._v(_vm._s(entity.name))]),
-                _vm._v(" "),
-                _c("blockquote", [_vm._v(_vm._s(entity.description))]),
+    _c("div", { attrs: { id: "grid" } }, [
+      _c("div", { attrs: { id: "top" } }, [
+        _c("div", { staticClass: "left" }, [
+          _c(
+            "div",
+            { attrs: { id: "entities" } },
+            _vm._l(_vm.player.location.entities, function(entity) {
+              return _c("div", { staticClass: "entity" }, [
+                _c("div", { staticClass: "entity-left" }, [
+                  _c("img", {
+                    staticClass: "circle",
+                    attrs: { src: entity.custom.image }
+                  }),
+                  _vm._v(" "),
+                  _c("span", [
+                    _vm._v(_vm._s(_vm._f("capitalize")(entity.name)))
+                  ])
+                ]),
                 _vm._v(" "),
                 _c(
                   "div",
-                  { staticClass: "buttons" },
+                  { staticClass: "entity-right" },
                   _vm._l(entity.actions, function(action) {
                     return _c(
                       "button",
-                      { attrs: { type: "button", name: "button" } },
+                      {
+                        staticClass: "circle",
+                        attrs: { type: "button", name: "button" }
+                      },
                       [
                         _vm._v(
-                          "\n\t\t\t\t\t\t\t🗣\n\t\t\t\t\t\t\t" +
+                          "\n\t\t\t\t\t\t\t\t" +
                             _vm._s(action) +
-                            "\n\t\t\t\t\t\t"
+                            "\n\t\t\t\t\t\t\t"
                         )
                       ]
                     )
@@ -19979,67 +19983,73 @@ exports.default = {
                   0
                 )
               ])
-            ])
-          })
-        ],
-        2
-      ),
+            }),
+            0
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "right" })
+      ]),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "output" },
-        [
-          _c("h1", [_vm._v("hello world")]),
+      _c("div", { attrs: { id: "bottom" } }, [
+        _c("div", { staticClass: "left" }, [
+          _c(
+            "div",
+            { staticClass: "output" },
+            [
+              _c("h1", [_vm._v("hello world")]),
+              _vm._v(" "),
+              _vm._l(_vm.game.output, function(output) {
+                return _c("p", [_vm._v(_vm._s(output))])
+              })
+            ],
+            2
+          ),
           _vm._v(" "),
-          _vm._l(_vm.game.output, function(output) {
-            return _c("p", [_vm._v(_vm._s(output))])
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.currentInput,
+                expression: "currentInput"
+              }
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.currentInput },
+            on: {
+              keydown: function($event) {
+                if (
+                  !$event.type.indexOf("key") &&
+                  $event.keyCode !== 38 &&
+                  $event.keyCode !== 40
+                ) {
+                  return null
+                }
+                $event.preventDefault()
+              },
+              keyup: function($event) {
+                if (
+                  !$event.type.indexOf("key") &&
+                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                ) {
+                  return null
+                }
+                return _vm.handleInput($event)
+              },
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.currentInput = $event.target.value
+              }
+            }
           })
-        ],
-        2
-      ),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.currentInput,
-            expression: "currentInput"
-          }
-        ],
-        attrs: { type: "text" },
-        domProps: { value: _vm.currentInput },
-        on: {
-          keydown: function($event) {
-            if (
-              !$event.type.indexOf("key") &&
-              $event.keyCode !== 38 &&
-              $event.keyCode !== 40
-            ) {
-              return null
-            }
-            $event.preventDefault()
-          },
-          keyup: function($event) {
-            if (
-              !$event.type.indexOf("key") &&
-              _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-            ) {
-              return null
-            }
-            return _vm.handleInput($event)
-          },
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.currentInput = $event.target.value
-          }
-        }
-      })
-    ]),
-    _vm._v(" "),
-    _c("div", { attrs: { id: "right" } })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "right" })
+      ])
+    ])
   ])
 }
 var staticRenderFns = []
@@ -21093,7 +21103,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62253" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59882" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
