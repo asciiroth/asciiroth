@@ -18,8 +18,9 @@
 									name="button"
 									class="circle"
 									v-for="action in entity.actions"
+									@click="callGameAction(action, [entity.name])"
 								>
-									{{ action }}
+									<img :src="action | transformActionIcon">
 								</button>
 							</div>
 							<!-- <div class="card-left">
@@ -278,6 +279,9 @@
 		methods: {
 			handleInput(e) {
 				const [ command, ...args ] = e.target.value.split(' ');
+				this.callGameAction(command, args);
+			},
+			callGameAction(command: string, args: string[]) {
 				this.game.addOutput(`${ command } ${ args.join(' ') }`);
 
 				this.currentInput = '';
@@ -295,6 +299,14 @@
 				if (!value) return ''
 				value = value.toString()
 				return value.charAt(0).toUpperCase() + value.slice(1);
+			},
+			transformActionIcon(value: string): string {
+				switch (value) {
+					case 'trade':
+						return 'https://wow.zamimg.com/images/wow/icons/large/inv_tradeskillitem_01.jpg';
+					default:
+						return '#';
+				}
 			}
 		}
 	}
@@ -376,7 +388,7 @@
 				span {
 					font-weight: bold;
 					color: white;
-					font-size: 1.5rem;
+					font-size: 1.75rem;
 					text-shadow: 2px 2px 2px rgba(0,0,0,0.2);
 				}
 			}
@@ -384,6 +396,9 @@
 			.entity-right {
 				flex-grow: 1;
 				flex-basis: 1;
+				display: flex;
+				align-items: center;
+				justify-content: flex-start;
 				padding: 0 1rem;
 
 				button {
@@ -392,6 +407,26 @@
 					appearance: none;
 					border: none;
 					background-color: #FFDE68;
+					overflow: hidden;
+					padding: 0;
+					cursor: pointer;
+
+					img {
+						height: 105%;
+						width: 105%;
+						object-fit: cover;
+						background: none;
+						border: none;
+						outline: none;
+
+						&[src="#"] {
+							display: none;
+						}
+					}
+
+					&:hover {
+						filter: brightness(80%);
+					}
 				}
 			}
 

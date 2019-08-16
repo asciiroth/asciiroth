@@ -18773,7 +18773,10 @@ var Game = /** @class */ (function () {
         configurable: true
     });
     Game.prototype.action = function (command, args) {
-        this._actions[command](args);
+        if (this._actions[command]) {
+            return this._actions[command](args);
+        }
+        this.addOutput("Command \"" + command + "\" does not exist");
     };
     Object.defineProperty(Game.prototype, "stage", {
         // Stages
@@ -19911,6 +19914,9 @@ exports.default = {
           command = _a[0],
           args = _a.slice(1);
 
+      this.callGameAction(command, args);
+    },
+    callGameAction: function callGameAction(command, args) {
       this.game.addOutput(command + " " + args.join(' '));
       this.currentInput = '';
       this.game.action(command, args);
@@ -19926,17 +19932,26 @@ exports.default = {
       if (!value) return '';
       value = value.toString();
       return value.charAt(0).toUpperCase() + value.slice(1);
+    },
+    transformActionIcon: function transformActionIcon(value) {
+      switch (value) {
+        case 'trade':
+          return 'https://wow.zamimg.com/images/wow/icons/large/inv_tradeskillitem_01.jpg';
+
+        default:
+          return '#';
+      }
     }
   }
 };
-        var $2e9fa6 = exports.default || module.exports;
+        var $a49a64 = exports.default || module.exports;
       
-      if (typeof $2e9fa6 === 'function') {
-        $2e9fa6 = $2e9fa6.options;
+      if (typeof $a49a64 === 'function') {
+        $a49a64 = $a49a64.options;
       }
     
         /* template */
-        Object.assign($2e9fa6, (function () {
+        Object.assign($a49a64, (function () {
           var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -19969,14 +19984,17 @@ exports.default = {
                       "button",
                       {
                         staticClass: "circle",
-                        attrs: { type: "button", name: "button" }
+                        attrs: { type: "button", name: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.callGameAction(action, [entity.name])
+                          }
+                        }
                       },
                       [
-                        _vm._v(
-                          "\n\t\t\t\t\t\t\t\t" +
-                            _vm._s(action) +
-                            "\n\t\t\t\t\t\t\t"
-                        )
+                        _c("img", {
+                          attrs: { src: _vm._f("transformActionIcon")(action) }
+                        })
                       ]
                     )
                   }),
@@ -20059,7 +20077,7 @@ render._withStripped = true
             render: render,
             staticRenderFns: staticRenderFns,
             _compiled: true,
-            _scopeId: "data-v-2e9fa6",
+            _scopeId: "data-v-a49a64",
             functional: undefined
           };
         })());
@@ -20072,9 +20090,9 @@ render._withStripped = true
         if (api.compatible) {
           module.hot.accept();
           if (!module.hot.data) {
-            api.createRecord('$2e9fa6', $2e9fa6);
+            api.createRecord('$a49a64', $a49a64);
           } else {
-            api.reload('$2e9fa6', $2e9fa6);
+            api.reload('$a49a64', $a49a64);
           }
         }
 
@@ -21103,7 +21121,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59882" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49421" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
