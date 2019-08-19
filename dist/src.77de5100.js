@@ -19817,14 +19817,23 @@ exports.default = {
         wolf: "Uh oh there's a wolf!",
         default: "Yo waddup"
       },
-      actions: ['talk', 'trade'],
+      actions: ['talk'],
       custom: {
         image: 'https://gamepedia.cursecdn.com/wowpedia/7/7a/Charactercreate-races_human-female.png?version=708cfbd211c07e688fbae08140874518'
       }
     });
+    var wolf = game.newNpc({
+      name: 'Wolf',
+      referenceNames: ['Wolf'],
+      description: 'A vicious wolf!',
+      actions: ['attack'],
+      custom: {
+        image: 'https://wow.zamimg.com/images/wow/icons/large/ability_hunter_pet_wolf.jpg'
+      }
+    });
     var location1 = game.newLocation({
       name: 'Location 1',
-      entities: [abby]
+      entities: [abby, wolf]
     });
     var location2 = game.newLocation({
       name: 'Location 2'
@@ -19937,6 +19946,12 @@ exports.default = {
       switch (value) {
         case 'trade':
           return 'https://wow.zamimg.com/images/wow/icons/large/inv_tradeskillitem_01.jpg';
+
+        case 'talk':
+          return 'https://image.flaticon.com/icons/png/512/130/130958.png';
+
+        case 'attack':
+          return 'https://wow.zamimg.com/images/wow/icons/large/ability_steelmelee.jpg';
 
         default:
           return '#';
@@ -21121,7 +21136,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49421" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59665" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

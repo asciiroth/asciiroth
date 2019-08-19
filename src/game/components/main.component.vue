@@ -161,9 +161,19 @@
 					wolf: "Uh oh there's a wolf!",
 					default: "Yo waddup",
 				},
-				actions: [ 'talk', 'trade' ],
+				actions: [ 'talk' ],
 				custom: {
 					image: 'https://gamepedia.cursecdn.com/wowpedia/7/7a/Charactercreate-races_human-female.png?version=708cfbd211c07e688fbae08140874518',
+				},
+			});
+
+			const wolf = game.newNpc({
+				name: 'Wolf',
+				referenceNames: ['Wolf'],
+				description: 'A vicious wolf!',
+				actions: [ 'attack' ],
+				custom: {
+					image: 'https://wow.zamimg.com/images/wow/icons/large/ability_hunter_pet_wolf.jpg',
 				},
 			});
 
@@ -171,7 +181,7 @@
 				name: 'Location 1',
 				entities: [
 					abby,
-
+					wolf,
 				]
 			});
 
@@ -304,6 +314,10 @@
 				switch (value) {
 					case 'trade':
 						return 'https://wow.zamimg.com/images/wow/icons/large/inv_tradeskillitem_01.jpg';
+					case 'talk':
+						return 'https://image.flaticon.com/icons/png/512/130/130958.png';
+					case 'attack':
+						return 'https://wow.zamimg.com/images/wow/icons/large/ability_steelmelee.jpg';
 					default:
 						return '#';
 				}
@@ -354,6 +368,10 @@
 	#entities {
 		padding: 16px;
 		color: #2B2D42;
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+		flex-wrap: wrap;
 
 		& * {
 			font-family: "Montserrat";
@@ -369,6 +387,8 @@
 			border: 0;
 			border-radius: 50px;
 			box-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+			margin-bottom: 1rem;
+			margin-right: 1rem;
 
 			.entity-left {
 				flex-shrink: 1;
@@ -408,16 +428,20 @@
 					border: none;
 					background-color: #FFDE68;
 					overflow: hidden;
-					padding: 0;
+					padding: 3px;
 					cursor: pointer;
+					display: flex;
+					align-items:center;
+					justify-content: center;
 
 					img {
-						height: 105%;
-						width: 105%;
+						height: 100%;
+						width: 100%;
 						object-fit: cover;
 						background: none;
 						border: none;
 						outline: none;
+						border-radius: 50%;
 
 						&[src="#"] {
 							display: none;

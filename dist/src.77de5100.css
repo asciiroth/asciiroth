@@ -32,6 +32,10 @@
 #entities[data-v-a49a64] {
   padding: 16px;
   color: #2B2D42;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 }
 #entities *[data-v-a49a64] {
   font-family: "Montserrat";
@@ -46,6 +50,8 @@
   border: 0;
   border-radius: 50px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+  margin-bottom: 1rem;
+  margin-right: 1rem;
 }
 #entities .entity .entity-left[data-v-a49a64] {
   flex-shrink: 1;
@@ -82,16 +88,20 @@
   border: none;
   background-color: #FFDE68;
   overflow: hidden;
-  padding: 0;
+  padding: 3px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 #entities .entity .entity-right button img[data-v-a49a64] {
-  height: 105%;
-  width: 105%;
+  height: 100%;
+  width: 100%;
   object-fit: cover;
   background: none;
   border: none;
   outline: none;
+  border-radius: 50%;
 }
 #entities .entity .entity-right button img[src="#"][data-v-a49a64] {
   display: none;
