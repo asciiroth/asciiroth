@@ -187,10 +187,6 @@
 				name: 'Location 1',
 				entities: [
 					abby,
-					abby,
-					abby,
-					abby,
-					abby,
 					wolf,
 				]
 			});
@@ -337,6 +333,15 @@
 </script>
 
 <style lang="scss" scoped>
+	@mixin hideScrollBars {
+		overflow: -moz-scrollbars-none;
+		-ms-overflow-style: none;
+
+		&::-webkit-scrollbar {
+			width: 0 !important;
+		}
+	}
+
 	#grid {
 		display: flex;
 		align-items: center;
@@ -359,6 +364,7 @@
 			height: 100%;
 			max-height: 100%;
 			overflow: auto;
+			@include hideScrollBars;
 		}
 	}
 
@@ -489,6 +495,11 @@
 			}
 		}
 
+	}
+
+	#bottom .left {
+		padding: 16px;
+		color: white;
 	}
 
 	input {

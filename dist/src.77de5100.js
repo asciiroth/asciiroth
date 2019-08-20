@@ -18727,38 +18727,38 @@ var Game = /** @class */ (function () {
         this._abilities = new Base_store_1.BaseStore();
         this._output = [];
         this._actions = {
-            talk: function (args) {
+            talk: function (game, args) {
                 // args will be something like ['abby']
                 var _a = args.map(function (item) { return item.toLowerCase(); }), name = _a[0], subject = _a[1];
                 if (!name) {
-                    return _this.addOutput('Who would you like to talk to?');
+                    return game.addOutput('Who would you like to talk to?');
                 }
-                var target = _this.player.location.find(name);
+                var target = game.player.location.find(name);
                 if (!target) {
-                    return _this.addOutput("Cannot find " + name);
+                    return game.addOutput("Cannot find " + name);
                 }
                 if (target.speech[subject]) {
-                    return _this.addOutput(target.speech[subject]);
+                    return game.addOutput(target.speech[subject]);
                 }
-                _this.addOutput(target.speech.default);
+                game.addOutput(target.speech.default);
             },
-            walk: function (args) {
+            walk: function (game, args) {
                 var _a;
                 var direction = args.map(function (item) { return item.toLowerCase(); })[0];
                 if (!direction) {
                     return _this.addOutput('Which direction would you like to walk?');
                 }
-                var availableDirections = (_a = _this._player.zone).getAvailableDirections.apply(_a, _this._player.coords);
+                var availableDirections = (_a = _this._player.zone).getAvailableDirections.apply(_a, game._player.coords);
                 if (availableDirections[direction]) {
-                    return _this._player.setLocation(availableDirections[direction]);
+                    return game._player.setLocation(availableDirections[direction]);
                 }
-                return _this.addOutput('Cannot move in that direction');
+                return game.addOutput('Cannot move in that direction');
             },
-            attack: function (args) {
+            attack: function (game, args) {
                 var name = args.map(function (item) { return item.toLowerCase(); })[0];
-                var target = _this.player.location.find(name);
+                var target = game.player.location.find(name);
                 if (!target) {
-                    return _this.addOutput("Cannot find " + name);
+                    return game.addOutput("Cannot find " + name);
                 }
                 var damage = Utils_class_1.Utils.calculateBaseDamage(_this.player.strength, target.defence);
                 target.removeHp(damage);
@@ -18774,7 +18774,7 @@ var Game = /** @class */ (function () {
     });
     Game.prototype.action = function (command, args) {
         if (this._actions[command]) {
-            return this._actions[command](args);
+            return this._actions[command](this, args);
         }
         this.addOutput("Command \"" + command + "\" does not exist");
     };
@@ -19839,7 +19839,7 @@ exports.default = {
     });
     var location1 = game.newLocation({
       name: 'Location 1',
-      entities: [abby, abby, abby, abby, abby, wolf]
+      entities: [abby, wolf]
     });
     var location2 = game.newLocation({
       name: 'Location 2'
@@ -19965,14 +19965,14 @@ exports.default = {
     }
   }
 };
-        var $a49a64 = exports.default || module.exports;
+        var $b420d8 = exports.default || module.exports;
       
-      if (typeof $a49a64 === 'function') {
-        $a49a64 = $a49a64.options;
+      if (typeof $b420d8 === 'function') {
+        $b420d8 = $b420d8.options;
       }
     
         /* template */
-        Object.assign($a49a64, (function () {
+        Object.assign($b420d8, (function () {
           var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -20113,7 +20113,7 @@ render._withStripped = true
             render: render,
             staticRenderFns: staticRenderFns,
             _compiled: true,
-            _scopeId: "data-v-a49a64",
+            _scopeId: "data-v-b420d8",
             functional: undefined
           };
         })());
@@ -20126,9 +20126,9 @@ render._withStripped = true
         if (api.compatible) {
           module.hot.accept();
           if (!module.hot.data) {
-            api.createRecord('$a49a64', $a49a64);
+            api.createRecord('$b420d8', $b420d8);
           } else {
-            api.reload('$a49a64', $a49a64);
+            api.reload('$b420d8', $b420d8);
           }
         }
 
@@ -21157,7 +21157,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55760" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53031" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
