@@ -19959,14 +19959,14 @@ exports.default = {
     }
   }
 };
-        var $a49a64 = exports.default || module.exports;
+        var $b420d8 = exports.default || module.exports;
       
-      if (typeof $a49a64 === 'function') {
-        $a49a64 = $a49a64.options;
+      if (typeof $b420d8 === 'function') {
+        $b420d8 = $b420d8.options;
       }
     
         /* template */
-        Object.assign($a49a64, (function () {
+        Object.assign($b420d8, (function () {
           var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -19975,6 +19975,8 @@ exports.default = {
     _c("div", { attrs: { id: "grid" } }, [
       _c("div", { attrs: { id: "top" } }, [
         _c("div", { staticClass: "left" }, [
+          _c("h3", [_vm._v("Around you, you see:")]),
+          _vm._v(" "),
           _c(
             "div",
             { attrs: { id: "entities" } },
@@ -19998,7 +20000,6 @@ exports.default = {
                     return _c(
                       "button",
                       {
-                        staticClass: "circle",
                         attrs: { type: "button", name: "button" },
                         on: {
                           click: function($event) {
@@ -20007,9 +20008,11 @@ exports.default = {
                         }
                       },
                       [
-                        _c("img", {
-                          attrs: { src: _vm._f("transformActionIcon")(action) }
-                        })
+                        _vm._v(
+                          "\n\t\t\t\t\t\t\t\t" +
+                            _vm._s(_vm._f("capitalize")(action)) +
+                            "\n\t\t\t\t\t\t\t"
+                        )
                       ]
                     )
                   }),
@@ -20092,7 +20095,7 @@ render._withStripped = true
             render: render,
             staticRenderFns: staticRenderFns,
             _compiled: true,
-            _scopeId: "data-v-a49a64",
+            _scopeId: "data-v-b420d8",
             functional: undefined
           };
         })());
@@ -20105,9 +20108,9 @@ render._withStripped = true
         if (api.compatible) {
           module.hot.accept();
           if (!module.hot.data) {
-            api.createRecord('$a49a64', $a49a64);
+            api.createRecord('$b420d8', $b420d8);
           } else {
-            api.reload('$a49a64', $a49a64);
+            api.reload('$b420d8', $b420d8);
           }
         }
 
@@ -21136,7 +21139,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59665" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51306" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

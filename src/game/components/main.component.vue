@@ -5,8 +5,8 @@
 				<div class="left">
 					<!-- <h2>{{ player.zone.name }} <span class="small">{{ player.location.name }}</span></h2> -->
 					<!-- <p>entities in this location {{ player.entities }}</p> -->
+					<h3>Around you, you see:</h3>
 					<div id="entities">
-						<!-- <h3>Around you, you see:</h3> -->
 						<div class="entity" v-for="entity in player.location.entities">
 							<div class="entity-left">
 								<img :src="entity.custom.image" class="circle">
@@ -16,11 +16,10 @@
 								<button
 									type="button"
 									name="button"
-									class="circle"
 									v-for="action in entity.actions"
 									@click="callGameAction(action, [entity.name])"
 								>
-									<img :src="action | transformActionIcon">
+									{{ action | capitalize }}
 								</button>
 							</div>
 							<!-- <div class="card-left">
@@ -350,11 +349,15 @@
 	}
 
 	.left {
-		h2 {
+		h3 {
 			font-family: "Luckiest Guy";
 			font-weight: 400;
 			font-size: 1.75rem;
 			margin-top: 0;
+			color: white;
+			padding: 1rem 0 0 0;
+			margin-bottom: 5px;
+			text-align: center;
 
 			.small {
 				font-family: "Poiret One";
@@ -426,27 +429,16 @@
 					box-shadow: 2px 2px 4px rgba(0,0,0,0.2);
 					appearance: none;
 					border: none;
+					border-radius: 50px;
 					background-color: #FFDE68;
 					overflow: hidden;
-					padding: 3px;
+					padding: 0.75rem 1rem;
 					cursor: pointer;
 					display: flex;
 					align-items:center;
 					justify-content: center;
-
-					img {
-						height: 100%;
-						width: 100%;
-						object-fit: cover;
-						background: none;
-						border: none;
-						outline: none;
-						border-radius: 50%;
-
-						&[src="#"] {
-							display: none;
-						}
-					}
+					color: white;
+					font-weight: bold;
 
 					&:hover {
 						filter: brightness(80%);
