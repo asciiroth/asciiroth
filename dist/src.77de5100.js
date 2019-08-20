@@ -18761,7 +18761,7 @@ var Game = /** @class */ (function () {
                     return _this.addOutput("Cannot find " + name);
                 }
                 var damage = Utils_class_1.Utils.calculateBaseDamage(_this.player.strength, target.defence);
-                console.log(damage);
+                target.removeHp(damage);
             },
         };
     }
@@ -18996,6 +18996,7 @@ var Npc = /** @class */ (function (_super) {
     function Npc(options) {
         var _this = _super.call(this, options) || this;
         _this.hp = 5;
+        _this.maxHp = 5;
         _this.strength = 5;
         _this.defence = 5;
         _this.friendly = true;
@@ -19003,6 +19004,9 @@ var Npc = /** @class */ (function (_super) {
             default: 'Hello there',
         };
         Object.assign(_this, options);
+        if (!options.maxHp) {
+            _this.maxHp = options.hp || _this.hp;
+        }
         return _this;
     }
     Npc.prototype.removeHp = function (amount) {
@@ -19817,6 +19821,7 @@ exports.default = {
         wolf: "Uh oh there's a wolf!",
         default: "Yo waddup"
       },
+      friendly: true,
       actions: ['talk'],
       custom: {
         image: 'https://gamepedia.cursecdn.com/wowpedia/7/7a/Charactercreate-races_human-female.png?version=708cfbd211c07e688fbae08140874518'
@@ -19827,13 +19832,14 @@ exports.default = {
       referenceNames: ['Wolf'],
       description: 'A vicious wolf!',
       actions: ['attack'],
+      friendly: false,
       custom: {
         image: 'https://wow.zamimg.com/images/wow/icons/large/ability_hunter_pet_wolf.jpg'
       }
     });
     var location1 = game.newLocation({
       name: 'Location 1',
-      entities: [abby, wolf]
+      entities: [abby, abby, abby, abby, abby, wolf]
     });
     var location2 = game.newLocation({
       name: 'Location 2'
@@ -19959,14 +19965,14 @@ exports.default = {
     }
   }
 };
-        var $b420d8 = exports.default || module.exports;
+        var $a49a64 = exports.default || module.exports;
       
-      if (typeof $b420d8 === 'function') {
-        $b420d8 = $b420d8.options;
+      if (typeof $a49a64 === 'function') {
+        $a49a64 = $a49a64.options;
       }
     
         /* template */
-        Object.assign($b420d8, (function () {
+        Object.assign($a49a64, (function () {
           var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -19981,44 +19987,56 @@ exports.default = {
             "div",
             { attrs: { id: "entities" } },
             _vm._l(_vm.player.location.entities, function(entity) {
-              return _c("div", { staticClass: "entity" }, [
-                _c("div", { staticClass: "entity-left" }, [
-                  _c("img", {
-                    staticClass: "circle",
-                    attrs: { src: entity.custom.image }
-                  }),
+              return _c(
+                "div",
+                {
+                  staticClass: "entity",
+                  class: { friend: entity.friendly, enemy: !entity.friendly }
+                },
+                [
+                  _c("div", { staticClass: "entity-left" }, [
+                    _c("div", {
+                      staticClass: "background",
+                      style: { width: (entity.hp / entity.maxHp) * 100 + "%" }
+                    }),
+                    _vm._v(" "),
+                    _c("img", {
+                      staticClass: "circle",
+                      attrs: { src: entity.custom.image }
+                    }),
+                    _vm._v(" "),
+                    _c("span", [
+                      _vm._v(_vm._s(_vm._f("capitalize")(entity.name)))
+                    ])
+                  ]),
                   _vm._v(" "),
-                  _c("span", [
-                    _vm._v(_vm._s(_vm._f("capitalize")(entity.name)))
-                  ])
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "entity-right" },
-                  _vm._l(entity.actions, function(action) {
-                    return _c(
-                      "button",
-                      {
-                        attrs: { type: "button", name: "button" },
-                        on: {
-                          click: function($event) {
-                            return _vm.callGameAction(action, [entity.name])
+                  _c(
+                    "div",
+                    { staticClass: "entity-right" },
+                    _vm._l(entity.actions, function(action) {
+                      return _c(
+                        "button",
+                        {
+                          attrs: { type: "button", name: "button" },
+                          on: {
+                            click: function($event) {
+                              return _vm.callGameAction(action, [entity.name])
+                            }
                           }
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n\t\t\t\t\t\t\t\t" +
-                            _vm._s(_vm._f("capitalize")(action)) +
-                            "\n\t\t\t\t\t\t\t"
-                        )
-                      ]
-                    )
-                  }),
-                  0
-                )
-              ])
+                        },
+                        [
+                          _vm._v(
+                            "\n\t\t\t\t\t\t\t\t" +
+                              _vm._s(_vm._f("capitalize")(action)) +
+                              "\n\t\t\t\t\t\t\t"
+                          )
+                        ]
+                      )
+                    }),
+                    0
+                  )
+                ]
+              )
             }),
             0
           )
@@ -20095,7 +20113,7 @@ render._withStripped = true
             render: render,
             staticRenderFns: staticRenderFns,
             _compiled: true,
-            _scopeId: "data-v-b420d8",
+            _scopeId: "data-v-a49a64",
             functional: undefined
           };
         })());
@@ -20108,9 +20126,9 @@ render._withStripped = true
         if (api.compatible) {
           module.hot.accept();
           if (!module.hot.data) {
-            api.createRecord('$b420d8', $b420d8);
+            api.createRecord('$a49a64', $a49a64);
           } else {
-            api.reload('$b420d8', $b420d8);
+            api.reload('$a49a64', $a49a64);
           }
         }
 
@@ -21139,7 +21157,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51306" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55760" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

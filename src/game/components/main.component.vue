@@ -7,8 +7,13 @@
 					<!-- <p>entities in this location {{ player.entities }}</p> -->
 					<h3>Around you, you see:</h3>
 					<div id="entities">
-						<div class="entity" v-for="entity in player.location.entities">
+						<div
+							class="entity"
+							:class="{ friend: entity.friendly, enemy: !entity.friendly }"
+							v-for="entity in player.location.entities"
+						>
 							<div class="entity-left">
+								<div class="background" :style="{ width: ( entity.hp / entity.maxHp ) * 100 + '%'}"></div>
 								<img :src="entity.custom.image" class="circle">
 								<span>{{ entity.name | capitalize }}</span>
 							</div>
@@ -160,6 +165,7 @@
 					wolf: "Uh oh there's a wolf!",
 					default: "Yo waddup",
 				},
+				friendly: true,
 				actions: [ 'talk' ],
 				custom: {
 					image: 'https://gamepedia.cursecdn.com/wowpedia/7/7a/Charactercreate-races_human-female.png?version=708cfbd211c07e688fbae08140874518',
@@ -171,6 +177,7 @@
 				referenceNames: ['Wolf'],
 				description: 'A vicious wolf!',
 				actions: [ 'attack' ],
+				friendly: false,
 				custom: {
 					image: 'https://wow.zamimg.com/images/wow/icons/large/ability_hunter_pet_wolf.jpg',
 				},
@@ -179,6 +186,10 @@
 			const location1 = game.newLocation({
 				name: 'Location 1',
 				entities: [
+					abby,
+					abby,
+					abby,
+					abby,
 					abby,
 					wolf,
 				]
@@ -340,11 +351,14 @@
 			align-items: center;
 			justify-content: flex-start;
 			width: 100%;
+			max-height: 50%;
 		}
 
 		.left, .right {
 			flex: 1;
 			height: 100%;
+			max-height: 100%;
+			overflow: auto;
 		}
 	}
 
@@ -399,13 +413,26 @@
 				display: flex;
 				align-items: center;
 				justify-content: flex-start;
-				background-color: #82BEE9;
 				border-radius: 50px;
 				box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+				position: relative;
+				overflow: hidden;
+
+				.background {
+					background-color: #82BEE9;
+					position: absolute;
+					top: 0;
+					left: 0;
+					width: 100%;
+					height: 100%;
+					z-index: 1;
+					transition: width .2s ease-in-out;
+				}
 
 				img {
 					margin-right: 1rem;
 					box-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+					z-index: 2;
 				}
 
 				span {
@@ -413,6 +440,7 @@
 					color: white;
 					font-size: 1.75rem;
 					text-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+					z-index: 2;
 				}
 			}
 
@@ -450,6 +478,14 @@
 				height: 60px;
 				width: 60px;
 				border-radius: 50%;
+			}
+
+			&.enemy {
+				.entity-left {
+					.background {
+						background-color: #FE4A49;
+					}
+				}
 			}
 		}
 
