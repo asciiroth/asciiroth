@@ -50,18 +50,22 @@
 				<div class="right"></div>
 			</div>
 			<div id="bottom">
-				<div class="left">
+				<div class="left" @click="focusInput">
 					<div class="output">
 						<h1>hello world</h1>
 						<p v-for="output in game.output">{{ output }}</p>
 					</div>
 					<input
-					type="text"
-					v-model="currentInput"
-					@keydown.38.40.prevent
-					@keyup.enter="handleInput">
+						type="text"
+						v-model="currentInput"
+						@keydown.38.40.prevent
+						@keyup.enter="handleInput"
+						ref="main-input"
+					>
 				</div>
-				<div class="right"></div>
+				<div class="right">
+					<img :src="player.location.custom.image" alt="">
+				</div>
 			</div>
 		</div>
 	</div>
@@ -172,7 +176,7 @@
 				},
 			});
 
-			const wolf = game.newNpc({
+			const wolf = {
 				name: 'Wolf',
 				referenceNames: ['Wolf'],
 				description: 'A vicious wolf!',
@@ -181,18 +185,27 @@
 				custom: {
 					image: 'https://wow.zamimg.com/images/wow/icons/large/ability_hunter_pet_wolf.jpg',
 				},
-			});
+			};
 
 			const location1 = game.newLocation({
 				name: 'Location 1',
 				entities: [
 					abby,
-					wolf,
-				]
+					game.newNpc(wolf),
+				],
+				custom: {
+					image: 'https://vignette.wikia.nocookie.net/wowwiki/images/d/dd/Northshire_Valley.jpg/revision/latest/scale-to-width-down/2000?cb=20171203170351',
+				}
 			});
 
 			const location2 = game.newLocation({
 				name: 'Location 2',
+				entities: [
+					game.newNpc(wolf),
+				],
+				custom: {
+					image: 'https://vignette.wikia.nocookie.net/wowwiki/images/8/8c/Stone_Cairn_Lake.jpg/revision/latest?cb=20130510021922',
+				}
 			});
 
 			const location3 = game.newLocation({
@@ -303,7 +316,10 @@
 				this.currentInput = '';
 
 				this.game.action(command, args);
-			}
+			},
+			focusInput() {
+				this.$refs['main-input'].focus();
+			},
 		},
 		computed: {
 			player() {
@@ -499,6 +515,7 @@
 
 	#bottom .left {
 		padding: 16px;
+		padding-bottom: 120px;
 		color: white;
 	}
 

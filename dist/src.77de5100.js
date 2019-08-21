@@ -18916,10 +18916,12 @@ exports.Input = Input;
 },{}],"../node_modules/@asciiroth/core/lib/Location.class.js":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
 var Base_store_1 = require("./stores/Base.store");
 var Location = /** @class */ (function () {
     function Location(options) {
         this._entities = new Base_store_1.BaseStore();
+        this._custom = {};
         this.name = options.name || '';
         this.description = options.description || '';
         this.image = options.description || '';
@@ -18927,6 +18929,8 @@ var Location = /** @class */ (function () {
         if (options.entities) {
             this._entities.add(options.entities);
         }
+        this._custom = tslib_1.__assign({}, this._custom, options.custom);
+        delete options.custom;
     }
     Object.defineProperty(Location.prototype, "coords", {
         get: function () {
@@ -18948,11 +18952,21 @@ var Location = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(Location.prototype, "custom", {
+        get: function () {
+            return this._custom;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Location.prototype.addCustom = function (customProperties) {
+        this._custom = tslib_1.__assign({}, this._custom, customProperties);
+    };
     return Location;
 }());
 exports.Location = Location;
 
-},{"./stores/Base.store":"../node_modules/@asciiroth/core/lib/stores/Base.store.js"}],"../node_modules/@asciiroth/core/lib/Inventory.class.js":[function(require,module,exports) {
+},{"tslib":"../node_modules/@asciiroth/core/node_modules/tslib/tslib.es6.js","./stores/Base.store":"../node_modules/@asciiroth/core/lib/stores/Base.store.js"}],"../node_modules/@asciiroth/core/lib/Inventory.class.js":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Inventory = /** @class */ (function () {
@@ -19827,7 +19841,7 @@ exports.default = {
         image: 'https://gamepedia.cursecdn.com/wowpedia/7/7a/Charactercreate-races_human-female.png?version=708cfbd211c07e688fbae08140874518'
       }
     });
-    var wolf = game.newNpc({
+    var wolf = {
       name: 'Wolf',
       referenceNames: ['Wolf'],
       description: 'A vicious wolf!',
@@ -19836,13 +19850,20 @@ exports.default = {
       custom: {
         image: 'https://wow.zamimg.com/images/wow/icons/large/ability_hunter_pet_wolf.jpg'
       }
-    });
+    };
     var location1 = game.newLocation({
       name: 'Location 1',
-      entities: [abby, wolf]
+      entities: [abby, game.newNpc(wolf)],
+      custom: {
+        image: 'https://vignette.wikia.nocookie.net/wowwiki/images/d/dd/Northshire_Valley.jpg/revision/latest/scale-to-width-down/2000?cb=20171203170351'
+      }
     });
     var location2 = game.newLocation({
-      name: 'Location 2'
+      name: 'Location 2',
+      entities: [game.newNpc(wolf)],
+      custom: {
+        image: 'https://vignette.wikia.nocookie.net/wowwiki/images/8/8c/Stone_Cairn_Lake.jpg/revision/latest?cb=20130510021922'
+      }
     });
     var location3 = game.newLocation({
       name: 'Location 3'
@@ -19935,6 +19956,9 @@ exports.default = {
       this.game.addOutput(command + " " + args.join(' '));
       this.currentInput = '';
       this.game.action(command, args);
+    },
+    focusInput: function focusInput() {
+      this.$refs['main-input'].focus();
     }
   },
   computed: {
@@ -19965,14 +19989,14 @@ exports.default = {
     }
   }
 };
-        var $b420d8 = exports.default || module.exports;
+        var $a49a64 = exports.default || module.exports;
       
-      if (typeof $b420d8 === 'function') {
-        $b420d8 = $b420d8.options;
+      if (typeof $a49a64 === 'function') {
+        $a49a64 = $a49a64.options;
       }
     
         /* template */
-        Object.assign($b420d8, (function () {
+        Object.assign($a49a64, (function () {
           var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -20046,7 +20070,7 @@ exports.default = {
       ]),
       _vm._v(" "),
       _c("div", { attrs: { id: "bottom" } }, [
-        _c("div", { staticClass: "left" }, [
+        _c("div", { staticClass: "left", on: { click: _vm.focusInput } }, [
           _c(
             "div",
             { staticClass: "output" },
@@ -20069,6 +20093,7 @@ exports.default = {
                 expression: "currentInput"
               }
             ],
+            ref: "main-input",
             attrs: { type: "text" },
             domProps: { value: _vm.currentInput },
             on: {
@@ -20101,7 +20126,11 @@ exports.default = {
           })
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "right" })
+        _c("div", { staticClass: "right" }, [
+          _c("img", {
+            attrs: { src: _vm.player.location.custom.image, alt: "" }
+          })
+        ])
       ])
     ])
   ])
@@ -20113,7 +20142,7 @@ render._withStripped = true
             render: render,
             staticRenderFns: staticRenderFns,
             _compiled: true,
-            _scopeId: "data-v-b420d8",
+            _scopeId: "data-v-a49a64",
             functional: undefined
           };
         })());
@@ -20126,9 +20155,9 @@ render._withStripped = true
         if (api.compatible) {
           module.hot.accept();
           if (!module.hot.data) {
-            api.createRecord('$b420d8', $b420d8);
+            api.createRecord('$a49a64', $a49a64);
           } else {
-            api.reload('$b420d8', $b420d8);
+            api.reload('$a49a64', $a49a64);
           }
         }
 
@@ -21157,7 +21186,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53031" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50888" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
