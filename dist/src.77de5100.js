@@ -18524,30 +18524,33 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = require("tslib");
 var Entity = /** @class */ (function () {
     function Entity(options) {
-        this.actions = [];
+        this._actions = [];
         if (options.actions) {
-            this.actions = options.actions.slice();
+            this._actions = options.actions.slice();
             delete options.actions;
+        }
+        if (options.custom) {
             this._custom = tslib_1.__assign({}, this._custom, options.custom);
             delete options.custom;
         }
         Object.assign(this, options);
     }
     Entity.prototype.hasAction = function (action) {
-        if (this.actions.includes(action)) {
-            return true;
-        }
-        return false;
+        return !!this._actions.includes(action);
     };
-    Entity.prototype.action = function (action, payload) {
-        return this.actions[action](this._game, payload);
-    };
-    Entity.prototype.addAction = function (name, action) {
-        this.actions[name] = action;
+    Entity.prototype.addAction = function (name) {
+        this._actions.push(name);
     };
     Object.defineProperty(Entity.prototype, "custom", {
         get: function () {
             return this._custom;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Entity.prototype, "actions", {
+        get: function () {
+            return this._actions;
         },
         enumerable: true,
         configurable: true
@@ -18750,7 +18753,9 @@ var Game = /** @class */ (function () {
                 }
                 var availableDirections = (_a = _this._player.zone).getAvailableDirections.apply(_a, game._player.coords);
                 if (availableDirections[direction]) {
-                    return game._player.setLocation(availableDirections[direction]);
+                    game._player.setZone(availableDirections[direction].zone || game.player.zone);
+                    game._player.setLocation(availableDirections[direction].location);
+                    return;
                 }
                 return game.addOutput('Cannot move in that direction');
             },
@@ -18763,6 +18768,9 @@ var Game = /** @class */ (function () {
                 var damage = Utils_class_1.Utils.calculateBaseDamage(_this.player.strength, target.defence);
                 target.removeHp(damage);
             },
+            go: function (game, args) {
+                _this._actions.walk(game, args);
+            },
         };
     }
     Object.defineProperty(Game.prototype, "name", {
@@ -18772,11 +18780,15 @@ var Game = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    // Actions
     Game.prototype.action = function (command, args) {
         if (this._actions[command]) {
             return this._actions[command](this, args);
         }
         this.addOutput("Command \"" + command + "\" does not exist");
+    };
+    Game.prototype.addAction = function (command, action) {
+        this._actions[command] = action;
     };
     Object.defineProperty(Game.prototype, "stage", {
         // Stages
@@ -18922,6 +18934,8 @@ var Location = /** @class */ (function () {
     function Location(options) {
         this._entities = new Base_store_1.BaseStore();
         this._custom = {};
+        this._warpPoints = {};
+        this._customDirections = {};
         this.name = options.name || '';
         this.description = options.description || '';
         this.image = options.description || '';
@@ -18929,7 +18943,12 @@ var Location = /** @class */ (function () {
         if (options.entities) {
             this._entities.add(options.entities);
         }
-        this._custom = tslib_1.__assign({}, this._custom, options.custom);
+        if (options.custom) {
+            this._custom = tslib_1.__assign({}, this._custom, options.custom);
+        }
+        if (options.customDirections) {
+            this._customDirections = options.customDirections;
+        }
         delete options.custom;
     }
     Object.defineProperty(Location.prototype, "coords", {
@@ -18962,6 +18981,29 @@ var Location = /** @class */ (function () {
     Location.prototype.addCustom = function (customProperties) {
         this._custom = tslib_1.__assign({}, this._custom, customProperties);
     };
+    Location.prototype.addWarpPoint = function (warpPoint) {
+        this._warpPoints[warpPoint.direction] = warpPoint;
+    };
+    Location.prototype.addCustomDirection = function (customDirection) {
+        this._customDirections[customDirection.direction] = {
+            location: customDirection.location,
+            zone: customDirection.zone || undefined,
+        };
+    };
+    Object.defineProperty(Location.prototype, "warpPoints", {
+        get: function () {
+            return this._warpPoints;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Location.prototype, "customDirections", {
+        get: function () {
+            return this._customDirections;
+        },
+        enumerable: true,
+        configurable: true
+    });
     return Location;
 }());
 exports.Location = Location;
@@ -19150,6 +19192,14 @@ var Player = /** @class */ (function () {
         }
         return this.hp = this.maxHp;
     };
+    Object.defineProperty(Player.prototype, "currentDirections", {
+        get: function () {
+            var _a;
+            return (_a = this.zone).getAvailableDirections.apply(_a, this.location.coords);
+        },
+        enumerable: true,
+        configurable: true
+    });
     return Player;
 }());
 exports.Player = Player;
@@ -19258,6 +19308,7 @@ exports.World = World;
 },{}],"../node_modules/@asciiroth/core/lib/Zone.class.js":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
 var Zone = /** @class */ (function () {
     function Zone(options) {
         var _this = this;
@@ -19293,6 +19344,7 @@ var Zone = /** @class */ (function () {
                 }
             }
         }
+        // @ts-ignore
         var locations = grid.flat();
         this.locations = locations;
     };
@@ -19311,24 +19363,35 @@ var Zone = /** @class */ (function () {
             west: [x - 1, y],
         };
         if (this.areCoordsInGrid.apply(this, directionCoords.north)) {
-            directions.north = this.getLocationAtCoords.apply(this, directionCoords.north);
+            directions.north = {
+                zone: this,
+                location: this.getLocationAtCoords.apply(this, directionCoords.north),
+            };
         }
         if (this.areCoordsInGrid.apply(this, directionCoords.east)) {
-            directions.east = this.getLocationAtCoords.apply(this, directionCoords.east);
+            directions.east = {
+                location: this.getLocationAtCoords.apply(this, directionCoords.east),
+            };
         }
         if (this.areCoordsInGrid.apply(this, directionCoords.south)) {
-            directions.south = this.getLocationAtCoords.apply(this, directionCoords.south);
+            directions.south = {
+                location: this.getLocationAtCoords.apply(this, directionCoords.south),
+            };
         }
         if (this.areCoordsInGrid.apply(this, directionCoords.west)) {
-            directions.west = this.getLocationAtCoords.apply(this, directionCoords.west);
+            directions.west = {
+                location: this.getLocationAtCoords.apply(this, directionCoords.west),
+            };
         }
+        var currentLocation = this.getLocationAtCoords(x, y);
+        directions = tslib_1.__assign({}, directions, currentLocation.customDirections);
         return directions;
     };
     return Zone;
 }());
 exports.Zone = Zone;
 
-},{}],"../node_modules/@asciiroth/core/lib/Zones.class.js":[function(require,module,exports) {
+},{"tslib":"../node_modules/@asciiroth/core/node_modules/tslib/tslib.es6.js"}],"../node_modules/@asciiroth/core/lib/Zones.class.js":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Zones = /** @class */ (function () {
@@ -19825,8 +19888,8 @@ exports.default = {
   name: 'MainComponent',
   data: function data() {
     var game = new core_1.Game('World of Asciiroth');
-    var world = game.newWorld('Eastern Kingdoms');
-    game.setWorld(world);
+    var world = game.newWorld('Eastern Kingdoms'); //game.setWorld(world);
+
     var abby = game.newNpc({
       name: 'Abby',
       referenceNames: ['Abby'],
@@ -19870,7 +19933,12 @@ exports.default = {
     });
     var zone = game.newZone({
       name: 'Zone 1',
-      grid: [[location2], [location1], [location3]]
+      grid: [[location1], [location2], [location3]]
+    });
+    location1.addCustomDirection({
+      direction: 'up',
+      zone: zone,
+      location: location3
     });
     var player = game.newPlayer({
       name: 'Jacob',
@@ -19989,14 +20057,14 @@ exports.default = {
     }
   }
 };
-        var $a49a64 = exports.default || module.exports;
+        var $2e9fa6 = exports.default || module.exports;
       
-      if (typeof $a49a64 === 'function') {
-        $a49a64 = $a49a64.options;
+      if (typeof $2e9fa6 === 'function') {
+        $2e9fa6 = $2e9fa6.options;
       }
     
         /* template */
-        Object.assign($a49a64, (function () {
+        Object.assign($2e9fa6, (function () {
           var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -20066,7 +20134,14 @@ exports.default = {
           )
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "right" })
+        _c(
+          "div",
+          { staticClass: "right" },
+          _vm._l(_vm.player.currentDirections, function(direction, key) {
+            return _c("p", [_vm._v(_vm._s(key))])
+          }),
+          0
+        )
       ]),
       _vm._v(" "),
       _c("div", { attrs: { id: "bottom" } }, [
@@ -20142,7 +20217,7 @@ render._withStripped = true
             render: render,
             staticRenderFns: staticRenderFns,
             _compiled: true,
-            _scopeId: "data-v-a49a64",
+            _scopeId: "data-v-2e9fa6",
             functional: undefined
           };
         })());
@@ -20155,9 +20230,9 @@ render._withStripped = true
         if (api.compatible) {
           module.hot.accept();
           if (!module.hot.data) {
-            api.createRecord('$a49a64', $a49a64);
+            api.createRecord('$2e9fa6', $2e9fa6);
           } else {
-            api.reload('$a49a64', $a49a64);
+            api.reload('$2e9fa6', $2e9fa6);
           }
         }
 
@@ -21186,7 +21261,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50888" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56833" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

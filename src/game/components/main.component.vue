@@ -47,7 +47,9 @@
 						</div>
 					</div>
 				</div>
-				<div class="right"></div>
+				<div class="right">
+					<p v-for="(direction, key) in player.currentDirections">{{ key }}</p>
+				</div>
 			</div>
 			<div id="bottom">
 				<div class="left" @click="focusInput">
@@ -157,9 +159,9 @@
 		name: 'MainComponent',
 		data() {
 			const game = new Game('World of Asciiroth')
-
 			const world = game.newWorld('Eastern Kingdoms');
-			game.setWorld(world);
+
+			//game.setWorld(world);
 
 			const abby = game.newNpc({
 				name: 'Abby',
@@ -195,7 +197,7 @@
 				],
 				custom: {
 					image: 'https://vignette.wikia.nocookie.net/wowwiki/images/d/dd/Northshire_Valley.jpg/revision/latest/scale-to-width-down/2000?cb=20171203170351',
-				}
+				},
 			});
 
 			const location2 = game.newLocation({
@@ -216,16 +218,22 @@
 				name: 'Zone 1',
 				grid: [
 					[
-						location2,
-					],
-					[
 						location1,
 
+					],
+					[
+						location2,
 					],
 					[
 						location3,
 					]
 				],
+			});
+
+			location1.addCustomDirection({
+				direction: 'up',
+				zone,
+				location: location3,
 			});
 
 			const player = game.newPlayer({
@@ -365,6 +373,7 @@
 		flex-direction: column;
 		width: 100%;
 		height: 100%;
+		color: white;
 
 		#top, #bottom {
 			flex: 1;
@@ -474,6 +483,10 @@
 				justify-content: flex-start;
 				padding: 0 1rem;
 
+				&:empty {
+					display: none;
+				}
+
 				button {
 					margin-right: 1rem;
 					box-shadow: 2px 2px 4px rgba(0,0,0,0.2);
@@ -517,6 +530,27 @@
 		padding: 16px;
 		padding-bottom: 120px;
 		color: white;
+	}
+
+	#bottom .right {
+		position: relative;
+		overflow: hidden;
+
+		&:after {
+			content: '';
+			position: absolute;
+			left: 0;
+			top: 0;
+			box-shadow: inset 10px 10px 5px -5px #2B2D42;
+			width: 100%;
+			height: 100%;
+		}
+
+		img {
+			height: 100%;
+			width: 100%;
+			object-fit: cover;
+		}
 	}
 
 	input {
