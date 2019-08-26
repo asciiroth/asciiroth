@@ -20057,14 +20057,14 @@ exports.default = {
     }
   }
 };
-        var $2e9fa6 = exports.default || module.exports;
+        var $b420d8 = exports.default || module.exports;
       
-      if (typeof $2e9fa6 === 'function') {
-        $2e9fa6 = $2e9fa6.options;
+      if (typeof $b420d8 === 'function') {
+        $b420d8 = $b420d8.options;
       }
     
         /* template */
-        Object.assign($2e9fa6, (function () {
+        Object.assign($b420d8, (function () {
           var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -20217,7 +20217,7 @@ render._withStripped = true
             render: render,
             staticRenderFns: staticRenderFns,
             _compiled: true,
-            _scopeId: "data-v-2e9fa6",
+            _scopeId: "data-v-b420d8",
             functional: undefined
           };
         })());
@@ -20230,9 +20230,9 @@ render._withStripped = true
         if (api.compatible) {
           module.hot.accept();
           if (!module.hot.data) {
-            api.createRecord('$2e9fa6', $2e9fa6);
+            api.createRecord('$b420d8', $b420d8);
           } else {
-            api.reload('$2e9fa6', $2e9fa6);
+            api.reload('$b420d8', $b420d8);
           }
         }
 
@@ -21261,7 +21261,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56833" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50321" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
